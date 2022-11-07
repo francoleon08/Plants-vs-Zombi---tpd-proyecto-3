@@ -1,11 +1,14 @@
 package nivel.generador;
 
 import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import ente.plantas.*;
 import ente.plantas.Planta;
@@ -18,13 +21,22 @@ public class GeneradorNivel {
 	private Nivel nivel;
 	private LinkedList<Planta> plantasDisponibles;
 	private LinkedList<Zombi> zombisDisponibles;
+	private Properties configPlanta;
 	
 	
 	public GeneradorNivel(String urlNivel, Nivel nivel) {
 		director = new DirectorZombi();
 		this.nivel = nivel;
 		plantasDisponibles = new LinkedList<Planta>();
-		zombisDisponibles = new LinkedList<Zombi>();
+		zombisDisponibles = new LinkedList<Zombi>();		
+		configPlanta = new Properties();
+		try {
+			configPlanta.load(new FileInputStream("assets/configuracion/config_plantas.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		generarNuevoNivel(urlNivel);
 	}
 	
@@ -47,7 +59,7 @@ public class GeneradorNivel {
 				case 'L':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new LanzaGuisantes(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new LanzaGuisantes(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
@@ -55,7 +67,7 @@ public class GeneradorNivel {
 				case 'G':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new Girasol(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new Girasol(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
@@ -63,7 +75,7 @@ public class GeneradorNivel {
 				case'P':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new Petacereza(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new Petacereza(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
@@ -71,7 +83,7 @@ public class GeneradorNivel {
 				case'D':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new SetaDesporada(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new SetaDesporada(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
@@ -79,7 +91,7 @@ public class GeneradorNivel {
 				case'S':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new SetaSolar(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new SetaSolar(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
@@ -87,7 +99,7 @@ public class GeneradorNivel {
 				case'H':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3));
 					y = String.valueOf(level.charAt(i+5)) + String.valueOf(level.charAt(i+6));
-					Planta p = new Humoseta(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					Planta p = new Humoseta(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;			
