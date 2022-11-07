@@ -25,6 +25,14 @@ public abstract class Proyectil extends Ente {
 		this.danio = danio;
 	}
 
+	public int getVelocidad() {
+		return velocidad;
+	}
+
+	public void setVelocidad(int velocidad) {
+		this.velocidad = velocidad;
+	}
+
 	/**
 	 * Actualizar.
 	 * Suma 1 a su posicion en x.

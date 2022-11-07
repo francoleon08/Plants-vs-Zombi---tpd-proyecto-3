@@ -18,7 +18,7 @@ public class Zombi extends Ente implements Visitor {
 	private boolean portero;
 	private boolean run;
 	
-	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position,String skin) {
+	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position, String skin) {
 		this.salud = salud;
 		this.danio = danio;
 		this.velocidad = 1;

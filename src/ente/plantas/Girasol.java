@@ -1,21 +1,24 @@
 package ente.plantas;
 
 import java.awt.Point;
+import java.util.Properties;
 
+import ente.grafico.EnteGrafico;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class Girasol extends Planta {
 	
-	public Girasol(Point position) {
-		this.salud = 70;
-		this.precio = 50;
-		this.cooldownAccion = 7;
-		this.cooldownCompra = 5;
-		
+	public Girasol(Point position, Properties p) {
 		this.setLocation(position);
-		this.width = 50; //tamanio de la hitbox
-		this.height = 70;
+		this.config = p;
+		this.salud = Integer.parseInt(config.getProperty("salud_girasol"));
+		this.precio = Integer.parseInt(config.getProperty("precio_girasol"));
+		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_girasol"));
+		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_girasol"));	
+		this.width = Integer.parseInt(config.getProperty("ancho_girasol"));
+		this.height = Integer.parseInt(config.getProperty("alto_girasol"));
+		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_girasol"));
 	}
 
 	@Override
