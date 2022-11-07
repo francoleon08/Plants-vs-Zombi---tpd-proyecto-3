@@ -28,13 +28,13 @@ public class Espora extends Proyectil {
 	public Espora(Point punto,EnteGrafico grafico,int velocidad, int distancia, int danio, Properties p ) {
 		//Generear archivo de configureacion.
 		this.config=p;
+		this.setLocation(punto);
 		this.width= Integer.parseInt(config.getProperty("ancho_espora"));
 		this.height=Integer.parseInt(config.getProperty("alto_espora"));
-		this.setLocation(punto);
-		this.grafico=grafico;
-		this.danio=danio;
-		this.velocidad=velocidad;
-		this.distancia=distancia;
+		this.grafico=new EnteGrafico(punto, this.width, this.height, config.getProperty("skin_espora"));
+		this.danio=Integer.parseInt(config.getProperty("danio_espora"));
+		this.velocidad=Integer.parseInt(config.getProperty("velovidad_espora"));
+		this.distancia=Integer.parseInt(config.getProperty("distancia_espora"));
 		
 	}
 	
