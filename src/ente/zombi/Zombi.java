@@ -33,21 +33,9 @@ public class Zombi extends Ente implements Visitor {
 		
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, skin);		
 	}
-
-	public int getSalud() {
-		return salud;
-	}
-
-	public void setSalud(int salud) {
-		this.salud = salud;
-	}
-
-	public int getDanio() {
-		return danio;
-	}
-
-	public void setDanio(int danio) {
-		this.danio = danio;
+	
+	public boolean estaVivo() {
+		return salud > 0;
 	}
 
 	public boolean isAbanderado() {

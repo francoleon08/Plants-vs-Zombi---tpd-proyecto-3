@@ -14,6 +14,10 @@ public abstract class Planta extends Ente {
 		return salud <= 0;
 	}
 	
+	public boolean estaViva() {
+		return salud >= 0;
+	}
+	
 	public abstract Proyectil disparar();
 	
 	public abstract Planta clone();

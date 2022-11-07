@@ -6,6 +6,7 @@ import ente.plantas.Planta;
 import ente.proyectiles.Proyectil;
 import ente.zombi.Zombi;
 import gui.GUI;
+import nivel.Nivel;
 
 public class Jardin {
 
@@ -13,12 +14,20 @@ public class Jardin {
 	private LinkedList<Zombi> zombisActivos;
 	private LinkedList<Planta> plantasActivas;
 	private LinkedList<Proyectil> proyectilesActivos;
-	private int nivel;
+	private int nivelActual;
+	private String modoJuego;
+	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
 	
 	public Jardin(GUI gui,String modoJuego) {
-		//genera el nivel y setea las listas
+		nivelActual = 1;
+		this.modoJuego = modoJuego;
+		zombisActivos = new LinkedList<Zombi>();
+		plantasActivas = new LinkedList<Planta>();
+		proyectilesActivos = new LinkedList<Proyectil>();
 		
+		nivel = new Nivel("nivel-"+nivelActual+"-"+modoJuego);		
+		plantasDisponibles = nivel.getPlantasDisponibles();
 	}
 	
 	public boolean addPlanta(Planta p) {
@@ -76,5 +85,33 @@ public class Jardin {
 			removio=true;
 		}
 		return removio;
+	}
+	
+	public void cambiarModoJuego(String modoJuego) {
+		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
+		plantasDisponibles = nivel.getPlantasDisponibles();
+		zombisActivos.clear();
+		proyectilesActivos.clear();
+		plantasActivas.clear();
+	}
+	
+	public void colision(Zombi z) {
+		double fila = z.getY();
+		for(Planta p : plantasActivas) {
+			if(p.getY() == fila && z.intersects(p)) {
+				p.accept(z);		
+				if(!p.estaViva())
+					removePlanta(p);
+			}
+		}
+		for(Proyectil p : proyectilesActivos) {
+			if(p.getY() == fila && z.intersects(p)) {
+				p.accept(z);	
+				removeProyectiles(p);
+				if(!z.estaVivo()) {
+					removeZombi(z);
+				}
+			}
+		}		
 	}
 }

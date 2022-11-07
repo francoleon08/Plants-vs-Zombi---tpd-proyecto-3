@@ -1,8 +1,22 @@
 package ente.proyectiles;
 
+<<<<<<< HEAD
+import ente.zombi.visitor.Visitor;
+
+public class Espora extends Proyectil {
+=======
 import java.awt.Point;
 import java.util.Properties;
+>>>>>>> branch 'main' of https://github.com/tonyy7/tdp-proyecto-3
 
+<<<<<<< HEAD
+	@Override
+	public void accept(Visitor v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+=======
 import ente.grafico.EnteGrafico;
 import ente.zombi.visitor.Visitor;
 
@@ -55,4 +69,5 @@ public class Espora extends Proyectil {
 	public int getDistancia() {
 		return this.distancia;}	
 	
+>>>>>>> branch 'main' of https://github.com/tonyy7/tdp-proyecto-3
 }
