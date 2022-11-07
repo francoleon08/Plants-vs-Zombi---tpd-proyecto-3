@@ -1,21 +1,24 @@
 package ente.plantas;
 
 import java.awt.Point;
+import java.util.Properties;
 
+import ente.grafico.EnteGrafico;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class SetaSolar extends Planta {
 
-	public SetaSolar(Point position) {
-		this.salud = 70;
-		this.precio = 25;
-		this.cooldownAccion = 7;
-		this.cooldownCompra = 5;
-		
+	public SetaSolar(Point position, Properties p) {
 		this.setLocation(position);
-		this.width = 50; //tamanio de la hitbox
-		this.height = 70;
+		this.config = p;
+		this.salud = Integer.parseInt(config.getProperty("salud_setaSolar"));
+		this.precio = Integer.parseInt(config.getProperty("precio_setaSolar"));
+		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaSolar"));
+		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaSolar"));	
+		this.width = Integer.parseInt(config.getProperty("ancho_setaSolar"));
+		this.height = Integer.parseInt(config.getProperty("alto_setaSolar"));
+		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_setaSolar"));
 	}
 	
 	@Override

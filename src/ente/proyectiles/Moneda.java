@@ -19,11 +19,12 @@ public class Moneda extends Proyectil {
 		this.velocidad = Integer.parseInt(config.getProperty("velocidad_moneda"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_moneda"));
 	}
+	
 	public int getValor() {
 		return valor;
 	}
+	
 	public void accept(Visitor v) {
 		v.visitProyectil(this);
 	}
-
 }
