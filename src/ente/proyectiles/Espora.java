@@ -1,7 +1,6 @@
 package ente.proyectiles;
 
 import java.awt.Point;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
@@ -11,7 +10,7 @@ import ente.zombi.visitor.Visitor;
 /**
  * The Class Espora.
  */
-@SuppressWarnings("serial")
+
 public class Espora extends Proyectil {
 	
 	/** The distancia. */
