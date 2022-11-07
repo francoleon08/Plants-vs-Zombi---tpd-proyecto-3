@@ -1,5 +1,7 @@
 package jardin;
 
+import ente.grafico.EnteGrafico;
+
 public class JardinGrafico {
 
 	
