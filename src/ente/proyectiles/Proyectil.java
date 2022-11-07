@@ -2,22 +2,15 @@ package ente.proyectiles;
 
 import ente.Ente;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Proyectil.
  */
 public abstract class Proyectil extends Ente {
-	
-	/** The danio. */
 	protected int danio;
-	
-	/** The velocidad. */
 	protected int velocidad;
 
 	/**
 	 * Gets the danio.
-	 *
 	 * @return the danio
 	 */
 	public int getDanio() {
@@ -26,7 +19,6 @@ public abstract class Proyectil extends Ente {
 
 	/**
 	 * Sets the danio.
-	 *
 	 * @param danio the new danio
 	 */
 	public void setDanio(int danio) {

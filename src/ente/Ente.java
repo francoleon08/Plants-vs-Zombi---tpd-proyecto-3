@@ -11,16 +11,11 @@ import ente.zombi.visitor.Visitor;
  * The Class Ente.
  */
 public abstract class Ente extends Rectangle {
-	
-	/** The grafico. */
 	protected EnteGrafico grafico;
-	
-	/** The config. */
 	protected Properties config;
 	
 	/**
 	 * Gets the position.
-	 *
 	 * @return Point position
 	 */
 	public Point getPosition() {
@@ -29,7 +24,6 @@ public abstract class Ente extends Rectangle {
 
 	/**
 	 * Sets the position.
-	 *
 	 * @param Point the new position
 	 */
 	public void setPosition(Point position) {
@@ -38,7 +32,6 @@ public abstract class Ente extends Rectangle {
 	
 	/**
 	 * Gets the ente grafico.
-	 *
 	 * @return the EnteGrafico grafico
 	 */
 	public EnteGrafico getEnteGrafico() {
@@ -47,7 +40,6 @@ public abstract class Ente extends Rectangle {
 	
 	/**
 	 * Accept.
-	 *
 	 * @param v the v
 	 */
 	public abstract void accept(Visitor v);
