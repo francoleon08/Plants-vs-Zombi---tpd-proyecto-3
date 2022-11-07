@@ -9,9 +9,6 @@ import ente.Ente;
  */
 public abstract class Proyectil extends Ente {
 	
-	/** The salud. */
-	protected int salud;
-	
 	/** The danio. */
 	protected int danio;
 	
@@ -36,24 +33,6 @@ public abstract class Proyectil extends Ente {
 		this.danio = danio;
 	}
 
-	/**
-	 * Gets the salud.
-	 *
-	 * @return the salud
-	 */
-	public int getSalud() {
-		return salud;
-	}
-
-	/**
-	 * Sets the salud.
-	 *
-	 * @param salud the new salud
-	 */
-	public void setSalud(int salud) {
-		this.salud = salud;
-	}
-	
 	/**
 	 * Actualizar.
 	 * Suma 1 a su posicion en x.
