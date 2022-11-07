@@ -1,22 +1,8 @@
 package ente.proyectiles;
 
-<<<<<<< HEAD
 import ente.zombi.visitor.Visitor;
-
-public class Espora extends Proyectil {
-=======
 import java.awt.Point;
 import java.util.Properties;
->>>>>>> branch 'main' of https://github.com/tonyy7/tdp-proyecto-3
-
-<<<<<<< HEAD
-	@Override
-	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-=======
 import ente.grafico.EnteGrafico;
 import ente.zombi.visitor.Visitor;
 
@@ -45,13 +31,18 @@ public class Espora extends Proyectil {
 		this.setLocation(punto);
 		this.width= Integer.parseInt(config.getProperty("ancho_espora"));
 		this.height=Integer.parseInt(config.getProperty("alto_espora"));
+		this.setLocation(punto);
+		this.grafico=grafico;
+		this.danio=danio;
+		this.velocidad=velocidad;
+		this.distancia=distancia;
 		this.grafico=new EnteGrafico(punto, this.width, this.height, config.getProperty("skin_espora"));
 		this.danio=Integer.parseInt(config.getProperty("danio_espora"));
 		this.velocidad=Integer.parseInt(config.getProperty("velovidad_espora"));
 		this.distancia=Integer.parseInt(config.getProperty("distancia_espora"));
-		
+
 	}
-	
+
 	/**
 	 * Accept.
 	 *
@@ -69,5 +60,4 @@ public class Espora extends Proyectil {
 	public int getDistancia() {
 		return this.distancia;}	
 	
->>>>>>> branch 'main' of https://github.com/tonyy7/tdp-proyecto-3
 }
