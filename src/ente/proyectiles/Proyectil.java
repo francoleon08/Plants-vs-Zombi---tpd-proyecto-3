@@ -2,6 +2,10 @@ package ente.proyectiles;
 
 import ente.Ente;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Proyectil.
+ */
 public abstract class Proyectil extends Ente {
 	protected int salud;
 	protected int danio;
@@ -23,5 +27,11 @@ public abstract class Proyectil extends Ente {
 		this.salud = salud;
 	}
 	
-	public abstract Proyectil clone(); 
+	/**
+	 * Actualizar.
+	 * Suma 1 a su posicion en x
+	 */
+	public void actualizar() {
+		this.getPosition().translate(1, 0);
+	} 
 }
