@@ -1,15 +1,21 @@
 package ente.plantas;
 
+import java.awt.Point;
+
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class SetaDesporada extends Planta {
 	
-	public SetaDesporada() {
+	public SetaDesporada(Point position) {
 		this.salud = 50;
 		this.precio = 0;
 		this.cooldownAccion = 4;
 		this.cooldownCompra = 3;
+		
+		this.setLocation(position);
+		this.width = 50; //tamanio de la hitbox
+		this.height = 70;
 	}
 
 	@Override
