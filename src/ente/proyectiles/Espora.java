@@ -1,8 +1,8 @@
 package ente.proyectiles;
 
-import ente.zombi.visitor.Visitor;
 import java.awt.Point;
 import java.util.Properties;
+
 import ente.grafico.EnteGrafico;
 import ente.zombi.visitor.Visitor;
 
@@ -45,5 +45,6 @@ public class Espora extends Proyectil {
 	 */
 	public int getDistancia() {
 		return this.distancia;}	
-	
+	{
+	}
 }

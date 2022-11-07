@@ -1,9 +1,12 @@
 package ente.proyectiles;
 
-import ente.grafico.EnteGrafico;
-import ente.zombi.visitor.Visitor;
+
 import java.awt.Point;
 import java.util.Properties;
+
+import ente.grafico.EnteGrafico;
+import ente.zombi.visitor.Visitor;
+
 
 /**
  * The Class Guizante.
