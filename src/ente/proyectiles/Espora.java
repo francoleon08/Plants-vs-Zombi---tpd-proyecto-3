@@ -44,7 +44,6 @@ public class Espora extends Proyectil {
 	 * @return Distancia a la que llega la espora.
 	 */
 	public int getDistancia() {
-		return this.distancia;}	
-	{
+		return this.distancia;
 	}
 }
