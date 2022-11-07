@@ -39,5 +39,6 @@ public abstract class Proyectil extends Ente {
 	 */
 	public void actualizar() {
 		this.getPosition().translate(1, 0);
+		this.grafico.update(this.getLocation());
 	} 
 }

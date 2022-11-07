@@ -23,7 +23,7 @@ public class EnteGrafico {
 		this.skin.setIcon(new ImageIcon(skin));
 	}
 	
-	public void update() {
-		
+	public void update(Point position) {
+		skin.setLocation(position);
 	}
 }

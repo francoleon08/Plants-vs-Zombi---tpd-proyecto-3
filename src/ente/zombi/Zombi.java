@@ -73,7 +73,7 @@ public class Zombi extends Ente implements Visitor {
 	public void actualizar() {
 		if(run) {			
 			this.getPosition().translate(-velocidad, 0);
-			this.grafico.update();
+			this.grafico.update(this.getLocation());
 		}			
 	}
 	

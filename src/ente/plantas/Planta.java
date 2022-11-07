@@ -18,7 +18,21 @@ public abstract class Planta extends Ente {
 		return salud >= 0;
 	}
 	
+	public boolean puedeComprar() {
+		return cooldownCompra == 0;
+	}
+	
+	public boolean puedeDisparar() {
+		return cooldownAccion == 0;
+	}
+	
+	public void actualizar() {
+		this.cooldownAccion--;
+	}
+	
 	public abstract Proyectil disparar();
+	
+	public abstract void resetDisparo();
 	
 	public abstract Planta clone();
 }

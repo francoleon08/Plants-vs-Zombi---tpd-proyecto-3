@@ -23,26 +23,23 @@ public class LanzaGuisantes extends Planta {
 
 	@Override
 	public Proyectil disparar() {
-		// TODO Auto-generated method stub
-		return null;
+		Proyectil disparo =  null;
+		if(this.cooldownAccion == 0) {
+			//
+		}
+		return disparo;
 	}
 
-	@Override
 	public Planta clone() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LanzaGuisantes(this.getLocation(), config);
 	}
 
-	@Override
 	public void accept(Visitor v) {
-		// TODO Auto-generated method stub
-		
+		v.visitLanzaGuisantes(this);
 	}
 
-	@Override
-	public void actualizar() {
-		// TODO Auto-generated method stub
-		
+	public void resetDisparo() {
+		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_lanzaGuisantes"));
 	}
 
 }
