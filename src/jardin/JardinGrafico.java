@@ -17,6 +17,7 @@ public class JardinGrafico {
 	private LinkedList<JLabel> entes;
 	
 	public JardinGrafico(GUI gui) {
+		entes = new LinkedList<JLabel>();
 		this.gui = gui;
 		config = new Properties();
 		try {
@@ -28,7 +29,8 @@ public class JardinGrafico {
 		}
 		panelGrafico = new JPanel(null);
 		panelGrafico.setBounds(10, 10, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));
-		entes = new LinkedList<JLabel>();
+		panelGrafico.setOpaque(false);
+		panelGrafico.setLayout(null);
 		gui.addJPanel(panelGrafico);
 	}
 	

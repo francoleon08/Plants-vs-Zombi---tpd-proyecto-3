@@ -7,11 +7,12 @@ import ente.plantas.Planta;
 import ente.proyectiles.Proyectil;
 import ente.zombi.Zombi;
 import gui.GUI;
+import logica.Logica;
 import nivel.Nivel;
 import timer.*;
 
 public class Jardin {
-
+	private Logica logica;
 	private LinkedList<Planta> plantasDisponibles;
 	private LinkedList<Zombi> zombisActivos;
 	private LinkedList<Planta> plantasActivas;
@@ -24,7 +25,8 @@ public class Jardin {
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
 	
-	public Jardin(GUI gui,String modoJuego) {
+	public Jardin(Logica logica, GUI gui, String modoJuego) {
+		this.logica = logica;
 		nivelActual = 1;
 		this.modoJuego = modoJuego;
 		zombisActivos = new LinkedList<Zombi>();
@@ -64,11 +66,14 @@ public class Jardin {
 			if(zombisActivos.size() == 0) {
 				//cambio de nivel
 			}
-			//espero a matar todos los zombis
+			else {
+				if(checkGameOver())
+					logica.gameOver();
+			}
 		}
 			
 	}
-	
+
 	public boolean addProyectil(Proyectil p) {
 		boolean agrego=false;
 		if(p != null) {
@@ -147,5 +152,14 @@ public class Jardin {
 	
 	public Iterable<Proyectil> getProyectiles() {
 		return proyectilesActivos;
+	}
+	
+	private boolean checkGameOver() {
+		int cont = 0;
+		for(Zombi z : getZombis()) {
+			if(z.getLocation().getX() <= 10)
+				cont++;
+		}
+		return cont == zombisActivos.size();
 	}
 }
