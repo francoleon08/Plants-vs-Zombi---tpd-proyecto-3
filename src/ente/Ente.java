@@ -5,14 +5,13 @@ import java.awt.Rectangle;
 import ente.zombi.visitor.Visitor;
 
 public abstract class Ente extends Rectangle {
-	protected Point position;
 	
 	public Point getPosition() {
-		return position;
+		return this.getLocation();
 	}
 
 	public void setPosition(Point position) {
-		this.position = position;
+		this.setLocation(position);
 	}
 	
 	public abstract void accept(Visitor v);
