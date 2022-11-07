@@ -20,4 +20,8 @@ public abstract class Ente extends Rectangle {
 	public abstract void accept(Visitor v);
 	
 	public abstract void actualizar();
+	
+	public EnteGrafico getEnteGrafico() {
+		return grafico;
+	}
 }
