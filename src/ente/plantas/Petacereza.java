@@ -1,15 +1,21 @@
 package ente.plantas;
 
+import java.awt.Point;
+
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class Petacereza extends Planta {
 	
-	public Petacereza() {
+	public Petacereza(Point position) {
 		this.salud = 90;
 		this.precio = 150;
 		this.cooldownAccion = 7;
 		this.cooldownCompra = 5;
+		
+		this.setLocation(position);
+		this.width = 50; //tamanio de la hitbox
+		this.height = 70;
 	}
 
 	@Override

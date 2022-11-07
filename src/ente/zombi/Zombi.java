@@ -11,6 +11,7 @@ import ente.zombi.visitor.Visitor;
 public class Zombi extends Ente implements Visitor {
 	private int salud;
 	private int danio;
+	private int velocidad;
 	private boolean abanderado;
 	private boolean caracono;
 	private boolean lector;
@@ -20,6 +21,7 @@ public class Zombi extends Ente implements Visitor {
 	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position,String skin) {
 		this.salud = salud;
 		this.danio = danio;
+		this.velocidad = 1;
 		this.abanderado = abanderado;
 		this.caracono = caracono;
 		this.lector = lector;
@@ -81,10 +83,12 @@ public class Zombi extends Ente implements Visitor {
 	}
 
 	public void actualizar() {
-		this.getPosition().translate(-1, 0);
+		if(run) {			
+			this.getPosition().translate(-velocidad, 0);
+			this.grafico.update();
+		}			
 	}
 	
-	@Override
 	public void visitLanzaGuisantes(LanzaGuisantes p) {
 		this.run = false;
 		if(p.disminuirSalud(this.danio)) {
@@ -101,9 +105,7 @@ public class Zombi extends Ente implements Visitor {
 
 	public void visitPetaCereza(Petacereza p) {
 		this.run = false;
-		if(p.disminuirSalud(this.danio)) {
-			this.run = true;
-		}
+		this.salud = 0;
 	}
 
 	public void visitSetaDesporada(SetaDesporada p) {
@@ -128,12 +130,18 @@ public class Zombi extends Ente implements Visitor {
 	}
 
 	@Override
-	public void visitProyectil(Proyectil p) {
+	public void visitProyectil(Proyectil p) {		
 		this.salud -= p.getDanio();
+		lectorPeriodico();
 	}
 
 	@Override
 	public void accept(Visitor v) {
 		// TODO Auto-generated method stub		
+	}
+	
+	private void lectorPeriodico() {
+		if(lector && salud <= 40 && velocidad == 1)
+			velocidad *=5;
 	}
 }
