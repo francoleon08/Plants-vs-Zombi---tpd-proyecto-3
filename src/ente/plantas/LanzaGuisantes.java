@@ -42,4 +42,8 @@ public class LanzaGuisantes extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_lanzaGuisantes"));
 	}
 
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_lanzaGuizantes");
+	}
+
 }

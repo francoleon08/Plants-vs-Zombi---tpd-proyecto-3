@@ -7,8 +7,7 @@ public abstract class Planta extends Ente {
 	protected int salud;
 	protected int precio;
 	protected int cooldownAccion;
-	protected int cooldownCompra;
-	
+	protected int cooldownCompra;	
 	public boolean disminuirSalud(int danio) {
 		salud -= danio;
 		return salud <= 0;
@@ -29,7 +28,7 @@ public abstract class Planta extends Ente {
 	public void actualizar() {
 		this.cooldownAccion--;
 	}
-	
+	public abstract String getSkinBoton();
 	public abstract Proyectil disparar();
 	
 	public abstract void resetDisparo();

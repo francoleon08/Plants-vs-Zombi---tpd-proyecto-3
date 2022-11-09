@@ -42,4 +42,8 @@ public class Petacereza extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_petaCereza"));
 	}
 
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_petaCereza");
+	}
+
 }
