@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
 
-import ente.plantas.Girasol;
+import Sonido.SClip;
 import ente.plantas.LanzaGuisantes;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
@@ -31,8 +31,10 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
+	private SClip sonidoZombi;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
+		sonidoZombi = new SClip("assets/sonidos/hit.wav");
 		this.logica = logica;
 		nivelActual = 1;
 		this.modoJuego = modoJuego;
@@ -62,6 +64,14 @@ public class Jardin {
 		jardinGrafico.setEnte(insert.getEnteGrafico());
 		plantasActivas.add(insert);
 		
+		LanzaGuisantes insert2 = new LanzaGuisantes(new Point(300,200), configPlanta);
+		jardinGrafico.setEnte(insert2.getEnteGrafico());
+		plantasActivas.add(insert2);
+		
+		LanzaGuisantes insert3 = new LanzaGuisantes(new Point(0,400), configPlanta);
+		jardinGrafico.setEnte(insert3.getEnteGrafico());
+		plantasActivas.add(insert3);
+		
 		timerZombis.start();
 		timerPlantas.start();
 		timerProyectiles.start();
@@ -82,7 +92,7 @@ public class Jardin {
 			jardinGrafico.setEnte(z.getEnteGrafico());
 			zombisActivos.add(z);
 		}
-		else {/*
+		else {
 			if(zombisActivos.size() == 0) {
 
 			}
@@ -91,7 +101,7 @@ public class Jardin {
 					stopTimers();
 					logica.gameOver();
 				}					
-			}*/
+			}
 		}
 			
 	}
@@ -154,11 +164,16 @@ public class Jardin {
 			}
 		}
 		for(Proyectil p : proyectilesActivos) {
-			if(p.getY() == fila && z.intersects(p)) {
-				p.accept(z);	
-				removeProyectiles(p);
-				if(!z.estaVivo()) {
-					removeZombi(z);
+			if(p.getLocation().getX() > 1000)
+				proyectilesActivos.remove(p);
+			else {
+				if(p.getY() == fila && z.intersects(p)) {
+					sonidoZombi.play();
+					p.accept(z);	
+					removeProyectiles(p);
+					if(!z.estaVivo()) {
+						removeZombi(z);
+					}
 				}
 			}
 		}		
@@ -177,18 +192,20 @@ public class Jardin {
 	}
 	
 	private boolean checkGameOver() {
-		int cont = 0;
+		boolean estado = false;
 		for(Zombi z : getZombis()) {
-			if(z.getLocation().getX() <= 10)
-				cont++;
+			if(z.getLocation().getX() <= 10) {
+				estado = true;
+				break;
+			}
 		}
-		return cont == zombisActivos.size();
+		return estado;
 	}
 	
 	private void stopTimers() {
 		timerPlantas.detener();
 		timerProyectiles.detener();
-		timerZombis.detener();
+		timerZombis.detener();		
 	}
 	
 	public int interaccionMoneda(Point pos) {
@@ -206,6 +223,5 @@ public class Jardin {
 			}
 		}
 		return valor;
-	}
-	
+	}	
 }
