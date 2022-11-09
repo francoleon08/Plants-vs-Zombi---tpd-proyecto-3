@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
 
-import Sonido.SClip;
 import ente.plantas.LanzaGuisantes;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
@@ -31,10 +30,8 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
-	private SClip sonidoZombi;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
-		sonidoZombi = new SClip("assets/sonidos/hit.wav");
 		this.logica = logica;
 		nivelActual = 1;
 		this.modoJuego = modoJuego;
@@ -50,8 +47,7 @@ public class Jardin {
 		timerProyectiles = new TimerProyectil(this);
 	}
 	
-	public void iniciarJuego() {
-		
+	public void iniciarJuego() {		
 		Properties configPlanta = new Properties();
 		try {
 			configPlanta.load(new FileInputStream("assets\\configuracion\\config_plantas.properties"));
@@ -71,11 +67,10 @@ public class Jardin {
 		LanzaGuisantes insert3 = new LanzaGuisantes(new Point(0,400), configPlanta);
 		jardinGrafico.setEnte(insert3.getEnteGrafico());
 		plantasActivas.add(insert3);
-		
-		
+			
 		timerZombis.start();
-		timerPlantas.start();
-		timerProyectiles.start();
+		//timerPlantas.start();
+		//timerProyectiles.start();
 	}
 	
 	public void insertPlanta(int idex, Point position) {
@@ -93,7 +88,7 @@ public class Jardin {
 			jardinGrafico.setEnte(z.getEnteGrafico());
 			zombisActivos.add(z);
 		}
-		else {
+		else {/*
 			if(zombisActivos.size() == 0) {
 
 			}
@@ -102,7 +97,7 @@ public class Jardin {
 					stopTimers();
 					logica.gameOver();
 				}					
-			}
+			}*/
 		}
 			
 	}
@@ -140,7 +135,7 @@ public class Jardin {
 	public boolean removeProyectiles(Proyectil p) {
 		boolean removio=false;
 		if(p != null) {
-			proyectilesActivos.remove(p);
+			plantasActivas.remove(p);
 			jardinGrafico.removeEnte(p.getEnteGrafico());
 			removio=true;
 		}
@@ -158,23 +153,18 @@ public class Jardin {
 	public void colision(Zombi z) {
 		double fila = z.getY();
 		for(Planta p : plantasActivas) {
-			if(p.getY() == fila && z.intersects(p)) {				
+			if(p.getY() == fila && z.intersects(p)) {
 				p.accept(z);		
 				if(!p.estaViva())
 					removePlanta(p);
 			}
 		}
 		for(Proyectil p : proyectilesActivos) {
-			if(p.getLocation().getX() > 1000)
-				proyectilesActivos.remove(p);
-			else {
-				if(p.getY() == fila && z.intersects(p)) {
-					sonidoZombi.play();
-					p.accept(z);	
-					removeProyectiles(p);
-					if(!z.estaVivo()) {
-						removeZombi(z);
-					}
+			if(p.getY() == fila && z.intersects(p)) {
+				p.accept(z);	
+				removeProyectiles(p);
+				if(!z.estaVivo()) {
+					removeZombi(z);
 				}
 			}
 		}		
@@ -193,20 +183,18 @@ public class Jardin {
 	}
 	
 	private boolean checkGameOver() {
-		boolean estado = false;
+		int cont = 0;
 		for(Zombi z : getZombis()) {
-			if(z.getLocation().getX() <= 10) {
-				estado = true;
-				break;
-			}
+			if(z.getLocation().getX() <= 10)
+				cont++;
 		}
-		return estado;
+		return cont == zombisActivos.size();
 	}
 	
 	private void stopTimers() {
 		timerPlantas.detener();
 		timerProyectiles.detener();
-		timerZombis.detener();		
+		timerZombis.detener();
 	}
 	
 	public int interaccionMoneda(Point pos) {
@@ -224,5 +212,6 @@ public class Jardin {
 			}
 		}
 		return valor;
-	}	
+	}
+	
 }
