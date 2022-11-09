@@ -45,4 +45,9 @@ public class Humoseta extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_humoseta"));
 	}
 
+	@Override
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_humoseta");
+	}
+
 }

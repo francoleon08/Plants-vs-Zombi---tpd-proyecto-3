@@ -45,4 +45,8 @@ public class SetaSolar extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaSolar"));
 	}
 
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_setaSolar");
+	}
+
 }
