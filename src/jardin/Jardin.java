@@ -67,8 +67,10 @@ public class Jardin {
 				//cambio de nivel
 			}
 			else {
-				if(checkGameOver())
+				if(checkGameOver()) {
+					stopTimers();
 					logica.gameOver();
+				}					
 			}
 		}
 			
@@ -161,5 +163,11 @@ public class Jardin {
 				cont++;
 		}
 		return cont == zombisActivos.size();
+	}
+	
+	private void stopTimers() {
+		timerPlantas.detener();
+		timerProyectiles.detener();
+		timerZombis.detener();
 	}
 }

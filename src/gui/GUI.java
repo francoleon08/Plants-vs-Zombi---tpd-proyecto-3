@@ -15,11 +15,14 @@ public class GUI extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
-		setVisible(true);
 	}
 	
 	public void addJPanel(JPanel panel) {
 		panelGrafico = panel;
 		getContentPane().add(panelGrafico);
+	}
+	
+	public void setVisible() {
+		this.setVisible(true);
 	}
 }
