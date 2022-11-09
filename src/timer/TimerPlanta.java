@@ -14,16 +14,19 @@ public class TimerPlanta extends Thread {
 	
 	public void run() {
 		while(control) {
-			System.out.println("");
-			for(Planta p : jardin.getPlantas()) {
-				p.actualizar();
-				if(p.puedeDisparar()) {
-					jardin.addProyectil(p.disparar());
-					p.resetDisparo();
+			
+			try {
+				for(Planta p : jardin.getPlantas()) {
+					p.actualizar();
+					if(p.puedeDisparar()) {
+						jardin.addProyectil(p.disparar());
+						p.resetDisparo();
+					}
 				}
+			}catch(Exception e) {
 			}
 			try {
-				Thread.sleep(100);			
+				Thread.sleep(1000);			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

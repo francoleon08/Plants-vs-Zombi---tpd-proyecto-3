@@ -41,7 +41,7 @@ public abstract class Proyectil extends Ente {
 	 */
 	public void actualizar() {
 		Point aux = new Point();
-		aux.setLocation(this.getLocation().getX(), this.getLocation().getY()+1);
+		aux.setLocation(this.getLocation().getX()+1, this.getLocation().getY());
 		this.setLocation(aux);
 		this.grafico.update(this.getLocation());
 	} 

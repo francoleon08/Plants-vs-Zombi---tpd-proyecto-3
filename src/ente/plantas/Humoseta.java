@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
+import ente.proyectiles.Espora;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
@@ -18,14 +19,16 @@ public class Humoseta extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_humoseta"));
 		this.height = Integer.parseInt(config.getProperty("alto_humoseta"));
-		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_humoseta"));
+		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_humoseta"));
 	}
 
 	@Override
 	public Proyectil disparar() {
 		Proyectil disparo =  null;
+		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			//
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			disparo = new Espora(aux, this.config);
 		}
 		return disparo;
 	}

@@ -9,7 +9,7 @@ public interface Visitor {
 	
 	public void visitGirasol(Girasol p);
 	
-	public void visitPetaCereza(Petacereza p);
+	public void visitPetaCereza(Jalapeno p);
 	
 	public void visitSetaDesporada(SetaDesporada p);
 	

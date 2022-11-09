@@ -19,15 +19,15 @@ public class Girasol extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_girasol"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_girasol"));
 		this.height = Integer.parseInt(config.getProperty("alto_girasol"));
-		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_girasol"));
+		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_girasol"));
 	}
 
 	@Override
 	public Proyectil disparar() {
 		Proyectil disparo =  null;
-		Point aux = null;
+		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+100, this.getLocation().getY());
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
 			disparo = new Moneda(aux, this.config);
 		}
 		return disparo;

@@ -14,7 +14,7 @@ public abstract class Planta extends Ente {
 	}
 	
 	public boolean estaViva() {
-		return salud >= 0;
+		return salud > 0;
 	}
 	
 	public boolean puedeComprar() {

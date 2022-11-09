@@ -3,7 +3,6 @@ package jardin;
 import java.awt.Point;
 import java.util.LinkedList;
 
-import Sonido.SClip;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -26,7 +25,6 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
-	private SClip sonidoZombi;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
 		this.logica = logica;
@@ -42,7 +40,6 @@ public class Jardin {
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
 		timerProyectiles = new TimerProyectil(this);
-		sonidoZombi= new SClip("assets\\sonidos\\hit2.wav");
 	}
 	
 	public void iniciarJuego() {
@@ -139,7 +136,6 @@ public class Jardin {
 		}
 		for(Proyectil p : proyectilesActivos) {
 			if(p.getY() == fila && z.intersects(p)) {
-				sonidoZombi.play();
 				p.accept(z);	
 				removeProyectiles(p);
 				if(!z.estaVivo()) {

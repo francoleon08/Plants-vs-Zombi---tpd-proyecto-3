@@ -1,6 +1,10 @@
 package timer;
 
+import java.util.Collections;
+import java.util.List;
+
 import ente.proyectiles.Proyectil;
+import ente.zombi.Zombi;
 import jardin.Jardin;
 
 public class TimerProyectil extends Thread {
@@ -13,13 +17,15 @@ public class TimerProyectil extends Thread {
 	}
 	
 	public void run() {
-		System.out.println("");
-		while(control) {
-			for(Proyectil p : jardin.getProyectiles()) {
-				p.actualizar();
+		while(control) {					
+			try {
+				for(Proyectil p : jardin.getProyectiles()) {
+					p.actualizar();
+				}
+			}catch(Exception e) {
 			}
 			try {
-				Thread.sleep(100);			
+				Thread.sleep(5);			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
