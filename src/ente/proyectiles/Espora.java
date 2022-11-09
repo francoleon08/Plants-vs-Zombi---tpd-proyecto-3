@@ -26,7 +26,7 @@ public class Espora extends Proyectil {
 		this.width = Integer.parseInt(config.getProperty("ancho_espora"));
 		this.height = Integer.parseInt(config.getProperty("alto_espora"));
 		this.danio = Integer.parseInt(config.getProperty("danio_espora"));
-		this.velocidad = Integer.parseInt(config.getProperty("velocidad_espora"));
+		this.velocidad = Integer.parseInt(config.getProperty("valocidad_espora"));
 		this.distancia = Integer.parseInt(config.getProperty("distancia_espora"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_espora"));
 	}

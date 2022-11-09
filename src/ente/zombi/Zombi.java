@@ -97,7 +97,7 @@ public class Zombi extends Ente implements Visitor {
 		}
 	}
 
-	public void visitPetaCereza(Petacereza p) {
+	public void visitPetaCereza(Jalapeno p) {
 		this.run = false;
 		this.salud = 0;
 	}

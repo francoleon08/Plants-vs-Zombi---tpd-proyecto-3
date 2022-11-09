@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 import ente.plantas.Girasol;
+import ente.plantas.LanzaGuisantes;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -57,7 +58,7 @@ public class Jardin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-		Girasol insert = new Girasol(new Point(100,100), configPlanta);
+		LanzaGuisantes insert = new LanzaGuisantes(new Point(100,100), configPlanta);
 		jardinGrafico.setEnte(insert.getEnteGrafico());
 		plantasActivas.add(insert);
 		
@@ -128,7 +129,7 @@ public class Jardin {
 	public boolean removeProyectiles(Proyectil p) {
 		boolean removio=false;
 		if(p != null) {
-			plantasActivas.remove(p);
+			proyectilesActivos.remove(p);
 			jardinGrafico.removeEnte(p.getEnteGrafico());
 			removio=true;
 		}

@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
-import ente.proyectiles.Guizante;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
@@ -28,8 +27,8 @@ public class Girasol extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()-10);
-			disparo = new Guizante(aux, this.config);
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			disparo = new Moneda(aux, this.config);
 		}
 		return disparo;
 	}

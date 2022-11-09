@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
+import ente.proyectiles.Espora;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
@@ -24,8 +25,10 @@ public class SetaDesporada extends Planta {
 	@Override
 	public Proyectil disparar() {
 		Proyectil disparo =  null;
+		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			//
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			disparo = new Espora(aux, this.config);
 		}
 		return disparo;
 	}

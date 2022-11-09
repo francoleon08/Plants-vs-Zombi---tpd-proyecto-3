@@ -26,6 +26,6 @@ public class Guizante extends Proyectil {
 
 	@Override
 	public void accept(Visitor v) {
-		
+		v.visitProyectil(this);
 	}
 }

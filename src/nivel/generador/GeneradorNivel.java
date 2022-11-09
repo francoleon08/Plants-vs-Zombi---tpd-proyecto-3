@@ -72,10 +72,10 @@ public class GeneradorNivel {
 					i=i+6;
 				}break;
 			
-				case'P':{
+				case'J':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
 					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
-					Planta p = new Petacereza(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
+					Planta p = new Jalapeno(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
 				}break;
