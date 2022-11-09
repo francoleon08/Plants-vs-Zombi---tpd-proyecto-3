@@ -26,6 +26,11 @@ public class TimerZombi extends Thread {
 				jardin.generarZombi();
 				cooldownSpawn = 10;
 			}
+			try {
+				Thread.sleep(100);			
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

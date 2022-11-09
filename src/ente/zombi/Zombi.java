@@ -71,11 +71,13 @@ public class Zombi extends Ente implements Visitor {
 	}
 
 	public void actualizar() {
+		Point aux = new Point();
+		aux.setLocation(this.getLocation().getX()-velocidad, this.getLocation().getY());	
 		if(run) {			
-			this.getPosition().translate(-velocidad, 0);
+			this.setLocation(aux);
 			this.grafico.update(this.getLocation());
 			if((int) this.getLocation().getX() <= 10)
-				run = false;
+				run = false;			
 		}			
 	}
 	

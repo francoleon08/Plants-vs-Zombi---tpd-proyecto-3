@@ -32,7 +32,7 @@ public class Jardin {
 		zombisActivos = new LinkedList<Zombi>();
 		plantasActivas = new LinkedList<Planta>();
 		proyectilesActivos = new LinkedList<Proyectil>();		
-		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego);		
+		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego+".txt");		
 		plantasDisponibles = nivel.getPlantasDisponibles();
 		jardinGrafico = new JardinGrafico(gui);
 		
@@ -43,8 +43,8 @@ public class Jardin {
 	
 	public void iniciarJuego() {
 		timerZombis.start();
-		timerPlantas.start();
-		timerProyectiles.start();
+		//timerPlantas.start();
+		//timerProyectiles.start();
 	}
 	
 	public void insertPlanta(int idex, Point position) {
@@ -62,16 +62,16 @@ public class Jardin {
 			jardinGrafico.setEnte(z.getEnteGrafico().getSkin());
 			zombisActivos.add(z);
 		}
-		else {
+		else {/*
 			if(zombisActivos.size() == 0) {
-				//cambio de nivel
+
 			}
 			else {
 				if(checkGameOver()) {
 					stopTimers();
 					logica.gameOver();
 				}					
-			}
+			}*/
 		}
 			
 	}

@@ -13,6 +13,7 @@ public class Logica {
 		gui = new GUI();
 		gui.setVisible();
 		jardin = new Jardin(this, gui, "dia");
+		jardin.iniciarJuego();
 	}
 	
 	public void setModoJuego(String modoJuego) {

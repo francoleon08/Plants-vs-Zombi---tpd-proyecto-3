@@ -18,6 +18,11 @@ public class TimerProyectil extends Thread {
 			for(Proyectil p : jardin.getProyectiles()) {
 				p.actualizar();
 			}
+			try {
+				Thread.sleep(100);			
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
