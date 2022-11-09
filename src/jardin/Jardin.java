@@ -132,7 +132,6 @@ public class Jardin {
 		double fila = z.getY();
 		for(Planta p : plantasActivas) {
 			if(p.getY() == fila && z.intersects(p)) {
-				sonidoZombi.play();
 				p.accept(z);		
 				if(!p.estaViva())
 					removePlanta(p);
@@ -140,6 +139,7 @@ public class Jardin {
 		}
 		for(Proyectil p : proyectilesActivos) {
 			if(p.getY() == fila && z.intersects(p)) {
+				sonidoZombi.play();
 				p.accept(z);	
 				removeProyectiles(p);
 				if(!z.estaVivo()) {
