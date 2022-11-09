@@ -39,6 +39,7 @@ public class GUI extends JFrame {
 		setSize(new Dimension(1000, 719));
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setUndecorated(true);
 		getContentPane().setLayout(null);
 		
 		botoneraPlantas = new JPanel();
@@ -62,9 +63,6 @@ public class GUI extends JFrame {
 		
 		
 		//jardin=new JardinGrafico();
-		
-		setVisible(true);
-		
 	}
 	private ImageIcon imagenEscalada(String ruta, int ancho, int largo) {
 		ImageIcon img=new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(ancho,largo, Image.SCALE_SMOOTH));
@@ -73,5 +71,9 @@ public class GUI extends JFrame {
 	public void addJPanel(JPanel panel) {
 		panelGrafico = panel;
 		getContentPane().add(panelGrafico);
+	}
+	
+	public void setVisible() {
+		this.setVisible(true);
 	}
 }

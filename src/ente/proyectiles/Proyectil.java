@@ -1,5 +1,7 @@
 package ente.proyectiles;
 
+import java.awt.Point;
+
 import ente.Ente;
 
 /**
@@ -38,7 +40,9 @@ public abstract class Proyectil extends Ente {
 	 * Suma 1 a su posicion en x.
 	 */
 	public void actualizar() {
-		this.getPosition().translate(1, 0);
+		Point aux = new Point();
+		aux.setLocation(this.getLocation().getX(), this.getLocation().getY()+1);
+		this.setLocation(aux);
 		this.grafico.update(this.getLocation());
 	} 
 }

@@ -1,5 +1,6 @@
 package jardin;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,6 +34,7 @@ public class JardinGrafico extends JPanel  {
 		panelGrafico.setBounds(10, 10, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));
 		panelGrafico.setOpaque(false);
 		panelGrafico.setLayout(null);
+		panelGrafico.setBackground(new Color(100,100,100));
 		gui.addJPanel(panelGrafico);
 	}
 	
