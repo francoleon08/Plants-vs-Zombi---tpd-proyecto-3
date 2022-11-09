@@ -116,6 +116,13 @@ public class Jardin {
 		return removio;
 	}
 	
+
+	public void crearPlanta(int pos,Point p) {
+		Planta planta=plantasDisponibles.get(pos).clone();
+		planta.setPosition(p);
+		plantasActivas.add(planta);
+	}
+	
 	public void cambiarModoJuego(String modoJuego) {
 		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
 		plantasDisponibles = nivel.getPlantasDisponibles();
@@ -170,4 +177,6 @@ public class Jardin {
 		timerProyectiles.detener();
 		timerZombis.detener();
 	}
+	
+	
 }
