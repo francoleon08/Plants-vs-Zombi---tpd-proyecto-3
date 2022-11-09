@@ -45,4 +45,9 @@ public class Girasol extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_girasol"));
 	}
 
+	@Override
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_Girasol");
+	}
+
 }
