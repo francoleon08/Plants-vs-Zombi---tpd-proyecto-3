@@ -1,5 +1,6 @@
 package jardin;
 
+import java.awt.Point;
 import java.util.LinkedList;
 
 import ente.plantas.Planta;
@@ -76,5 +77,11 @@ public class Jardin {
 			removio=true;
 		}
 		return removio;
+	}
+	
+	public void crearPlanta(int pos,Point p) {
+		Planta planta=plantasDisponibles.get(pos).clone();
+		planta.setPosition(p);
+		plantasActivas.add(planta);
 	}
 }
