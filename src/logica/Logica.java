@@ -13,9 +13,9 @@ public class Logica {
 	public Logica() {
 		dinero = 0;
 		gui = new GUI();
-		gui.setVisible();
 		jardin = new Jardin(this, gui, "dia");
 		jardin.iniciarJuego();
+		gui.setVisible();
 	}
 	
 	public void interactuarMoneda(Point p) {
