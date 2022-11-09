@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 
 import ente.plantas.Planta;
+import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
 import ente.zombi.Zombi;
 import gui.GUI;
@@ -116,13 +117,6 @@ public class Jardin {
 		return removio;
 	}
 	
-
-	public void crearPlanta(int pos,Point p) {
-		Planta planta=plantasDisponibles.get(pos).clone();
-		planta.setPosition(p);
-		plantasActivas.add(planta);
-	}
-	
 	public void cambiarModoJuego(String modoJuego) {
 		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
 		plantasDisponibles = nivel.getPlantasDisponibles();
@@ -178,5 +172,22 @@ public class Jardin {
 		timerZombis.detener();
 	}
 	
+	public int interaccionMoneda(Point pos) {
+		int valor = 0;
+		Moneda aux = null;
+		for(Proyectil p : proyectilesActivos) {
+			if(p.contains(pos)) {
+				proyectilesActivos.remove(p);
+				jardinGrafico.removeEnte(p.getEnteGrafico());
+				aux = (Moneda) p;
+				try {
+					valor += aux.getValor();
+				}
+				catch (Exception e) {}
+				break;
+			}
+		}
+		return valor;
+	}
 	
 }
