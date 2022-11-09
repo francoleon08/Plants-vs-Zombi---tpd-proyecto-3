@@ -27,7 +27,7 @@ public class TimerZombi extends Thread {
 				cooldownSpawn = 100;
 			}
 			try {
-				Thread.sleep(50);			
+				Thread.sleep(10);			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

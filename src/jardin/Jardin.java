@@ -1,8 +1,13 @@
 package jardin;
 
 import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Properties;
 
+import ente.plantas.Girasol;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -43,9 +48,22 @@ public class Jardin {
 	}
 	
 	public void iniciarJuego() {
+		
+		Properties configPlanta = new Properties();
+		try {
+			configPlanta.load(new FileInputStream("assets\\configuracion\\config_plantas.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		Girasol insert = new Girasol(new Point(100,100), configPlanta);
+		jardinGrafico.setEnte(insert.getEnteGrafico());
+		plantasActivas.add(insert);
+		
 		timerZombis.start();
-		//timerPlantas.start();
-		//timerProyectiles.start();
+		timerPlantas.start();
+		timerProyectiles.start();
 	}
 	
 	public void insertPlanta(int idex, Point position) {
@@ -128,7 +146,7 @@ public class Jardin {
 	public void colision(Zombi z) {
 		double fila = z.getY();
 		for(Planta p : plantasActivas) {
-			if(p.getY() == fila && z.intersects(p)) {
+			if(p.getY() == fila && z.intersects(p)) {				
 				p.accept(z);		
 				if(!p.estaViva())
 					removePlanta(p);

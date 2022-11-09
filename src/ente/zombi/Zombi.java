@@ -20,7 +20,7 @@ public class Zombi extends Ente implements Visitor {
 	
 	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position, String skin) {
 		this.salud = salud;
-		this.danio = danio;
+		this.danio = 1;
 		this.velocidad = 1;
 		this.abanderado = abanderado;
 		this.caracono = caracono;
@@ -90,7 +90,7 @@ public class Zombi extends Ente implements Visitor {
 		}
 	}
 
-	public void visitGirasol(Girasol p) {
+	public void visitGirasol(Girasol p) {		
 		this.run = false;
 		if(p.disminuirSalud(this.danio)) {
 			this.run = true;

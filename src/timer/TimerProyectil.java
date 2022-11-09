@@ -19,7 +19,7 @@ public class TimerProyectil extends Thread {
 				p.actualizar();
 			}
 			try {
-				Thread.sleep(100);			
+				Thread.sleep(5);			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

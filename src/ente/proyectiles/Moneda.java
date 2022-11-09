@@ -16,9 +16,9 @@ public class Moneda extends Proyectil {
 		this.setLocation(position);
 		this.cooldown = Integer.parseInt(config.getProperty("cooldown_moneda"));
 		this.width = Integer.parseInt(config.getProperty("ancho_moneda"));
-		this.height = Integer.parseInt(config.getProperty("alto_emoneda"));
+		this.height = Integer.parseInt(config.getProperty("alto_moneda"));
 		this.danio = Integer.parseInt(config.getProperty("danio_moneda"));
-		this.velocidad = Integer.parseInt(config.getProperty("velocidad_moneda"));
+		this.velocidad = Integer.parseInt(config.getProperty("valocidad_moneda"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_moneda"));
 	}
 	
