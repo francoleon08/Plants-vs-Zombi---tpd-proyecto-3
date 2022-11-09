@@ -2,6 +2,7 @@ package jardin;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
@@ -10,7 +11,7 @@ import javax.swing.JPanel;
 
 import gui.GUI;
 
-public class JardinGrafico {
+public class JardinGrafico extends JPanel  {
 	private GUI gui;
 	private JPanel panelGrafico;
 	private Properties config;
@@ -21,7 +22,8 @@ public class JardinGrafico {
 		this.gui = gui;
 		config = new Properties();
 		try {
-			config.load(new FileInputStream("assets/configuracion/panelGrafico.properties"));
+			FileReader reader=new FileReader("assets/configuracion/panelGrafico.properties");
+			config.load(reader);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
