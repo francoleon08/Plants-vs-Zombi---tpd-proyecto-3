@@ -1,5 +1,6 @@
 package ente.grafico;
 
+import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
@@ -11,7 +12,8 @@ public class EnteGrafico {
 	
 	public EnteGrafico(Point position, int width, int heigth, String skin) {
 		this.position = position;
-		this.skin = new JLabel(new ImageIcon(skin));
+		ImageIcon img2=new ImageIcon(new ImageIcon(skin).getImage().getScaledInstance(width, heigth, Image.SCALE_SMOOTH));
+		this.skin = new JLabel(img2);
 		this.skin.setBounds((int) this.position.getX(), (int) this.position.getY(), width, heigth);
 	}
 	
@@ -23,7 +25,7 @@ public class EnteGrafico {
 		this.skin.setIcon(new ImageIcon(skin));
 	}
 	
-	public void update() {
-		
+	public void update(Point position) {
+		skin.setLocation(position);
 	}
 }

@@ -18,7 +18,7 @@ public class Zombi extends Ente implements Visitor {
 	private boolean portero;
 	private boolean run;
 	
-	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position,String skin) {
+	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position, String skin) {
 		this.salud = salud;
 		this.danio = danio;
 		this.velocidad = 1;
@@ -33,21 +33,9 @@ public class Zombi extends Ente implements Visitor {
 		
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, skin);		
 	}
-
-	public int getSalud() {
-		return salud;
-	}
-
-	public void setSalud(int salud) {
-		this.salud = salud;
-	}
-
-	public int getDanio() {
-		return danio;
-	}
-
-	public void setDanio(int danio) {
-		this.danio = danio;
+	
+	public boolean estaVivo() {
+		return salud > 0;
 	}
 
 	public boolean isAbanderado() {
@@ -85,7 +73,9 @@ public class Zombi extends Ente implements Visitor {
 	public void actualizar() {
 		if(run) {			
 			this.getPosition().translate(-velocidad, 0);
-			this.grafico.update();
+			this.grafico.update(this.getLocation());
+			if((int) this.getLocation().getX() <= 10)
+				run = false;
 		}			
 	}
 	

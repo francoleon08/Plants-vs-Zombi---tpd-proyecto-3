@@ -7,42 +7,79 @@ import ente.plantas.Planta;
 import ente.proyectiles.Proyectil;
 import ente.zombi.Zombi;
 import gui.GUI;
+import logica.Logica;
+import nivel.Nivel;
+import timer.*;
 
 public class Jardin {
-
+	private Logica logica;
 	private LinkedList<Planta> plantasDisponibles;
 	private LinkedList<Zombi> zombisActivos;
 	private LinkedList<Planta> plantasActivas;
 	private LinkedList<Proyectil> proyectilesActivos;
-	private int nivel;
+	private TimerZombi timerZombis;
+	private TimerPlanta timerPlantas;
+	private TimerProyectil timerProyectiles;
+	private int nivelActual;
+	private String modoJuego;
+	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
 	
-	public Jardin(GUI gui,String modoJuego) {
-		//genera el nivel y setea las listas
+	public Jardin(Logica logica, GUI gui, String modoJuego) {
+		this.logica = logica;
+		nivelActual = 1;
+		this.modoJuego = modoJuego;
+		zombisActivos = new LinkedList<Zombi>();
+		plantasActivas = new LinkedList<Planta>();
+		proyectilesActivos = new LinkedList<Proyectil>();		
+		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego);		
+		plantasDisponibles = nivel.getPlantasDisponibles();
+		jardinGrafico = new JardinGrafico(gui);
 		
+		timerZombis = new TimerZombi(this);
+		timerPlantas = new TimerPlanta(this);
+		timerProyectiles = new TimerProyectil(this);
 	}
 	
-	public boolean addPlanta(Planta p) {
-		boolean agrego=false;
-		if(p!=null) {
-			plantasActivas.add(p);
-			agrego=true;
+	public void iniciarJuego() {
+		timerZombis.start();
+		timerPlantas.start();
+		timerProyectiles.start();
+	}
+	
+	public void insertPlanta(int idex, Point position) {
+		Planta insert = plantasDisponibles.get(idex);
+		if(insert != null && insert.puedeComprar()) {
+			insert.setLocation(position);
+			jardinGrafico.setEnte(insert.getEnteGrafico().getSkin());
+			plantasActivas.add(insert);
 		}
-		return agrego;
 	}
 	
-	public boolean addZombi(Zombi z) {
-		boolean agrego=false;
-		if(z!=null) {
+	public void generarZombi() {
+		Zombi z = nivel.getZombi();
+		if(z != null) {
+			jardinGrafico.setEnte(z.getEnteGrafico().getSkin());
 			zombisActivos.add(z);
-			agrego=true;
 		}
-		return agrego;
+		else {
+			if(zombisActivos.size() == 0) {
+				//cambio de nivel
+			}
+			else {
+				if(checkGameOver()) {
+					stopTimers();
+					logica.gameOver();
+				}					
+			}
+		}
+			
 	}
-	
+
 	public boolean addProyectil(Proyectil p) {
 		boolean agrego=false;
-		if(p!=null) {
+		if(p != null) {
+			jardinGrafico.setEnte(p.getEnteGrafico().getSkin());
 			proyectilesActivos.add(p);
 			agrego=true;
 		}
@@ -51,9 +88,9 @@ public class Jardin {
 	
 	public boolean removeZombi(Zombi z) {
 		boolean removio=false;
-		if(z!=null) {
+		if(z != null) {
 			zombisActivos.remove(z);
-			jardinGrafico.removeEnte(z.getEnteGrafico());
+			jardinGrafico.removeEnte(z.getEnteGrafico().getSkin());
 			removio=true;
 		}
 		return removio;
@@ -61,9 +98,9 @@ public class Jardin {
 	
 	public boolean removePlanta(Planta p) {
 		boolean removio=false;
-		if(p!=null) {
+		if(p != null) {
 			plantasActivas.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico());
+			jardinGrafico.removeEnte(p.getEnteGrafico().getSkin());
 			removio=true;
 		}
 		return removio;
@@ -71,17 +108,75 @@ public class Jardin {
 	
 	public boolean removeProyectiles(Proyectil p) {
 		boolean removio=false;
-		if(p!=null) {
+		if(p != null) {
 			plantasActivas.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico());
+			jardinGrafico.removeEnte(p.getEnteGrafico().getSkin());
 			removio=true;
 		}
 		return removio;
 	}
 	
+
 	public void crearPlanta(int pos,Point p) {
 		Planta planta=plantasDisponibles.get(pos).clone();
 		planta.setPosition(p);
 		plantasActivas.add(planta);
 	}
+	
+	public void cambiarModoJuego(String modoJuego) {
+		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
+		plantasDisponibles = nivel.getPlantasDisponibles();
+		zombisActivos.clear();
+		proyectilesActivos.clear();
+		plantasActivas.clear();
+	}
+	
+	public void colision(Zombi z) {
+		double fila = z.getY();
+		for(Planta p : plantasActivas) {
+			if(p.getY() == fila && z.intersects(p)) {
+				p.accept(z);		
+				if(!p.estaViva())
+					removePlanta(p);
+			}
+		}
+		for(Proyectil p : proyectilesActivos) {
+			if(p.getY() == fila && z.intersects(p)) {
+				p.accept(z);	
+				removeProyectiles(p);
+				if(!z.estaVivo()) {
+					removeZombi(z);
+				}
+			}
+		}		
+	}
+	
+	public Iterable<Zombi> getZombis() {
+		return zombisActivos;
+	}
+	
+	public Iterable<Planta> getPlantas() {
+		return plantasActivas;
+	}
+	
+	public Iterable<Proyectil> getProyectiles() {
+		return proyectilesActivos;
+	}
+	
+	private boolean checkGameOver() {
+		int cont = 0;
+		for(Zombi z : getZombis()) {
+			if(z.getLocation().getX() <= 10)
+				cont++;
+		}
+		return cont == zombisActivos.size();
+	}
+	
+	private void stopTimers() {
+		timerPlantas.detener();
+		timerProyectiles.detener();
+		timerZombis.detener();
+	}
+	
+	
 }

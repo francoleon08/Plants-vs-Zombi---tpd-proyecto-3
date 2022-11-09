@@ -1,9 +1,12 @@
 package ente.proyectiles;
 
+
 import java.awt.Point;
+import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
 import ente.zombi.visitor.Visitor;
+
 
 /**
  * The Class Guizante.
@@ -11,17 +14,19 @@ import ente.zombi.visitor.Visitor;
 @SuppressWarnings("serial")
 public class Guizante extends Proyectil {
 	
-	public Guizante(Point punto,EnteGrafico grafico,int velocidad, int danio ) {
-		//Generear archivo de configureacion.
-		this.width=100;
-		this.height=100;
-		this.setLocation(punto);
-		this.grafico=grafico;
-		this.danio=danio;
-		this.velocidad=velocidad;
+	public Guizante(Point position, Properties p ) {
+		this.config=p;
+		this.setLocation(position);
+		this.width= Integer.parseInt(config.getProperty("ancho_guizante"));
+		this.height=Integer.parseInt(config.getProperty("alto_guizante"));
+		this.danio=Integer.parseInt(config.getProperty("danio_guizante"));
+		this.velocidad=Integer.parseInt(config.getProperty("velocidad_guizante"));
+		this.grafico=new EnteGrafico(position, this.width, this.height, config.getProperty("skin_guizante"));
 	}
-	
+
+	@Override
 	public void accept(Visitor v) {
-		v.visitProyectil(this);
+		// TODO Auto-generated method stub
+		
 	}
 }
