@@ -42,7 +42,7 @@ public class Jardin {
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
 		timerProyectiles = new TimerProyectil(this);
-		sonidoZombi= new SClip("assets\\sonidos\\hit.wav");
+		sonidoZombi= new SClip("assets\\sonidos\\hit2.wav");
 	}
 	
 	public void iniciarJuego() {
