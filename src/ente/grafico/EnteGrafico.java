@@ -1,28 +1,26 @@
 package ente.grafico;
 
-import java.awt.Image;
 import java.awt.Point;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class EnteGrafico extends JLabel {	
+public class EnteGrafico{	
+	private JLabel skin;
 	
-	public EnteGrafico(Point position, int width, int heigth, String skin) {		
-		ImageIcon img=new ImageIcon(new ImageIcon(skin).getImage().getScaledInstance(width, heigth, Image.SCALE_SMOOTH));		
-		this.setIcon(img);		
-		this.setLocation(position);
+	public EnteGrafico(Point position, int width, int heigth, String skin) {
+		this.skin = new JLabel(new ImageIcon(skin));						
+		this.skin.setBounds((int)position.getX(),(int) position.getY(), width, heigth);		
 	}
 	
 	public JLabel getSkin()	{
-		return this;
+		return skin;
 	}
 	
 	public void setSkin(String skin) {
-		this.setIcon(new ImageIcon(skin));
+		this.skin.setIcon(new ImageIcon(skin));
 	}
 	
 	public void update(Point position) {
-		this.setLocation(position);
+		skin.setLocation(position);
 	}
 }

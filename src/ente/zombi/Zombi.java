@@ -28,7 +28,7 @@ public class Zombi extends Ente implements Visitor {
 		this.portero = portero;
 		this.run = true;
 		this.setLocation(position);
-		this.width = 80; //tamanio de la hitbox
+		this.width = 100; //tamanio de la hitbox
 		this.height = 100;
 		
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, skin);		
@@ -76,8 +76,10 @@ public class Zombi extends Ente implements Visitor {
 		if(run) {			
 			this.setLocation(aux);
 			this.grafico.update(this.getLocation());
-			if((int) this.getLocation().getX() <= 10)
+			if((int) this.getLocation().getX() <= 10) {
 				run = false;			
+				//cambiar animacion
+			}
 		}			
 	}
 	

@@ -8,12 +8,18 @@ import jardin.Jardin;
 public class Logica {
 	private Jardin jardin;
 	private GUI gui;
+	private int dinero;
 	
 	public Logica() {
+		dinero = 0;
 		gui = new GUI();
-		jardin = new Jardin(this, gui, "dia");
+		jardin = new Jardin(this, gui, "dia");		
 		jardin.iniciarJuego();
 		gui.setVisible();
+	}
+	
+	public void interactuarMoneda(Point p) {
+		dinero += jardin.interaccionMoneda(p);
 	}
 	
 	public void setModoJuego(String modoJuego) {

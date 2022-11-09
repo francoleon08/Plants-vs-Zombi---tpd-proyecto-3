@@ -8,11 +8,13 @@ import ente.zombi.visitor.Visitor;
 
 public class Moneda extends Proyectil {
 	private int valor;
+	private int cooldown;
 	protected Boolean generatePlanta;
 
 	public Moneda(Point position, Properties p) {
 		this.config = p;
 		this.setLocation(position);
+		this.cooldown = Integer.parseInt(config.getProperty("cooldown_moneda"));
 		this.width = Integer.parseInt(config.getProperty("ancho_moneda"));
 		this.height = Integer.parseInt(config.getProperty("alto_emoneda"));
 		this.danio = Integer.parseInt(config.getProperty("danio_moneda"));
@@ -23,6 +25,10 @@ public class Moneda extends Proyectil {
 	public int getValor() {
 		return valor;
 	}
+	
+	public void actualizar() {
+		cooldown--;
+	} 
 	
 	public void accept(Visitor v) {
 		v.visitProyectil(this);

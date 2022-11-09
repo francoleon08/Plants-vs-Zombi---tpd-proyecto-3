@@ -12,13 +12,14 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import jardin.JardinGrafico;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-	private JPanel panelGrafico;
+	private JLayeredPane panelGrafico;
 	private Properties guiConfig;
 	//private JLabel fondoJardin;
 	private JardinGrafico jardin;
@@ -50,15 +51,15 @@ public class GUI extends JFrame {
 		getContentPane().add(botoneraPlantas);
 		
 	    //Panel_1 es jardin grafico.		
-		panel_1 = new JPanel();
-		panel_1.setBounds(22, 69, 900, 600);
-		panel_1.setOpaque(false);
-		ImageIcon img2= imagenEscalada(guiConfig.getProperty("fondo_dia"), panel_1.getWidth(), panel_1.getHeight());
-		JLabel fondoLabel=new JLabel(img2); 
-		panel_1.add(fondoLabel);
+		//panel_1 = new JPanel();
+		//panel_1.setBounds(22, 69, 900, 600);
+		//panel_1.setOpaque(false);
+		//ImageIcon img2= imagenEscalada(guiConfig.getProperty("fondo_dia"), panel_1.getWidth(), panel_1.getHeight());
+		//JLabel fondoLabel=new JLabel(""); 
+		//panel_1.add(fondoLabel);
 		
 		
-		getContentPane().add(panel_1);
+		//getContentPane().add(panel_1);
 		
 		
 		
@@ -68,9 +69,13 @@ public class GUI extends JFrame {
 		ImageIcon img=new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(ancho,largo, Image.SCALE_SMOOTH));
 		return img; 
 	}
-	public void addJPanel(JPanel panel) {
+	public void addJPanel(JLayeredPane panel) {
 		panelGrafico = panel;
 		getContentPane().add(panelGrafico);
+	}
+	
+	public void repintar() {
+		panelGrafico.repaint();
 	}
 	
 	public void setVisible() {
