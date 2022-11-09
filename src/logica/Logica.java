@@ -2,6 +2,7 @@ package logica;
 
 import java.awt.Point;
 
+import Sonido.SClip;
 import gui.GUI;
 import jardin.Jardin;
 
@@ -9,6 +10,7 @@ public class Logica {
 	private Jardin jardin;
 	private GUI gui;
 	private int dinero;
+	SClip reproductorfondo;
 	
 	public Logica() {
 		dinero = 0;
@@ -16,6 +18,8 @@ public class Logica {
 		jardin = new Jardin(this, gui, "dia");		
 		jardin.iniciarJuego();
 		gui.setVisible();
+		reproductorfondo= new SClip("assets\\sonidos\\Music1.wav");
+		reproductorfondo.loop();
 	}
 	
 	public void interactuarMoneda(Point p) {
