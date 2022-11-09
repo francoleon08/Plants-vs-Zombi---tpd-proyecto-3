@@ -35,7 +35,7 @@ public class Jardin {
 		proyectilesActivos = new LinkedList<Proyectil>();		
 		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego+".txt");		
 		plantasDisponibles = nivel.getPlantasDisponibles();
-		jardinGrafico = new JardinGrafico(gui);
+		jardinGrafico = new JardinGrafico(gui, modoJuego);
 		
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
@@ -52,7 +52,7 @@ public class Jardin {
 		Planta insert = plantasDisponibles.get(idex);
 		if(insert != null && insert.puedeComprar()) {
 			insert.setLocation(position);
-			jardinGrafico.setEnte(insert.getEnteGrafico().getSkin());
+			jardinGrafico.setEnte(insert.getEnteGrafico());
 			plantasActivas.add(insert);
 		}
 	}
@@ -60,7 +60,7 @@ public class Jardin {
 	public void generarZombi() {
 		Zombi z = nivel.getZombi();
 		if(z != null) {
-			jardinGrafico.setEnte(z.getEnteGrafico().getSkin());
+			jardinGrafico.setEnte(z.getEnteGrafico());
 			zombisActivos.add(z);
 		}
 		else {/*
@@ -80,7 +80,7 @@ public class Jardin {
 	public boolean addProyectil(Proyectil p) {
 		boolean agrego=false;
 		if(p != null) {
-			jardinGrafico.setEnte(p.getEnteGrafico().getSkin());
+			jardinGrafico.setEnte(p.getEnteGrafico());
 			proyectilesActivos.add(p);
 			agrego=true;
 		}
@@ -91,7 +91,7 @@ public class Jardin {
 		boolean removio=false;
 		if(z != null) {
 			zombisActivos.remove(z);
-			jardinGrafico.removeEnte(z.getEnteGrafico().getSkin());
+			jardinGrafico.removeEnte(z.getEnteGrafico());
 			removio=true;
 		}
 		return removio;
@@ -101,7 +101,7 @@ public class Jardin {
 		boolean removio=false;
 		if(p != null) {
 			plantasActivas.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico().getSkin());
+			jardinGrafico.removeEnte(p.getEnteGrafico());
 			removio=true;
 		}
 		return removio;
@@ -111,7 +111,7 @@ public class Jardin {
 		boolean removio=false;
 		if(p != null) {
 			plantasActivas.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico().getSkin());
+			jardinGrafico.removeEnte(p.getEnteGrafico());
 			removio=true;
 		}
 		return removio;
@@ -179,12 +179,11 @@ public class Jardin {
 			if(p.contains(pos)) {
 				proyectilesActivos.remove(p);
 				jardinGrafico.removeEnte(p.getEnteGrafico());
-				aux = (Moneda) p;
-				try {
-					valor += aux.getValor();
+				if(p.getDanio() == 0) {
+					aux = (Moneda) p;
+					valor += aux.getValor();					
+					break;
 				}
-				catch (Exception e) {}
-				break;
 			}
 		}
 		return valor;

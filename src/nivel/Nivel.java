@@ -24,7 +24,10 @@ public class Nivel {
 	}
 
 	public Zombi getZombi() {
-		return zombisDisponibles.removeFirst();
+		Zombi toReturn = null;
+		if(!zombisDisponibles.isEmpty())
+			toReturn = zombisDisponibles.removeFirst();
+		return toReturn;
 	}
 
 	public void setZombisDisponibles(LinkedList<Zombi> zombisDisponibles) {

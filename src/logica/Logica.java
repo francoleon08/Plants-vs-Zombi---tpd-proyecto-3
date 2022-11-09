@@ -13,7 +13,7 @@ public class Logica {
 	public Logica() {
 		dinero = 0;
 		gui = new GUI();
-		jardin = new Jardin(this, gui, "dia");
+		jardin = new Jardin(this, gui, "dia");		
 		jardin.iniciarJuego();
 		gui.setVisible();
 	}
