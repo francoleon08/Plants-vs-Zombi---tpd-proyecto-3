@@ -38,11 +38,15 @@ public class Jalapeno extends Planta {
 	}
 
 	public void accept(Visitor v) {
-		v.visitPetaCereza(this);
+		v.visitJalapeno(this);
 	}
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_petaCereza"));
+	}
+
+	public String getSkinBoton() {
+		return config.getProperty("skin_boton_jalapeno");
 	}
 
 }

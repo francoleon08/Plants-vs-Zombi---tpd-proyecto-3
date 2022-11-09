@@ -72,6 +72,7 @@ public class Jardin {
 		jardinGrafico.setEnte(insert3.getEnteGrafico());
 		plantasActivas.add(insert3);
 		
+		
 		timerZombis.start();
 		timerPlantas.start();
 		timerProyectiles.start();
