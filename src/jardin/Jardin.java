@@ -1,19 +1,10 @@
 package jardin;
 
 import java.awt.Point;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Properties;
-
-import Sonido.SClip;
 import animacion.Animacion;
 import ente.grafico.EnteGrafico;
-import ente.plantas.LanzaGuisantes;
 import ente.plantas.Planta;
-import ente.proyectiles.Moneda;
-import ente.proyectiles.Proyectil;
 import ente.zombi.Zombi;
 import gui.GUI;
 import gui.botonera.Botonera;
@@ -24,9 +15,6 @@ import timer.*;
 public class Jardin {
 	private Logica logica;
 	private LinkedList<Planta> plantasDisponibles;
-	private LinkedList<Zombi> zombisActivos;
-	private LinkedList<Planta> plantasActivas;
-	private LinkedList<Proyectil> proyectilesActivos;
 	private TimerZombi timerZombis;
 	private TimerPlanta timerPlantas;
 	private TimerProyectil timerProyectiles;
@@ -34,39 +22,34 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
-	private Botonera botoneraGrafica;
-	private SClip sonidoZombi;
+	private Botonera botoneraGrafica;	
+	
+	private FilaJardin[] filas;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
 		this.logica = logica;
 		nivelActual = 1;
 		this.modoJuego = modoJuego;
-		zombisActivos = new LinkedList<Zombi>();
-		plantasActivas = new LinkedList<Planta>();
-		proyectilesActivos = new LinkedList<Proyectil>();		
-		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego+".txt");		
+		
+		nivel = new Nivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego+".txt");	
+		
+		filas = new FilaJardin[6];
+		for(int i=0; i<filas.length; i++) {
+			filas[i] = new FilaJardin(this);
+		}
+		
 		plantasDisponibles = nivel.getPlantasDisponibles();		
 		jardinGrafico = new JardinGrafico(gui, modoJuego);
+		
 		botoneraGrafica = new Botonera(gui);
 		setBotonera();
-		sonidoZombi = new SClip("assets/sonidos/proyectil.wav");		
 		
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
-		timerProyectiles = new TimerProyectil(this);
-		
+		timerProyectiles = new TimerProyectil(this);		
 	}
 
-	public void iniciarJuego() {		
-		Properties configPlanta = new Properties();
-		try {
-			configPlanta.load(new FileInputStream("assets\\configuracion\\config_plantas.properties"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-			
+	public void iniciarJuego() {				
 		timerZombis.start();
 		timerPlantas.start();
 		timerProyectiles.start();
@@ -77,150 +60,95 @@ public class Jardin {
 		int precio = 0;
 		Point posInsert = refactorPoint(position);		
 		boolean celdaVacia = true;
-		for(Planta p : plantasActivas) {
-			if(p.getLocation().equals(posInsert))
-				celdaVacia = false;
+		
+		if(filas[(int) (posInsert.getY())/100].hayPlantaEnPos(posInsert)) {
+			celdaVacia = false;
 		}
-		if(celdaVacia && plantasDisponibles.get(index).puedeComprar() && 
-				logica.getDinero() >= insert.getPrecio() && insert != null && posInsert != null) {			
-			insert.setLocation(posInsert);
-			insert.getEnteGrafico().setPosition(posInsert);
-			jardinGrafico.setEnte(insert.getEnteGrafico());
-			plantasActivas.add(insert);
+		if(plantasDisponibles.get(index).puedeComprar() && logica.getDinero() >= insert.getPrecio() 
+				&& celdaVacia && insert != null && posInsert != null) {						
+			insert.setPosition(posInsert);
+			filas[(int) (posInsert.getY())/100].insertPlanta(insert);
 			plantasDisponibles.get(index).resetCompra();
-			precio += insert.getPrecio();
+			precio += insert.getPrecio();			
 		}
 		return precio;
 	}
 	
 	public int interaccionMoneda(Point pos) {
-		int valor = 0;
-		Moneda aux = null;
-		for(Proyectil p : proyectilesActivos) {
-			if(p.contains(pos) && p.getDanio() == 0) {
-				proyectilesActivos.remove(p);
-				jardinGrafico.removeEnte(p.getEnteGrafico());
-				aux = (Moneda) p;
-				valor += aux.getValor();
-				break;
-			}
-		}
-		return valor;
+		int fila = (int) (pos.getY()/100)*100;
+		return filas[fila/100].interaccionMoneda(pos);
 	}
 	
 	public void generarZombi() {
 		Zombi z = nivel.getZombi();
+		int fila;
 		if(z != null) {
 			jardinGrafico.setEnte(z.getEnteGrafico());
-			zombisActivos.add(z);
+			fila = (int) (z.getLocation().getY()/100)*100;			
+			filas[fila/100].insertZombi(z);
 		}
-		else {
-			if(zombisActivos.size() == 0) {
-
-			}
-			else {
-				if(checkGameOver()) {
-					//stopTimers();
-					//logica.gameOver();
-				}					
-			}
+		if(checkGameOver()) {
+			stopTimers();
+			logica.gameOver();
 		}
-			
-	}
-
-	public boolean addProyectil(Proyectil p) {
-		boolean agrego=false;
-		if(p != null) {
-			jardinGrafico.setEnte(p.getEnteGrafico());
-			proyectilesActivos.add(p);
-			agrego=true;
-		}
-		return agrego;
-	}
-	
-	public void cambiarModoJuego(String modoJuego) {
-		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
-		plantasDisponibles = nivel.getPlantasDisponibles();
-		zombisActivos.clear();
-		proyectilesActivos.clear();
-		plantasActivas.clear();
 	}
 	
 	public void colision(Zombi z) {
-		double fila = z.getY();
-		for(Planta p : plantasActivas) {
-			if(p.getY() == fila && z.intersects(p)) {
-				p.accept(z);		
-				if(!p.estaViva())
-					removePlanta(p);
+		int fila = (int) (z.getLocation().getY()/100)*100;
+		filas[fila/100].colision(z);
+	}
+	
+	public void cambiarModoJuego(String modoJuego) {
+		stopTimers();
+		for(int i=0; i<filas.length; i++) {
+			filas[i].limpiarListas();
+		}
+		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
+		plantasDisponibles.clear();
+		plantasDisponibles = nivel.getPlantasDisponibles();
+	}
+	
+	public void actualizarZombis() {
+		for(int i=0; i<filas.length; i++) {
+			filas[i].actualizarZombis();
+		}
+	}
+	
+	public void actualizarPlantas() {
+		try {			
+			for(Planta p : plantasDisponibles) {
+				p.actualizarCompra();
 			}
-		}
-		for(Proyectil p : proyectilesActivos) {
-			if(p.getY() == fila && z.intersects(p) && p.getDanio() > 0) {
-				sonidoZombi.play();
-				removeProyectiles(p);
-				p.accept(z);	
-				if(p.getLocation().getX() > 900) 
-					removeProyectiles(p);
-				if(!z.estaVivo()) {
-					removeZombi(z);
-					Animacion animacion = new Animacion(this.jardinGrafico, p.getLocation(), "assets\\sprites\\explocion.gif");
-					animacion.run();
-				}
+			for(int i=0; i<filas.length; i++) {
+				filas[i].actualizarPlantas();
 			}
-		}		
-	}
-	
-	public Iterable<Zombi> getZombis() {
-		return zombisActivos;
-	}
-	
-	public Iterable<Planta> getPlantas() {
-		return plantasActivas;
-	}
-	
-	public Iterable<Planta> getPlantasDisponibles() {
-		return plantasDisponibles;
-	}
-	
-	public Iterable<Proyectil> getProyectiles() {
-		return proyectilesActivos;
-	}
-	
-	private boolean removeZombi(Zombi z) {
-		boolean removio=false;
-		if(z != null) {
-			zombisActivos.remove(z);
-			jardinGrafico.removeEnte(z.getEnteGrafico());
-			removio=true;
+		}catch(Exception e) {
 		}
-		return removio;
 	}
 	
-	private boolean removePlanta(Planta p) {
-		boolean removio=false;
-		if(p != null) {
-			plantasActivas.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico());
-			removio=true;
+	public void actualizarProyectiles() {
+		for(int i=0; i<filas.length; i++) {
+			filas[i].actualizarProyectiles();
 		}
-		return removio;
 	}
 	
-	private boolean removeProyectiles(Proyectil p) {
-		boolean removio=false;
-		if(p != null) {
-			proyectilesActivos.remove(p);
-			jardinGrafico.removeEnte(p.getEnteGrafico());
-			removio=true;
-		}
-		return removio;
+	public void removerEnteJardinGrafico(EnteGrafico e) {
+		jardinGrafico.removeEnte(e);
+	}
+	
+	public void insertEnteJardinGrafico(EnteGrafico e) {
+		jardinGrafico.setEnte(e);
+	}
+	
+	public void generarAnimacionColision(Point p, String url) {
+		Animacion animacion = new Animacion(this.jardinGrafico, p, url);
+		animacion.run();
 	}
 	
 	private boolean checkGameOver() {
 		boolean estado = false;
-		for(Zombi z : getZombis()) {
-			if(z.getLocation().getX() <= 10) {
+		for(int i=0; i<filas.length; i++) {
+			if(filas[i].hayZombiAlFinal()) {
 				estado = true;
 				break;
 			}

@@ -1,6 +1,5 @@
 package timer;
 
-import ente.plantas.Planta;
 import jardin.Jardin;
 
 public class TimerPlanta extends Thread {
@@ -13,21 +12,8 @@ public class TimerPlanta extends Thread {
 	}
 	
 	public void run() {
-		while(control) {
-			
-			try {
-				for(Planta p : jardin.getPlantas()) {
-					p.actualizar();
-					if(p.puedeDisparar()) {
-						jardin.addProyectil(p.disparar());
-						p.resetDisparo();
-					}
-				}
-				for(Planta p : jardin.getPlantasDisponibles()) {
-					p.actualizarCompra();	
-				}
-			}catch(Exception e) {
-			}
+		while(control) {			
+			jardin.actualizarPlantas();
 			try {
 				Thread.sleep(500);			
 			} catch (InterruptedException e) {

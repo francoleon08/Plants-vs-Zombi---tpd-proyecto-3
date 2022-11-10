@@ -1,6 +1,5 @@
 package timer;
 
-import ente.proyectiles.Proyectil;
 import jardin.Jardin;
 
 public class TimerProyectil extends Thread {
@@ -14,12 +13,7 @@ public class TimerProyectil extends Thread {
 	
 	public void run() {
 		while(control) {					
-			try {
-				for(Proyectil p : jardin.getProyectiles()) {
-					p.actualizar();
-				}
-			}catch(Exception e) {
-			}
+			jardin.actualizarProyectiles();
 			try {
 				Thread.sleep(5);			
 			} catch (InterruptedException e) {

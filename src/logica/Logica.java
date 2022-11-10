@@ -14,10 +14,10 @@ public class Logica {
 	private SClip reproductorfondo;
 	
 	public Logica() {
-		dinero = 400;
+		dinero = 40000;
 		gui = new GUI(this);		
 		gui.setVisible();
-		reproductorfondo= new SClip("assets\\sonidos\\Music1.wav");
+		reproductorfondo= new SClip("assets\\sonidos\\music.wav");
 		reproductorfondo.loop();
 	}
 	
@@ -30,12 +30,6 @@ public class Logica {
 	public void interactuarMoneda(Point p) {
 		dinero += jardin.interaccionMoneda(p);
 	}
-	
-	/*
-	public void setModoJuego(String modoJuego) {
-		jardin.cambiarModoJuego(modoJuego);
-	}
-	*/
 	
 	public void crearPlanta(int index, Point p) {
 		dinero -= jardin.insertPlanta(index, p);

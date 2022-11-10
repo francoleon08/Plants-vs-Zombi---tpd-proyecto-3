@@ -9,6 +9,7 @@ public class Animacion implements Runnable {
 	private JardinGrafico jardin;
 	
 	public Animacion(JardinGrafico jardin, Point position, String urlAnimacion) {
+		position.setLocation(position.getX()+10, position.getY());
 		animacion = new EnteGrafico(position, 50, 50, urlAnimacion);
 		this.jardin = jardin;
 	}

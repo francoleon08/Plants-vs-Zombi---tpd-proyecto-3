@@ -28,6 +28,7 @@ public abstract class Ente extends Rectangle {
 	 */
 	public void setPosition(Point position) {
 		this.setLocation(position);
+		this.grafico.setPosition(position);
 	}
 	
 	/**
