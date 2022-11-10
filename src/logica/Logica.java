@@ -1,8 +1,10 @@
 package logica;
 
 import java.awt.Point;
+import java.util.LinkedList;
 
 import Sonido.SClip;
+import ente.grafico.EnteGrafico;
 import gui.GUI;
 import jardin.Jardin;
 
@@ -23,8 +25,15 @@ public class Logica {
 	
 	public void setModoJuego(String modo) {
 		this.modo = modo;
+	}
+	
+	public void initGame() {
 		jardin = new Jardin(this, gui, modo);		
 		jardin.iniciarJuego();
+	}
+	
+	public Iterable<EnteGrafico> getPlantasDisponibles() {
+		return jardin.getPlantasDisponibles();
 	}
 	
 	public void interactuarMoneda(Point p) {

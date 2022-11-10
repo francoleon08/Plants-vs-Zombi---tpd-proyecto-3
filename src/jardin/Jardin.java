@@ -22,7 +22,6 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
-	private Botonera botoneraGrafica;	
 	
 	private FilaJardin[] filas;
 	
@@ -40,9 +39,6 @@ public class Jardin {
 		
 		plantasDisponibles = nivel.getPlantasDisponibles();		
 		jardinGrafico = new JardinGrafico(gui, modoJuego);
-		
-		botoneraGrafica = new Botonera(gui);
-		setBotonera();
 		
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
@@ -145,6 +141,14 @@ public class Jardin {
 		animacion.run();
 	}
 	
+	public Iterable<EnteGrafico> getPlantasDisponibles() {
+		LinkedList<EnteGrafico> list = new LinkedList<EnteGrafico>();
+		for(Planta p : plantasDisponibles) {
+			list.add(p.getEnteGrafico());
+		}
+		return list;
+	}
+	
 	private boolean checkGameOver() {
 		boolean estado = false;
 		for(int i=0; i<filas.length; i++) {
@@ -155,14 +159,6 @@ public class Jardin {
 		}
 		return estado;
 	}	
-	
-	private void setBotonera() {
-		LinkedList<EnteGrafico> list = new LinkedList<EnteGrafico>();
-		for(Planta p : plantasDisponibles) {
-			list.add(p.getEnteGrafico());
-		}
-		botoneraGrafica.setBotonera(list);
-	}
 	
 	private void stopTimers() {
 		timerPlantas.detener();

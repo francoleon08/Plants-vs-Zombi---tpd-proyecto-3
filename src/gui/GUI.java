@@ -22,6 +22,9 @@ import logica.Logica;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
+
+import gui.botonera.Botonera;
+
 import java.awt.Font;
 import java.awt.Button;
 import java.awt.event.ActionListener;
@@ -31,9 +34,12 @@ import java.awt.event.ActionEvent;
 public class GUI extends JFrame {
 	private Logica logica;
 	private Properties guiConfig;
+	private Botonera botoneraGrafica;
 	private JLayeredPane panelGrafico;
 	private JLayeredPane botonera;	
 	private JTextPane textDinero;
+	private Button button;
+	private Button button_1;
 	private int indexPlanta;
 	
 	public GUI(Logica logica) {
@@ -64,30 +70,36 @@ public class GUI extends JFrame {
 		textDinero.setBounds(700, 55, 154, 40);
 		getContentPane().add(textDinero);
 		
-		Button button = new Button("MODO DIA");
-		Button button_1 = new Button("MODO NOCHE");
+		button = new Button("MODO DIA");
+		button_1 = new Button("MODO NOCHE");
 		button.setBounds(118, 147, 103, 22);
 		button_1.setBounds(118, 208, 103, 22);
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logica.setModoJuego("dia");
-				button_1.setVisible(false);
-				button.setVisible(false);
+				initGame();
 			}
 		});		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logica.setModoJuego("noche");
-				button_1.setVisible(false);
-				button.setVisible(false);
+				initGame();
 			}
 		});
 		
 		getContentPane().add(button);
 		getContentPane().add(button_1);
 		accionMouse();		
-	}	
+	}
+	
+	private void initGame() {
+		button_1.setVisible(false);
+		button.setVisible(false);
+		logica.initGame();
+		botoneraGrafica = new Botonera(this);
+		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
+	}
 	
 	public void addJPanel(JLayeredPane panel) {
 		panelGrafico = panel;

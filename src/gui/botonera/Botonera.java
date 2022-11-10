@@ -25,7 +25,7 @@ public class Botonera {
 		gui.addBotonera(panelBotones);		
 	}
 	
-	public void setBotonera(LinkedList<EnteGrafico> list) {
+	public void setBotonera(Iterable<EnteGrafico> list) {
 		int cont = 0;
 		for(EnteGrafico e : list) {
 			JButton insert = new JButton(e.getSkin().getIcon());
