@@ -75,7 +75,7 @@ public class Jardin {
 	public int insertPlanta(int index, Point position) {		
 		Planta insert = plantasDisponibles.get(index).clone();
 		int precio = 0;
-		Point posInsert = refactorPoint(position);
+		Point posInsert = refactorPoint(position);		
 		boolean celdaVacia = true;
 		for(Planta p : plantasActivas) {
 			if(p.getLocation().equals(posInsert))
@@ -243,8 +243,8 @@ public class Jardin {
 	}
 	
 	private Point refactorPoint(Point p) {
-		Point toReturn = null;
-		if(p.getX()>10 && p.getY()>110) {
+		Point toReturn = null;		
+		if(p != null) {
 			toReturn = new Point((int)(p.getX()/100)*100, (int)(p.getY()/100)*100);
 		}
 		return toReturn;
