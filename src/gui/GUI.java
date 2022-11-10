@@ -23,6 +23,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
 import java.awt.Font;
+import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -61,6 +64,28 @@ public class GUI extends JFrame {
 		textDinero.setBounds(700, 55, 154, 40);
 		getContentPane().add(textDinero);
 		
+		Button button = new Button("MODO DIA");
+		Button button_1 = new Button("MODO NOCHE");
+		button.setBounds(118, 147, 103, 22);
+		button_1.setBounds(118, 208, 103, 22);
+		
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logica.setModoJuego("dia");
+				button_1.setVisible(false);
+				button.setVisible(false);
+			}
+		});		
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logica.setModoJuego("noche");
+				button_1.setVisible(false);
+				button.setVisible(false);
+			}
+		});
+		
+		getContentPane().add(button);
+		getContentPane().add(button_1);
 		accionMouse();		
 	}	
 	
@@ -98,7 +123,7 @@ public class GUI extends JFrame {
 				textDinero.setText("DINERO: "+logica.getDinero());
 			}
 		});
-	}
+	}	
 	
 	private void crearPlanta(Point position) {
 		logica.crearPlanta(indexPlanta, position);
