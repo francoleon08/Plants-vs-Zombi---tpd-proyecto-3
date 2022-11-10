@@ -1,10 +1,6 @@
 package timer;
 
-import java.util.Collections;
-import java.util.List;
-
 import ente.proyectiles.Proyectil;
-import ente.zombi.Zombi;
 import jardin.Jardin;
 
 public class TimerProyectil extends Thread {

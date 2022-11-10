@@ -21,8 +21,7 @@ public class LanzaGuisantes extends Planta {
 		this.height = Integer.parseInt(config.getProperty("alto_lanzaGuisantes"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_lanzaGuisantes"));
 	}
-
-	@Override
+	
 	public Proyectil disparar() {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
@@ -42,11 +41,11 @@ public class LanzaGuisantes extends Planta {
 	}
 
 	public void resetDisparo() {
-		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_lanzaGuisantes"));
+		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_lanzaGuisantes"));	
 	}
 
-	public String getSkinBoton() {
-		return config.getProperty("skin_boton_lanzaGuizantes");
+	public void resetCompra() {
+		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_lanzaGuisantes"));
 	}
 
 }

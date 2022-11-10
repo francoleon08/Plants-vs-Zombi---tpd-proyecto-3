@@ -1,7 +1,9 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,26 +18,34 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import jardin.JardinGrafico;
+import logica.Logica;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTextPane;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-	private JLayeredPane panelGrafico;
+	private Logica logica;
 	private Properties guiConfig;
-	//private JLabel fondoJardin;
-	private JardinGrafico jardin;
-	private JPanel botoneraPlantas;
-	private JPanel panel_1;
+	private JLayeredPane panelGrafico;
+	private JLayeredPane botonera;	
+	private JTextPane textDinero;
+	private int indexPlanta;
 	
-	public GUI() {
+	public GUI(Logica logica) {
+		this.logica = logica;
+		indexPlanta = -1;
+		getContentPane().setBackground(new Color(255, 255, 170));
 		guiConfig= new Properties();
+		
 		try {
 			FileReader reader=new FileReader("assets/configuracion/config_gui.properties");  
-			guiConfig.load(reader);
-			
+			guiConfig.load(reader);			
 		} catch (IOException e) {
-			System.out.println("NO cargo la wea");
-		}
-
+			e.printStackTrace();
+		}		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(1000, 719));
 		setResizable(false);
@@ -43,35 +53,29 @@ public class GUI extends JFrame {
 		setUndecorated(true);
 		getContentPane().setLayout(null);
 		
-		botoneraPlantas = new JPanel();
-		botoneraPlantas.setBounds(84, 37, 393, 64);
-		ImageIcon fondoBotonera= imagenEscalada(guiConfig.getProperty("fondo_botonera"), botoneraPlantas.getWidth(),botoneraPlantas.getHeight());
-		JLabel fondoBot=new JLabel(fondoBotonera);
-		botoneraPlantas.add(fondoBot);
-		getContentPane().add(botoneraPlantas);
+		textDinero = new JTextPane();
+		textDinero.setEditable(false);
+		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
+		textDinero.setBackground(new Color(255,255,170));
+		textDinero.setText("DINERO: "+logica.getDinero());
+		textDinero.setBounds(700, 55, 154, 40);
+		getContentPane().add(textDinero);
 		
-	    //Panel_1 es jardin grafico.		
-		//panel_1 = new JPanel();
-		//panel_1.setBounds(22, 69, 900, 600);
-		//panel_1.setOpaque(false);
-		//ImageIcon img2= imagenEscalada(guiConfig.getProperty("fondo_dia"), panel_1.getWidth(), panel_1.getHeight());
-		//JLabel fondoLabel=new JLabel(""); 
-		//panel_1.add(fondoLabel);
-		
-		
-		//getContentPane().add(panel_1);
-		
-		
-		
-		//jardin=new JardinGrafico();
-	}
-	private ImageIcon imagenEscalada(String ruta, int ancho, int largo) {
-		ImageIcon img=new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(ancho,largo, Image.SCALE_SMOOTH));
-		return img; 
-	}
+		accionMouse();		
+	}	
+	
 	public void addJPanel(JLayeredPane panel) {
 		panelGrafico = panel;
 		getContentPane().add(panelGrafico);
+	}
+	
+	public void addBotonera(JLayeredPane panel) {
+		botonera = panel;
+		getContentPane().add(botonera);
+	}
+	
+	public void accionBoton(int index) {
+		indexPlanta = index;
 	}
 	
 	public void repintar() {
@@ -80,5 +84,24 @@ public class GUI extends JFrame {
 	
 	public void setVisible() {
 		this.setVisible(true);
+	}
+	
+	private void accionMouse() {
+		getContentPane().addMouseListener(new MouseAdapter() {		
+			public void mouseClicked(MouseEvent e) {
+				Point insert = e.getPoint();
+				insert.setLocation(insert.getX()-10, insert.getY()-110);
+				if(indexPlanta >= 0)
+					crearPlanta(insert);
+				else
+					logica.interactuarMoneda(insert);
+				textDinero.setText("DINERO: "+logica.getDinero());
+			}
+		});
+	}
+	
+	private void crearPlanta(Point position) {
+		logica.crearPlanta(indexPlanta, position);
+		indexPlanta = -1;			
 	}
 }

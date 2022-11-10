@@ -1,5 +1,6 @@
 package jardin;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import ente.grafico.EnteGrafico;
 import gui.GUI;
 
-public class JardinGrafico extends JPanel  {
+public class JardinGrafico {
 	private GUI gui;
 	private JLayeredPane panelGrafico;
 	private Properties config;
@@ -32,7 +33,7 @@ public class JardinGrafico extends JPanel  {
 			e.printStackTrace();
 		}
 		panelGrafico = new JLayeredPane();
-		panelGrafico.setBounds(22, 69, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));		
+		panelGrafico.setBounds(10, 110, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));		
 		panelGrafico.setLayout(null);		
 		panelGrafico.setOpaque(false);
 		ImageIcon img= imagenEscalada(config.getProperty("fondo_"+modoJuego), panelGrafico.getWidth(), panelGrafico.getHeight());
@@ -40,7 +41,7 @@ public class JardinGrafico extends JPanel  {
 		fondo.setSize(900, 600);
 		panelGrafico.add(fondo);
 		panelGrafico.setLayer(fondo, 0);		
-		
+	
 		gui.addJPanel(panelGrafico);			
 	}
 	

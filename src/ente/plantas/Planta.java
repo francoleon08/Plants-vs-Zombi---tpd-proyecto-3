@@ -7,10 +7,15 @@ public abstract class Planta extends Ente {
 	protected int salud;
 	protected int precio;
 	protected int cooldownAccion;
-	protected int cooldownCompra;	
+	protected int cooldownCompra;		
+	
 	public boolean disminuirSalud(int danio) {
 		salud -= danio;
 		return salud <= 0;
+	}
+	
+	public int getPrecio() {
+		return precio;
 	}
 	
 	public boolean estaViva() {
@@ -26,12 +31,20 @@ public abstract class Planta extends Ente {
 	}
 	
 	public void actualizar() {
-		this.cooldownAccion--;
+		if(cooldownAccion > 0)
+			cooldownAccion--;
 	}
-	public abstract String getSkinBoton();
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+	}
+	
 	public abstract Proyectil disparar();
 	
 	public abstract void resetDisparo();
+	
+	public abstract void resetCompra();
 	
 	public abstract Planta clone();
 }

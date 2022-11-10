@@ -47,9 +47,8 @@ public class SetaDesporada extends Planta {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaDesporada"));
 	}
 
-	@Override
-	public String getSkinBoton() {
-		return config.getProperty("skin_boton_setaDesporada");
+	public void resetCompra() {
+		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaDesporada"));
 	}
 
 }

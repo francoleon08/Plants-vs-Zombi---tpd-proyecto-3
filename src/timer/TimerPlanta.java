@@ -23,10 +23,13 @@ public class TimerPlanta extends Thread {
 						p.resetDisparo();
 					}
 				}
+				for(Planta p : jardin.getPlantasDisponibles()) {
+					p.actualizarCompra();	
+				}
 			}catch(Exception e) {
 			}
 			try {
-				Thread.sleep(1000);			
+				Thread.sleep(500);			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

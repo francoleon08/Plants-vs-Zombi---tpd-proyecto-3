@@ -1,45 +1,53 @@
 package gui.botonera;
 
-import java.awt.GridLayout;
-import java.awt.Image;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-
-import ente.plantas.Planta;
+import ente.grafico.EnteGrafico;
 import gui.GUI;
 
-public class Botonera extends JLayeredPane{
-	private LinkedList<Planta> plantasDisponibles;
+public class Botonera {
+	private JLayeredPane panelBotones;
+	private GUI gui;
+	private LinkedList<JButton> botones;
 	
-	public Botonera(LinkedList<Planta> p,GUI gui) {
-		plantasDisponibles = p;
-		
-		this.setSize(200, 50);
-		this.setLayout(new GridLayout(1, 4, 0, 0));
-		
-		
-		JButton planta1 = new JButton("Planta 1");
-		planta1.setIcon(new ImageIcon(plantasDisponibles.get(0).getSkinBoton()));
-		this.add(planta1,1);
-		
-		JButton  planta2 = new JButton("Planta 2");
-		planta2.setIcon(new ImageIcon(plantasDisponibles.get(1).getSkinBoton()));
-		this.add(planta2,1);
-		
-		JButton planta3 = new JButton("Planta3");
-		planta2.setIcon(new ImageIcon(plantasDisponibles.get(2).getSkinBoton()));
-		this.add(planta3,1);
+	public Botonera(GUI gui) {
+		this.gui = gui;
+		panelBotones = new JLayeredPane();
+		panelBotones.setBounds(10, 10, 400, 100);
+		panelBotones.setLayout(null);
+		panelBotones.setOpaque(true);
+		botones = new LinkedList<JButton>();
+			
+		gui.addBotonera(panelBotones);		
+	}
 	
+	public void setBotonera(LinkedList<EnteGrafico> list) {
+		int cont = 0;
+		for(EnteGrafico e : list) {
+			JButton insert = new JButton(e.getSkin().getIcon());
+			insert.setBounds(cont*100, 0, 100, 100);
+			insert.setOpaque(false);
+			insert.setContentAreaFilled(false);	
+			insert.addActionListener(new ActionListener() {				
+				public void actionPerformed(ActionEvent e) {
+					controlBoton(insert);
+				}
+			});
+					
+			botones.addLast(insert);
+			panelBotones.add(insert);
+			panelBotones.setLayer(insert, 1);
+			cont++;
+		}
+		panelBotones.setSize((cont)*100, 100);
 	}
-	public void setFondo(String s) {
-		ImageIcon img=new ImageIcon(new ImageIcon(s).getImage().getScaledInstance(this.getWidth(),this.getHeight(), Image.SCALE_SMOOTH));
-		this.add(new JLabel(img));
-	}
-	public JLayeredPane getPanel() {
-		return this;
+	
+	private void controlBoton(JButton b) {
+		int index = (int) b.getLocation().getX() / 100;		
+		gui.accionBoton(index);
 	}
 }

@@ -10,11 +10,11 @@ public class Logica {
 	private Jardin jardin;
 	private GUI gui;
 	private int dinero;
-	SClip reproductorfondo;
+	private SClip reproductorfondo;
 	
 	public Logica() {
-		dinero = 0;
-		gui = new GUI();
+		dinero = 400;
+		gui = new GUI(this);
 		jardin = new Jardin(this, gui, "dia");		
 		jardin.iniciarJuego();
 		gui.setVisible();
@@ -31,7 +31,11 @@ public class Logica {
 	}
 	
 	public void crearPlanta(int index, Point p) {
-		jardin.insertPlanta(index, p);
+		dinero -= jardin.insertPlanta(index, p);
+	}
+	
+	public int getDinero() {
+		return dinero;
 	}
 	
 	public void gameOver() {

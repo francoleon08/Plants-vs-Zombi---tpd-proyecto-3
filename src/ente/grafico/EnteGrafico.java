@@ -20,6 +20,10 @@ public class EnteGrafico{
 		this.skin.setIcon(new ImageIcon(skin));
 	}
 	
+	public void setPosition(Point p) {
+		skin.setLocation(p);
+	}
+	
 	public void update(Point position) {
 		skin.setLocation(position);
 	}

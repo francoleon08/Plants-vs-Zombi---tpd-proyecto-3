@@ -11,8 +11,7 @@ public final class ComandoCrearPlanta implements command {
 	public ComandoCrearPlanta(int planta, Logica l, Point p) {
 		 this.planta=planta;
 		 this.logica=l;
-		 this.p=p;
-		
+		 this.p=p;		
 	}
 		
 	@Override
