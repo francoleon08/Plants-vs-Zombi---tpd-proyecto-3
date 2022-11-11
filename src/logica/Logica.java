@@ -14,22 +14,24 @@ public class Logica {
 	private int dinero;
 	private String modo;
 	private SClip reproductorfondo;
+	private boolean reproductorActivo;
 	
 	public Logica() {
 		dinero = 40000;
+		reproductorActivo = true;
 		gui = new GUI(this);		
 		gui.setVisible();
 		reproductorfondo= new SClip("assets\\sonidos\\music.wav");
 		reproductorfondo.loop();
 	}
 	
-	public void setModoJuego(String modo) {
-		this.modo = modo;
-	}
-	
 	public void initGame() {
 		jardin = new Jardin(this, gui, modo);		
 		jardin.iniciarJuego();
+	}
+	
+	public void setModoJuego(String modo) {
+		this.modo = modo;
 	}
 	
 	public Iterable<EnteGrafico> getPlantasDisponibles() {
@@ -42,6 +44,18 @@ public class Logica {
 	
 	public void crearPlanta(int index, Point p) {
 		dinero -= jardin.insertPlanta(index, p);
+	}
+	
+	public boolean playPausaMusica() {
+		if(reproductorActivo) {
+			reproductorfondo.stop();
+			reproductorActivo = false;
+		}
+		else {
+			reproductorfondo.loop();
+			reproductorActivo = true;
+		}
+		return reproductorActivo;	
 	}
 	
 	public int getDinero() {

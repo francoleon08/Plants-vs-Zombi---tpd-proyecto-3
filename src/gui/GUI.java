@@ -1,32 +1,25 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Point;
-import java.io.FileInputStream;
+import java.awt.Toolkit;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputFilter.Config;
 import java.util.Properties;
-
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-
-import jardin.JardinGrafico;
 import logica.Logica;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
-
 import gui.botonera.Botonera;
-
 import java.awt.Font;
-import java.awt.Button;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -38,67 +31,100 @@ public class GUI extends JFrame {
 	private JLayeredPane panelGrafico;
 	private JLayeredPane botonera;	
 	private JTextPane textDinero;
-	private Button button;
-	private Button button_1;
+	private JButton buttonModoDia;
+	private JButton buttonModoNoche;
+	private JButton buttonMusic;
+	private ImageIcon playMusic;
+	private ImageIcon stopMusic;
+	private JLabel logo;
 	private int indexPlanta;
+	private boolean runJuego;
 	
 	public GUI(Logica logica) {
+		cargarConfiguracion();		
 		this.logica = logica;
-		indexPlanta = -1;
-		getContentPane().setBackground(new Color(255, 255, 170));
-		guiConfig= new Properties();
-		
-		try {
-			FileReader reader=new FileReader("assets/configuracion/config_gui.properties");  
-			guiConfig.load(reader);			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-		
+		this.indexPlanta = -1;
+		this.runJuego = false;
+		playMusic = new ImageIcon(guiConfig.getProperty("playMusic"));
+		stopMusic = new ImageIcon(guiConfig.getProperty("stopMusic"));
+				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(1000, 719));
+		setSize(new Dimension(1100, 720));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(new Color(154, 228, 146));			
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();		
+		Image cursorImage = tk.getImage("assets\\imagenes\\gui\\cursor.png");
+		Cursor cursor = tk.createCustomCursor(cursorImage, new Point(0,0), "Custom Cursor");	
+		getContentPane().setCursor(cursor);
+		
+		logo = new JLabel(new ImageIcon(guiConfig.getProperty("logo")));
+		logo.setBounds(211, 99, 700, 418);
 		
 		textDinero = new JTextPane();
 		textDinero.setEditable(false);
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
-		textDinero.setBackground(new Color(255,255,170));
+		textDinero.setBackground(new Color(154, 228, 146));
 		textDinero.setText("DINERO: "+logica.getDinero());
-		textDinero.setBounds(700, 55, 154, 40);
-		getContentPane().add(textDinero);
+		textDinero.setBounds(599, 53, 154, 40);
+		textDinero.setVisible(false);
 		
-		button = new Button("MODO DIA");
-		button_1 = new Button("MODO NOCHE");
-		button.setBounds(118, 147, 103, 22);
-		button_1.setBounds(118, 208, 103, 22);
+		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
+		buttonModoNoche = new JButton(new ImageIcon(guiConfig.getProperty("modoNoche")));		
+		buttonModoDia.setBounds(211, 578, 283, 70);
+		buttonModoNoche.setBounds(628, 578, 283, 70);		
+		buttonModoDia.setContentAreaFilled(false);		
+		buttonModoNoche.setContentAreaFilled(false);
 		
-		button.addActionListener(new ActionListener() {
+		buttonModoDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logica.setModoJuego("dia");
 				initGame();
 			}
 		});		
-		button_1.addActionListener(new ActionListener() {
+		buttonModoNoche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logica.setModoJuego("noche");
 				initGame();
 			}
 		});
 		
-		getContentPane().add(button);
-		getContentPane().add(button_1);
-		accionMouse();		
+		buttonMusic = new JButton(playMusic);
+		buttonMusic.setBounds(527, 578, 70, 70);
+		buttonMusic.setOpaque(false);
+		buttonMusic.setContentAreaFilled(false);	
+		buttonMusic.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!logica.playPausaMusica()) {
+					buttonMusic.setIcon(stopMusic);
+				}
+				else {
+					buttonMusic.setIcon(playMusic);
+				}
+			}
+		});
+		
+		getContentPane().add(logo);
+		getContentPane().add(textDinero);
+		getContentPane().add(buttonModoDia);
+		getContentPane().add(buttonModoNoche);
+		getContentPane().add(buttonMusic);		
+		accionMouse();				
 	}
 	
 	private void initGame() {
-		button_1.setVisible(false);
-		button.setVisible(false);
+		logo.setVisible(false);
+		buttonModoNoche.setVisible(false);
+		buttonModoDia.setVisible(false);
+		buttonMusic.setLocation(840, 20);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
+		textDinero.setVisible(true);
+		runJuego = true;
 	}
 	
 	public void addJPanel(JLayeredPane panel) {
@@ -124,15 +150,17 @@ public class GUI extends JFrame {
 	}
 	
 	private void accionMouse() {
-		getContentPane().addMouseListener(new MouseAdapter() {		
-			public void mouseClicked(MouseEvent e) {
-				Point insert = e.getPoint();
-				insert.setLocation(insert.getX()-10, insert.getY()-110);
-				if(indexPlanta >= 0)
-					crearPlanta(insert);
-				else
-					logica.interactuarMoneda(insert);
-				textDinero.setText("DINERO: "+logica.getDinero());
+		getContentPane().addMouseListener(new MouseAdapter() {			
+			public void mouseClicked(MouseEvent e) {								
+				if(runJuego) {
+					Point insert = e.getPoint();
+					insert.setLocation(insert.getX()-10, insert.getY()-110);
+					if(indexPlanta >= 0)
+						crearPlanta(insert);
+					else
+						logica.interactuarMoneda(insert);
+					textDinero.setText("DINERO: "+logica.getDinero());
+				}
 			}
 		});
 	}	
@@ -140,5 +168,15 @@ public class GUI extends JFrame {
 	private void crearPlanta(Point position) {
 		logica.crearPlanta(indexPlanta, position);
 		indexPlanta = -1;			
+	}
+	
+	private void cargarConfiguracion() {
+		try {
+			guiConfig= new Properties();
+			FileReader reader=new FileReader("assets/configuracion/config_gui.properties");  
+			guiConfig.load(reader);			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
