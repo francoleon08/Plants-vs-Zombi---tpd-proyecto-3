@@ -1,13 +1,19 @@
 package jardin;
 
 import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Properties;
+
+import Sonido.SClip;
 import animacion.Animacion;
 import ente.grafico.EnteGrafico;
 import ente.plantas.Planta;
+import ente.proyectiles.Moneda;
 import ente.zombi.Zombi;
 import gui.GUI;
-import gui.botonera.Botonera;
 import logica.Logica;
 import nivel.Nivel;
 import timer.*;
@@ -15,6 +21,9 @@ import timer.*;
 public class Jardin {
 	private Logica logica;
 	private LinkedList<Planta> plantasDisponibles;
+	private LinkedList<Moneda> monedasGeneradas;
+	private SClip sonidoMoneda;
+	private Properties configPlanta;
 	private TimerZombi timerZombis;
 	private TimerPlanta timerPlantas;
 	private TimerProyectil timerProyectiles;
@@ -22,7 +31,6 @@ public class Jardin {
 	private String modoJuego;
 	private Nivel nivel;
 	private JardinGrafico jardinGrafico;
-	
 	private FilaJardin[] filas;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
@@ -35,10 +43,14 @@ public class Jardin {
 		filas = new FilaJardin[6];
 		for(int i=0; i<filas.length; i++) {
 			filas[i] = new FilaJardin(this);
-		}
+		}	
 		
-		plantasDisponibles = nivel.getPlantasDisponibles();		
 		jardinGrafico = new JardinGrafico(gui, modoJuego);
+		plantasDisponibles = nivel.getPlantasDisponibles();		
+		monedasGeneradas = new LinkedList<Moneda>();
+		cargarConfiguracionMoneda();
+		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");
+		
 		
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
@@ -72,7 +84,19 @@ public class Jardin {
 	
 	public int interaccionMoneda(Point pos) {
 		int fila = (int) (pos.getY()/100)*100;
-		return filas[fila/100].interaccionMoneda(pos);
+		int valor = filas[fila/100].interaccionMoneda(pos);
+		if(valor == 0) {
+			for(Moneda m : monedasGeneradas) {
+				if(m.contains(pos)) {
+					sonidoMoneda.play();
+					valor = m.getValor();
+					monedasGeneradas.remove(m);
+					jardinGrafico.removeEnte(m.getEnteGrafico());
+					break;
+				}
+			}
+		}
+		return valor;
 	}
 	
 	public void generarZombi() {
@@ -87,6 +111,13 @@ public class Jardin {
 			stopTimers();
 			logica.gameOver();
 		}
+	}
+	
+	public void generarMoneda() {
+		int x = (int)(Math.random()*850);				
+		Moneda insert = new Moneda(new Point(x,-50), configPlanta);
+		monedasGeneradas.add(insert);
+		jardinGrafico.setEnte(insert.getEnteGrafico());		
 	}
 	
 	public void colision(Zombi z) {
@@ -126,6 +157,9 @@ public class Jardin {
 		for(int i=0; i<filas.length; i++) {
 			filas[i].actualizarProyectiles();
 		}
+		for(Moneda m : monedasGeneradas) {
+			m.actualizarCaida();
+		}
 	}
 	
 	public void removerEnteJardinGrafico(EnteGrafico e) {
@@ -138,7 +172,8 @@ public class Jardin {
 	
 	public void generarAnimacionColision(Point p, String url) {
 		Animacion animacion = new Animacion(this.jardinGrafico, p, url);
-		animacion.run();
+		animacion.start();
+		animacion = null;
 	}
 	
 	public Iterable<EnteGrafico> getPlantasDisponibles() {
@@ -173,4 +208,15 @@ public class Jardin {
 		}
 		return toReturn;
 	}	
+	
+	private void cargarConfiguracionMoneda() {
+		configPlanta = new Properties();
+		try {
+			configPlanta.load(new FileInputStream("assets/configuracion/config_plantas.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

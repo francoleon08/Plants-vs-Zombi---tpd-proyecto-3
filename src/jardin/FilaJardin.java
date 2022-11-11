@@ -3,6 +3,7 @@ package jardin;
 import java.awt.Point;
 import java.util.LinkedList;
 import Sonido.SClip;
+import animacion.Animacion;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -14,6 +15,7 @@ public class FilaJardin {
 	private LinkedList<Planta> plantasActivas;
 	private LinkedList<Proyectil> proyectilesActivos;
 	private SClip sonidoZombi;
+	private SClip sonidoMoneda;
 	
 	public FilaJardin(Jardin jardin) {
 		this.jardin = jardin;
@@ -21,6 +23,7 @@ public class FilaJardin {
 		plantasActivas = new LinkedList<Planta>();
 		proyectilesActivos = new LinkedList<Proyectil>();
 		sonidoZombi = new SClip("assets/sonidos/proyectil.wav");
+		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");
 	}
 	
 	public void actualizarZombis() {
@@ -54,7 +57,7 @@ public class FilaJardin {
 	
 	public void colision(Zombi z) {		
 		for(Planta p : plantasActivas) {
-			if(z.intersects(p)) {
+			if(z.intersects(p)) {				
 				p.accept(z);		
 				if(!p.estaViva())
 					removePlanta(p);
@@ -83,6 +86,7 @@ public class FilaJardin {
 		Moneda aux = null;
 		for(Proyectil p : proyectilesActivos) {
 			if(p.getDanio() == 0 && p.contains(pos)) {
+				sonidoMoneda.play();
 				proyectilesActivos.remove(p);
 				jardin.removerEnteJardinGrafico(p.getEnteGrafico());
 				aux = (Moneda) p;

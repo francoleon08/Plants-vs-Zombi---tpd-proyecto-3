@@ -31,6 +31,14 @@ public class Moneda extends Proyectil {
 		cooldown--;
 	} 
 	
+	public void actualizarCaida() {
+		if(this.getLocation().getY() < Integer.parseInt(config.getProperty("minPosicionMoneda"))) {
+			Point aux = new Point();
+			aux.setLocation(this.getX(), this.getY()+1);
+			this.setPosition(aux);
+		}
+	}
+	
 	public void accept(Visitor v) {
 		v.visitProyectil(this);
 	}

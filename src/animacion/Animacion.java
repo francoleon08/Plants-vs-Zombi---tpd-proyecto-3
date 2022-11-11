@@ -4,7 +4,7 @@ import java.awt.Point;
 import ente.grafico.EnteGrafico;
 import jardin.JardinGrafico;
 
-public class Animacion implements Runnable {
+public class Animacion extends Thread {
 	private EnteGrafico animacion;
 	private JardinGrafico jardin;
 	
@@ -19,6 +19,7 @@ public class Animacion implements Runnable {
 			jardin.setEnte(animacion);		
 			Thread.sleep(500);
 			jardin.removeEnte(animacion);
+			Thread.interrupted();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
