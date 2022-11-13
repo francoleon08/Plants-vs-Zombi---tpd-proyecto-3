@@ -22,11 +22,12 @@ public class SetaDesporada extends Planta {
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_setaDesporada"));
 	}
 
-	@Override
 	public Proyectil disparar() {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
+		System.out.println(this.cooldownAccion==0);
 		if(this.cooldownAccion == 0) {
+			System.out.println("Disparé");
 			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
 			disparo = new Espora(aux, this.config);
 		}
