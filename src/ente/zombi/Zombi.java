@@ -135,7 +135,11 @@ public class Zombi extends Ente implements Visitor {
 	}
 	
 	private void lectorPeriodico() {
-		if(lector && salud <= 40 && velocidad == 1)
-			velocidad *=5;
+		if(lector && salud <= 40 && velocidad == 1) {
+			velocidad *=3;
+			//CAMIAR A LA SKIN CORRESPONDIENTE
+			this.grafico.setSkin("assets\\imagenes\\zombis\\comunZombi.gif");
+		}
+			
 	}
 }

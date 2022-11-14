@@ -19,6 +19,7 @@ public class Jalapeno extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_jalapeno"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_jalapeno"));
 		this.height = Integer.parseInt(config.getProperty("alto_jalapeno"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_jalapeno_desactivado"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_jalapeno"));
 	}
 
@@ -40,6 +41,14 @@ public class Jalapeno extends Planta {
 	public void accept(Visitor v) {
 		v.visitJalapeno(this);
 	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			this.icon.setSkin(config.getProperty("icon_jalapeno"));			
+		}
+	}
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_jalapeno"));
@@ -47,6 +56,7 @@ public class Jalapeno extends Planta {
 	
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_jalapeno"));	
+		this.icon.setSkin(config.getProperty("icon_jalapeno_desactivado"));		
 	}
 
 }

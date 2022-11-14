@@ -19,6 +19,7 @@ public class SetaDesporada extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaDesporada"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_setaDesporada"));
 		this.height = Integer.parseInt(config.getProperty("alto_setaDesporada"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_setaDesporada"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_setaDesporada"));
 	}
 
@@ -26,7 +27,7 @@ public class SetaDesporada extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()+30);
 			disparo = new Espora(aux, this.config);
 		}
 		return disparo;
@@ -41,6 +42,14 @@ public class SetaDesporada extends Planta {
 	public void accept(Visitor v) {
 		v.visitSetaDesporada(this);
 	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			//ICONO ACTUIVADO			
+		}
+	}
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaDesporada"));
@@ -48,6 +57,7 @@ public class SetaDesporada extends Planta {
 
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaDesporada"));
+		//ICONO DESACTIVADO
 	}
 
 }

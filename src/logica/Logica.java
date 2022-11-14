@@ -58,6 +58,10 @@ public class Logica {
 		return reproductorActivo;	
 	}
 	
+	public void actualizarPlantasDisponibles(Iterable<EnteGrafico> list) {
+		gui.actualizarBotonera(list);
+	}
+	
 	public int getDinero() {
 		return dinero;
 	}

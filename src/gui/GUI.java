@@ -17,6 +17,8 @@ import logica.Logica;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
+
+import ente.grafico.EnteGrafico;
 import gui.botonera.Botonera;
 import java.awt.Font;
 import java.awt.Image;
@@ -69,7 +71,7 @@ public class GUI extends JFrame {
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
 		textDinero.setBackground(new Color(154, 228, 146));
 		textDinero.setText("DINERO: "+logica.getDinero());
-		textDinero.setBounds(599, 53, 154, 40);
+		textDinero.setBounds(650, 53, 150, 20);
 		textDinero.setVisible(false);
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
@@ -78,6 +80,8 @@ public class GUI extends JFrame {
 		buttonModoNoche.setBounds(628, 578, 283, 70);		
 		buttonModoDia.setContentAreaFilled(false);		
 		buttonModoNoche.setContentAreaFilled(false);
+		buttonModoDia.setBorder(null);
+		buttonModoNoche.setBorder(null);
 		
 		buttonModoDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -96,6 +100,7 @@ public class GUI extends JFrame {
 		buttonMusic.setBounds(527, 578, 70, 70);
 		buttonMusic.setOpaque(false);
 		buttonMusic.setContentAreaFilled(false);	
+		buttonMusic.setBorder(null);
 		buttonMusic.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!logica.playPausaMusica()) {
@@ -119,7 +124,7 @@ public class GUI extends JFrame {
 		logo.setVisible(false);
 		buttonModoNoche.setVisible(false);
 		buttonModoDia.setVisible(false);
-		buttonMusic.setLocation(840, 20);
+		buttonMusic.setLocation(840, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
@@ -142,7 +147,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void repintar() {
-		panelGrafico.repaint();
+		panelGrafico.repaint();		
 	}
 	
 	public void setVisible() {
@@ -177,6 +182,12 @@ public class GUI extends JFrame {
 			guiConfig.load(reader);			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void actualizarBotonera(Iterable<EnteGrafico> list) {
+		if(botoneraGrafica != null) {
+			botoneraGrafica.actualizarBotonera(list);
 		}
 	}
 }

@@ -3,9 +3,13 @@ package gui.botonera;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.LinkedList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
+
 import ente.grafico.EnteGrafico;
 import gui.GUI;
 
@@ -32,6 +36,7 @@ public class Botonera {
 			insert.setBounds(cont*100, 0, 100, 100);
 			insert.setOpaque(false);
 			insert.setContentAreaFilled(false);	
+			insert.setBorder(null);
 			insert.addActionListener(new ActionListener() {				
 				public void actionPerformed(ActionEvent e) {
 					controlBoton(insert);
@@ -44,6 +49,13 @@ public class Botonera {
 			cont++;
 		}
 		panelBotones.setSize((cont)*100, 100);
+	}
+	
+	public void actualizarBotonera(Iterable<EnteGrafico> list) {
+		Iterator<EnteGrafico> ente = list.iterator();
+		for(JButton b : botones) {
+			b.setIcon(ente.next().getSkin().getIcon());
+		}
 	}
 	
 	private void controlBoton(JButton b) {

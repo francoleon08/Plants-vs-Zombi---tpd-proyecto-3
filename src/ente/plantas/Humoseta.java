@@ -19,6 +19,7 @@ public class Humoseta extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_humoseta"));
 		this.height = Integer.parseInt(config.getProperty("alto_humoseta"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_humoseta"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_humoseta"));
 	}
 
@@ -27,10 +28,18 @@ public class Humoseta extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()+30);
 			disparo = new Espora(aux, this.config);
 		}
 		return disparo;
+	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			//ICONO ACTUIVADO			
+		}
 	}
 
 	public Planta clone() {
@@ -46,7 +55,8 @@ public class Humoseta extends Planta {
 	}
 	
 	public void resetCompra() {
-		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));	
+		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));
+		//ICONO DESACTIVADO	
 	}
 
 }

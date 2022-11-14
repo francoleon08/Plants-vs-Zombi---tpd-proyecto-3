@@ -143,6 +143,7 @@ public class Jardin {
 	
 	public void actualizarPlantas() {
 		try {			
+			logica.actualizarPlantasDisponibles(getPlantasDisponibles());
 			for(Planta p : plantasDisponibles) {
 				p.actualizarCompra();
 			}
@@ -179,7 +180,7 @@ public class Jardin {
 	public Iterable<EnteGrafico> getPlantasDisponibles() {
 		LinkedList<EnteGrafico> list = new LinkedList<EnteGrafico>();
 		for(Planta p : plantasDisponibles) {
-			list.add(p.getEnteGrafico());
+			list.add(p.getIcon());
 		}
 		return list;
 	}

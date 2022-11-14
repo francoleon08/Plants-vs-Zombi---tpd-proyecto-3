@@ -19,6 +19,7 @@ public class LanzaGuisantes extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_lanzaGuisantes"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_lanzaGuisantes"));
 		this.height = Integer.parseInt(config.getProperty("alto_lanzaGuisantes"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_lanzaGuisantes_desactivado"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_lanzaGuisantes"));
 	}
 	
@@ -26,7 +27,7 @@ public class LanzaGuisantes extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()+10);
 			disparo = new Guizante(aux, this.config);
 		}
 		return disparo;
@@ -39,6 +40,14 @@ public class LanzaGuisantes extends Planta {
 	public void accept(Visitor v) {
 		v.visitLanzaGuisantes(this);
 	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			this.icon.setSkin(config.getProperty("icon_lanzaGuisantes"));			
+		}
+	}
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_lanzaGuisantes"));	
@@ -46,6 +55,7 @@ public class LanzaGuisantes extends Planta {
 
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_lanzaGuisantes"));
+		this.icon.setSkin(config.getProperty("icon_lanzaGuisantes_desactivado"));
 	}
 
 }

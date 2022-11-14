@@ -19,6 +19,7 @@ public class Girasol extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_girasol"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_girasol"));
 		this.height = Integer.parseInt(config.getProperty("alto_girasol"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_girasol_desactivado"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_girasol"));
 	}
 
@@ -41,12 +42,20 @@ public class Girasol extends Planta {
 		v.visitGirasol(this);
 	}	
 
-	public void resetDisparo() {
+	public void resetDisparo() {		
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_girasol"));
+	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			this.icon.setSkin(config.getProperty("icon_girasol"));			
+		}
 	}
 
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_girasol"));
+		this.icon.setSkin(config.getProperty("icon_girasol_desactivado"));
 	}
-
 }

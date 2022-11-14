@@ -1,13 +1,15 @@
 package ente.plantas;
 
 import ente.Ente;
+import ente.grafico.EnteGrafico;
 import ente.proyectiles.Proyectil;
 
 public abstract class Planta extends Ente {
 	protected int salud;
 	protected int precio;
 	protected int cooldownAccion;
-	protected int cooldownCompra;		
+	protected int cooldownCompra;
+	protected EnteGrafico icon;
 	
 	public boolean disminuirSalud(int danio) {
 		salud -= danio;
@@ -35,10 +37,11 @@ public abstract class Planta extends Ente {
 			cooldownAccion--;
 	}
 	
-	public void actualizarCompra() {
-		if(cooldownCompra > 0)
-			cooldownCompra--;
+	public EnteGrafico getIcon() {
+		return icon;
 	}
+	
+	public abstract void actualizarCompra();
 	
 	public abstract Proyectil disparar();
 	

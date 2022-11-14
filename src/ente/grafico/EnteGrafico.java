@@ -9,7 +9,12 @@ public class EnteGrafico{
 	
 	public EnteGrafico(Point position, int width, int heigth, String skin) {
 		this.skin = new JLabel(new ImageIcon(skin));						
-		this.skin.setBounds((int)position.getX(),(int) position.getY(), width, heigth);		
+		if(position != null) {
+			this.skin.setBounds((int)position.getX(),(int) position.getY(), width, heigth);
+		}
+		else {
+			this.skin.setBounds(0,0, width, heigth);
+		}
 	}
 	
 	public JLabel getSkin()	{

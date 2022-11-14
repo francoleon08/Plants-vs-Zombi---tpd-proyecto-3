@@ -19,6 +19,7 @@ public class SetaSolar extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaSolar"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_setaSolar"));
 		this.height = Integer.parseInt(config.getProperty("alto_setaSolar"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_setaSolar"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_setaSolar"));
 	}
 	
@@ -27,7 +28,7 @@ public class SetaSolar extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
+			aux.setLocation(this.getLocation().getX()+50, this.getLocation().getY());
 			disparo = new Moneda(aux, this.config);
 		}
 		return disparo;
@@ -40,6 +41,14 @@ public class SetaSolar extends Planta {
 	public void accept(Visitor v) {
 		v.visitSetaSolar(this);
 	}
+	
+	public void actualizarCompra() {
+		if(cooldownCompra > 0)
+			cooldownCompra--;
+		else {
+			//ICONO ACTUIVADO			
+		}
+	}
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaSolar"));
@@ -47,6 +56,7 @@ public class SetaSolar extends Planta {
 	
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaSolar"));	
+		//ICONO DESACTIVADO
 	}
 
 }

@@ -16,10 +16,10 @@ public class Animacion extends Thread {
 
 	public void run() {
 		try {
-			jardin.setEnte(animacion);		
+			jardin.setEnte(animacion);				
 			Thread.sleep(500);
 			jardin.removeEnte(animacion);
-			Thread.interrupted();
+			//Thread.interrupted();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
