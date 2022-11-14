@@ -35,6 +35,8 @@ public class Nivel {
 	}
 	
 	public void setNivel(String urlNivel) {
+		plantasDisponibles.clear();
+		zombisDisponibles.clear();
 		generador.generarNuevoNivel(urlNivel);
 	}
 }

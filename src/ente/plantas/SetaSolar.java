@@ -19,7 +19,7 @@ public class SetaSolar extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaSolar"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_setaSolar"));
 		this.height = Integer.parseInt(config.getProperty("alto_setaSolar"));
-		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_setaSolar"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_setaSolar_desactivado"));
 		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_setaSolar"));
 	}
 	
@@ -46,7 +46,7 @@ public class SetaSolar extends Planta {
 		if(cooldownCompra > 0)
 			cooldownCompra--;
 		else {
-			//ICONO ACTUIVADO			
+			this.icon.setSkin(config.getProperty("icon_setaSolar"));		
 		}
 	}
 
@@ -56,7 +56,7 @@ public class SetaSolar extends Planta {
 	
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_setaSolar"));	
-		//ICONO DESACTIVADO
+		this.icon.setSkin(config.getProperty("icon_setaSolar_desactivado"));	
 	}
 
 }

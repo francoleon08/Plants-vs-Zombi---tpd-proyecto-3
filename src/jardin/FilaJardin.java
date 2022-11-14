@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 import Sonido.SClip;
 import animacion.Animacion;
+import ente.plantas.Jalapeno;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -31,17 +32,26 @@ public class FilaJardin {
 			for(Zombi z : zombisActivos) {
 				z.actualizar();
 				colision(z);
+				if(!z.estaVivo())
+					removeZombi(z);
 			}
 		} catch(Exception e) {}
 	}
 	
 	public void actualizarPlantas() {
+		Proyectil insert = null;
 		try { 
 			for(Planta p : plantasActivas) {
 				p.actualizar();
 				if(p.puedeDisparar()) {
-					insertProyectil(p.disparar());							
-					p.resetDisparo();
+					insert = p.disparar();					
+					if(insert != null) {
+						insertProyectil(insert);
+						p.resetDisparo();
+					}						
+					else {
+						removePlanta(p);
+					}
 				}
 			}
 		} catch(Exception e) {}

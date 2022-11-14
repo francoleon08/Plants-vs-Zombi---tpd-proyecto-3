@@ -16,6 +16,7 @@ import ente.zombi.Zombi;
 import gui.GUI;
 import logica.Logica;
 import nivel.Nivel;
+import splashscreen.SplashScreen;
 import timer.*;
 
 public class Jardin {
@@ -32,6 +33,7 @@ public class Jardin {
 	private SClip sonidoMoneda;
 	private String modoJuego;
 	private int nivelActual;
+	private static final int MAX_LEVEL = 4;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
 		this.logica = logica;
@@ -102,10 +104,21 @@ public class Jardin {
 	public void generarZombi() {
 		Zombi z = nivel.getZombi();
 		int fila;
+		int controlAbanderado = 0;
 		if(z != null) {
 			jardinGrafico.setEnte(z.getEnteGrafico());
 			fila = (int) (z.getLocation().getY()/100)*100;			
 			filas[fila/100].insertZombi(z);
+			if(z.isAbanderado()) {
+				z = nivel.getZombi();
+				while(controlAbanderado < 4 && z != null) {
+					jardinGrafico.setEnte(z.getEnteGrafico());
+					fila = (int) (z.getLocation().getY()/100)*100;			
+					filas[fila/100].insertZombi(z);
+					z = nivel.getZombi();
+					controlAbanderado++;
+				}
+			}
 		}
 		if(checkGameOver()) {
 			stopTimers();
@@ -119,10 +132,12 @@ public class Jardin {
 	}
 
 	public void generarMoneda() {
-		int x = (int)(Math.random()*850);				
-		Moneda insert = new Moneda(new Point(x,-50), configPlanta);
-		monedasGeneradas.add(insert);
-		jardinGrafico.setEnte(insert.getEnteGrafico());		
+		if(modoJuego == "dia") {
+			int x = (int)(Math.random()*850);				
+			Moneda insert = new Moneda(new Point(x,-50), configPlanta);
+			monedasGeneradas.add(insert);
+			jardinGrafico.setEnte(insert.getEnteGrafico());
+		}
 	}
 	
 	public void colision(Zombi z) {
@@ -137,9 +152,9 @@ public class Jardin {
 	}
 	
 	public void actualizarPlantas() {
-		try {			
+		try {
 			for(Planta p : plantasDisponibles) {
-				p.actualizarCompra();
+				p.actualizarCompra();				
 			}
 			logica.actualizarPlantasDisponibles(getPlantasDisponibles());
 			for(int i=0; i<filas.length; i++) {
@@ -167,9 +182,9 @@ public class Jardin {
 	}
 	
 	public void generarAnimacionColision(Point p, String url) {
-		Animacion animacion = new Animacion(this.jardinGrafico, p, url);
-		animacion.start();
-		animacion = null;
+		//Animacion animacion = new Animacion(this.jardinGrafico, p, url);
+		//animacion.start();
+		//animacion = null;
 	}
 	
 	public Iterable<EnteGrafico> getPlantasDisponibles() {
@@ -205,10 +220,12 @@ public class Jardin {
 	
 	private boolean checkGameOver() {
 		boolean estado = false;
-		for(int i=0; i<filas.length; i++) {
-			if(filas[i].hayZombiAlFinal()) {
-				estado = true;
-				break;
+		if(nivelActual+1 <= MAX_LEVEL) {
+			for(int i=0; i<filas.length; i++) {
+				if(filas[i].hayZombiAlFinal()) {
+					estado = true;
+					break;
+				}
 			}
 		}
 		return estado;

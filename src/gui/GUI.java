@@ -191,8 +191,7 @@ public class GUI extends JFrame {
 		runJuego = false;
 	}
 	
-	public void cambiarNivel() {
-		botoneraGrafica = new Botonera(this);
+	public void cambiarNivel() {		
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
 	}
 	

@@ -30,6 +30,7 @@ public class Botonera {
 	}
 	
 	public void setBotonera(Iterable<EnteGrafico> list) {
+		botones.clear();
 		int cont = 0;
 		for(EnteGrafico e : list) {
 			JButton insert = new JButton(e.getSkin().getIcon());
@@ -48,13 +49,17 @@ public class Botonera {
 			panelBotones.setLayer(insert, 1);
 			cont++;
 		}
+		
 		panelBotones.setSize((cont)*100, 100);
+		//gui.addBotonera(panelBotones);
 	}
 	
 	public void actualizarBotonera(Iterable<EnteGrafico> list) {
 		Iterator<EnteGrafico> ente = list.iterator();
 		for(JButton b : botones) {
-			b.setIcon(ente.next().getSkin().getIcon());
+			if(ente.hasNext()) {
+				b.setIcon(ente.next().getSkin().getIcon());
+			}
 		}
 	}
 	

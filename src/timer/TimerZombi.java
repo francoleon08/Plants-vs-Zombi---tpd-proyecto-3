@@ -10,7 +10,7 @@ public class TimerZombi extends Thread {
 	public TimerZombi(Jardin jardin) {
 		this.jardin = jardin;
 		control = true;
-		cooldownSpawn = 50;
+		cooldownSpawn = 10;	
 	}
 	
 	public void run() {
@@ -19,7 +19,7 @@ public class TimerZombi extends Thread {
 			cooldownSpawn--;
 			if(cooldownSpawn == 0) {
 				jardin.generarZombi();
-				cooldownSpawn = 100;
+				cooldownSpawn = 150;
 			}
 			try {
 				Thread.sleep(70);			

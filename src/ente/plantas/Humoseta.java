@@ -19,7 +19,7 @@ public class Humoseta extends Planta {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));	
 		this.width = Integer.parseInt(config.getProperty("ancho_humoseta"));
 		this.height = Integer.parseInt(config.getProperty("alto_humoseta"));
-		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_humoseta"));
+		this.icon = new EnteGrafico(null, 100, 100, config.getProperty("icon_humoseta_desactivado"));
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_humoseta"));
 	}
 
@@ -38,7 +38,7 @@ public class Humoseta extends Planta {
 		if(cooldownCompra > 0)
 			cooldownCompra--;
 		else {
-			//ICONO ACTUIVADO			
+			this.icon.setSkin(config.getProperty("icon_humoseta"));			
 		}
 	}
 
@@ -56,7 +56,7 @@ public class Humoseta extends Planta {
 	
 	public void resetCompra() {
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_humoseta"));
-		//ICONO DESACTIVADO	
+		this.icon.setSkin(config.getProperty("icon_humoseta_desactivado"));	
 	}
 
 }

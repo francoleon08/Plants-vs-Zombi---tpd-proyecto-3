@@ -9,11 +9,13 @@ import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class Jalapeno extends Planta {
+	private int danio;
 	
 	public Jalapeno(Point position, Properties p) {
 		this.setLocation(position);
 		this.config = p;
 		this.salud = Integer.parseInt(config.getProperty("salud_jalapeno"));
+		this.danio = Integer.parseInt(config.getProperty("danio_jalapeno"));
 		this.precio = Integer.parseInt(config.getProperty("precio_jalapeno"));
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_jalapeno"));
 		this.cooldownCompra = Integer.parseInt(config.getProperty("cooldowncompra_jalapeno"));	
@@ -23,19 +25,16 @@ public class Jalapeno extends Planta {
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_jalapeno"));
 	}
 
-	@Override
 	public Proyectil disparar() {
-		Proyectil disparo =  null;
-		Point aux = new Point(0,0);
-		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY());
-			disparo = new Guizante(aux, this.config);
-		}
-		return disparo;
+		return null;
 	}
 
 	public Planta clone() {
 		return new Jalapeno(this.getLocation(), config);
+	}
+	
+	public int getDanio() {
+		return this.danio;
 	}
 
 	public void accept(Visitor v) {
