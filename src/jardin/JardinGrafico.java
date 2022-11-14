@@ -61,6 +61,16 @@ public class JardinGrafico {
 		panelGrafico.repaint();
 	}
 	
+	public void reset(String modoJuego) {
+		panelGrafico.removeAll();
+		entes.clear();
+		ImageIcon img= imagenEscalada(config.getProperty("fondo_"+modoJuego), panelGrafico.getWidth(), panelGrafico.getHeight());
+		JLabel fondo = new JLabel(img);
+		fondo.setSize(900, 600);
+		panelGrafico.add(fondo);
+		panelGrafico.setLayer(fondo, 0);
+	}
+	
 	private ImageIcon imagenEscalada(String ruta, int ancho, int largo) {
 		ImageIcon img=new ImageIcon(new ImageIcon(ruta).getImage().getScaledInstance(ancho,largo, Image.SCALE_SMOOTH));
 		return img; 

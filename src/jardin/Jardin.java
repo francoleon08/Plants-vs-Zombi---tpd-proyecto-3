@@ -20,18 +20,18 @@ import timer.*;
 
 public class Jardin {
 	private Logica logica;
+	private JardinGrafico jardinGrafico;
+	private Nivel nivel;
 	private LinkedList<Planta> plantasDisponibles;
 	private LinkedList<Moneda> monedasGeneradas;
-	private SClip sonidoMoneda;
+	private FilaJardin[] filas;
 	private Properties configPlanta;
 	private TimerZombi timerZombis;
 	private TimerPlanta timerPlantas;
 	private TimerProyectil timerProyectiles;
-	private int nivelActual;
+	private SClip sonidoMoneda;
 	private String modoJuego;
-	private Nivel nivel;
-	private JardinGrafico jardinGrafico;
-	private FilaJardin[] filas;
+	private int nivelActual;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
 		this.logica = logica;
@@ -111,8 +111,13 @@ public class Jardin {
 			stopTimers();
 			logica.gameOver();
 		}
+		else {
+			if(checkUpLevel()) {				
+				upLevel();
+			}
+		}
 	}
-	
+
 	public void generarMoneda() {
 		int x = (int)(Math.random()*850);				
 		Moneda insert = new Moneda(new Point(x,-50), configPlanta);
@@ -125,16 +130,6 @@ public class Jardin {
 		filas[fila/100].colision(z);
 	}
 	
-	public void cambiarModoJuego(String modoJuego) {
-		stopTimers();
-		for(int i=0; i<filas.length; i++) {
-			filas[i].limpiarListas();
-		}
-		nivel.setNivel("nivel-"+nivelActual+"-"+modoJuego);
-		plantasDisponibles.clear();
-		plantasDisponibles = nivel.getPlantasDisponibles();
-	}
-	
 	public void actualizarZombis() {
 		for(int i=0; i<filas.length; i++) {
 			filas[i].actualizarZombis();
@@ -143,10 +138,10 @@ public class Jardin {
 	
 	public void actualizarPlantas() {
 		try {			
-			logica.actualizarPlantasDisponibles(getPlantasDisponibles());
 			for(Planta p : plantasDisponibles) {
 				p.actualizarCompra();
 			}
+			logica.actualizarPlantasDisponibles(getPlantasDisponibles());
 			for(int i=0; i<filas.length; i++) {
 				filas[i].actualizarPlantas();
 			}
@@ -184,6 +179,29 @@ public class Jardin {
 		}
 		return list;
 	}
+
+	private boolean checkUpLevel() {
+		int cont = 0;
+		for(int i=0; i<filas.length; i++) {
+			if(filas[i].hayZombisActivos())
+				cont++;
+		}
+		return cont == 0;
+	}
+	
+	private void upLevel() {
+		stopTimers();
+		for(int i=0; i<filas.length; i++) {
+			filas[i].limpiarListas();
+		}
+		monedasGeneradas.clear();
+		nivelActual++;
+		jardinGrafico.reset(modoJuego);
+		nivel.setNivel("assets/niveles/nivel-"+nivelActual+"-"+this.modoJuego+".txt");
+		plantasDisponibles = nivel.getPlantasDisponibles();
+		logica.cambiarNivel();
+		initTimers();
+	}
 	
 	private boolean checkGameOver() {
 		boolean estado = false;
@@ -200,6 +218,12 @@ public class Jardin {
 		timerPlantas.detener();
 		timerProyectiles.detener();
 		timerZombis.detener();
+	}
+	
+	private void initTimers() {
+		timerPlantas.iniciar();
+		timerProyectiles.iniciar();
+		timerZombis.iniciar();
 	}
 	
 	private Point refactorPoint(Point p) {

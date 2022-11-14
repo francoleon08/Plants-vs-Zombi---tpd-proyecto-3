@@ -96,6 +96,10 @@ public class FilaJardin {
 		return valor;
 	}
 	
+	public boolean hayZombisActivos() {
+		return !zombisActivos.isEmpty();
+	}
+	
 	public boolean hayZombiAlFinal() {
 		boolean estado = false;
 		for(Zombi z : zombisActivos) {

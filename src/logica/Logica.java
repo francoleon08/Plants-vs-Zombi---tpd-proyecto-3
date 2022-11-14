@@ -67,7 +67,10 @@ public class Logica {
 	}
 	
 	public void gameOver() {
-		reproductorfondo.stop();
-		System.exit(0);
+		gui.gameOver();
+	}
+
+	public void cambiarNivel() {
+		gui.cambiarNivel();
 	}
 }

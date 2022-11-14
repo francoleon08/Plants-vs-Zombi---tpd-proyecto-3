@@ -33,4 +33,8 @@ public class TimerProyectil extends Thread {
 	public void detener() {
 		control = false;
 	}
+
+	public void iniciar() {
+		control = true;
+	}
 }

@@ -116,7 +116,7 @@ public class GUI extends JFrame {
 		getContentPane().add(textDinero);
 		getContentPane().add(buttonModoDia);
 		getContentPane().add(buttonModoNoche);
-		getContentPane().add(buttonMusic);		
+		getContentPane().add(buttonMusic);
 		accionMouse();				
 	}
 	
@@ -175,6 +175,27 @@ public class GUI extends JFrame {
 		indexPlanta = -1;			
 	}
 	
+	public void actualizarBotonera(Iterable<EnteGrafico> list) {
+		if(botoneraGrafica != null) {
+			botoneraGrafica.actualizarBotonera(list);
+		}
+	}
+	
+	public void gameOver() {
+		logo.setVisible(true);
+		botonera.setVisible(false);
+		panelGrafico.setVisible(false);
+		buttonModoDia.setVisible(true);
+		buttonModoNoche.setVisible(true);
+		buttonMusic.setLocation(527, 578);
+		runJuego = false;
+	}
+	
+	public void cambiarNivel() {
+		botoneraGrafica = new Botonera(this);
+		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
+	}
+	
 	private void cargarConfiguracion() {
 		try {
 			guiConfig= new Properties();
@@ -182,12 +203,6 @@ public class GUI extends JFrame {
 			guiConfig.load(reader);			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public void actualizarBotonera(Iterable<EnteGrafico> list) {
-		if(botoneraGrafica != null) {
-			botoneraGrafica.actualizarBotonera(list);
 		}
 	}
 }
