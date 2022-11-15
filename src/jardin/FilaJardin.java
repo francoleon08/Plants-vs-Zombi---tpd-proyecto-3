@@ -17,6 +17,8 @@ public class FilaJardin {
 	private LinkedList<Proyectil> proyectilesActivos;
 	private SClip sonidoZombi;
 	private SClip sonidoMoneda;
+	private int zombis;
+	private boolean gameOver;
 	
 	public FilaJardin(Jardin jardin) {
 		this.jardin = jardin;
@@ -25,6 +27,8 @@ public class FilaJardin {
 		proyectilesActivos = new LinkedList<Proyectil>();
 		sonidoZombi = new SClip("assets/sonidos/proyectil.wav");
 		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");
+		zombis = 0;
+		gameOver = false;
 	}
 	
 	public void actualizarZombis() {
@@ -34,6 +38,8 @@ public class FilaJardin {
 				colision(z);
 				if(!z.estaVivo())
 					removeZombi(z);
+				if(z.getPosition().getX() <= 10)
+					gameOver = true;
 			}
 		} catch(Exception e) {}
 	}
@@ -107,18 +113,11 @@ public class FilaJardin {
 	}
 	
 	public boolean hayZombisActivos() {
-		return !zombisActivos.isEmpty();
+		return zombis != 0;
 	}
 	
 	public boolean hayZombiAlFinal() {
-		boolean estado = false;
-		for(Zombi z : zombisActivos) {
-			if(z.getLocation().getX() == 10) {
-				estado = true;
-				break;
-			}
-		}
-		return estado;
+		return gameOver;
 	}
 	
 	public boolean hayPlantaEnPos(Point posInsert) {
@@ -140,6 +139,7 @@ public class FilaJardin {
 	public void insertZombi(Zombi z) {
 		zombisActivos.add(z);
 		jardin.insertEnteJardinGrafico(z.getEnteGrafico());
+		zombis++;
 	}
 	
 	public void insertProyectil(Proyectil p) {
@@ -151,13 +151,16 @@ public class FilaJardin {
 		zombisActivos.clear();
 		plantasActivas.clear();
 		proyectilesActivos.clear();
+		zombis = 0;
+		gameOver = false;
 	}
 	
 	private boolean removeZombi(Zombi z) {
 		boolean removio=false;
 		if(z != null) {
 			zombisActivos.remove(z);
-			jardin.removerEnteJardinGrafico(z.getEnteGrafico());			
+			jardin.removerEnteJardinGrafico(z.getEnteGrafico());
+			zombis--;
 			removio=true;
 		}
 		return removio;
