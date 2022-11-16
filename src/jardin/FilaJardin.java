@@ -113,6 +113,15 @@ public class FilaJardin {
 		return valor;
 	}
 	
+	public void interaccionPala(Point pos) {		
+		for(Planta p : plantasActivas) {
+			if(p.contains(pos)) {
+				removePlanta(p);
+				break;
+			}
+		}
+	}
+	
 	public boolean hayZombisActivos() {
 		return zombis != 0;
 	}

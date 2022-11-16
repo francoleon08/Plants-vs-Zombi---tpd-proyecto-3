@@ -73,4 +73,8 @@ public class Logica {
 	public void cambiarNivel() {
 		gui.cambiarNivel();
 	}
+
+	public void removerPlanta(Point p) {
+		jardin.removerPlanta(p);
+	}
 }

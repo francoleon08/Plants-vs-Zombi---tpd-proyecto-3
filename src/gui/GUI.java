@@ -24,6 +24,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -35,18 +37,21 @@ public class GUI extends JFrame {
 	private JTextPane textDinero;
 	private JButton buttonModoDia;
 	private JButton buttonModoNoche;
+	private JButton pala;
 	private JButton buttonMusic;
 	private ImageIcon playMusic;
 	private ImageIcon stopMusic;
 	private JLabel logo;
 	private int indexPlanta;
 	private boolean runJuego;
+	private boolean accionPala;
 	
 	public GUI(Logica logica) {
 		cargarConfiguracion();		
 		this.logica = logica;
 		this.indexPlanta = -1;
 		this.runJuego = false;
+		this.accionPala = false;
 		playMusic = new ImageIcon(guiConfig.getProperty("playMusic"));
 		stopMusic = new ImageIcon(guiConfig.getProperty("stopMusic"));
 				
@@ -71,7 +76,7 @@ public class GUI extends JFrame {
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
 		textDinero.setBackground(new Color(154, 228, 146));
 		textDinero.setText("DINERO: "+logica.getDinero());
-		textDinero.setBounds(650, 53, 150, 20);
+		textDinero.setBounds(570, 53, 150, 20);
 		textDinero.setVisible(false);
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
@@ -82,6 +87,17 @@ public class GUI extends JFrame {
 		buttonModoNoche.setContentAreaFilled(false);
 		buttonModoDia.setBorder(null);
 		buttonModoNoche.setBorder(null);
+		
+		pala = new JButton(new ImageIcon("assets\\imagenes\\pala\\pala.png"));
+		pala.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+		});
+		pala.setBounds(730,15,90,90);
+		pala.setContentAreaFilled(false);
+		pala.setBorder(null);
+		pala.setVisible(false);
 		
 		buttonModoDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -95,9 +111,14 @@ public class GUI extends JFrame {
 				initGame();
 			}
 		});
+		pala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionPala = true;
+			}
+		});
 		
 		buttonMusic = new JButton(playMusic);
-		buttonMusic.setBounds(527, 578, 70, 70);
+		buttonMusic.setBounds(527, 578, 90, 90);
 		buttonMusic.setOpaque(false);
 		buttonMusic.setContentAreaFilled(false);	
 		buttonMusic.setBorder(null);
@@ -116,14 +137,16 @@ public class GUI extends JFrame {
 		getContentPane().add(textDinero);
 		getContentPane().add(buttonModoDia);
 		getContentPane().add(buttonModoNoche);
+		getContentPane().add(pala);
 		getContentPane().add(buttonMusic);
 		accionMouse();				
 	}
-	
+
 	private void initGame() {
 		logo.setVisible(false);
 		buttonModoNoche.setVisible(false);
 		buttonModoDia.setVisible(false);
+		pala.setVisible(true);
 		buttonMusic.setLocation(840, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
@@ -160,10 +183,20 @@ public class GUI extends JFrame {
 				if(runJuego) {
 					Point insert = e.getPoint();
 					insert.setLocation(insert.getX()-10, insert.getY()-110);
-					if(indexPlanta >= 0)
+					if(indexPlanta >= 0) {
 						crearPlanta(insert);
-					else
-						logica.interactuarMoneda(insert);
+						accionPala = false;
+					}						
+					else {
+						if(accionPala) {							
+							logica.removerPlanta(insert);
+							accionPala = false;
+						}
+						else {
+							logica.interactuarMoneda(insert);
+							accionPala = false;
+						}
+					}
 					textDinero.setText("DINERO: "+logica.getDinero());
 				}
 			}
@@ -187,6 +220,7 @@ public class GUI extends JFrame {
 		panelGrafico.setVisible(false);
 		buttonModoDia.setVisible(true);
 		buttonModoNoche.setVisible(true);
+		pala.setVisible(false);
 		buttonMusic.setLocation(527, 578);
 		runJuego = false;
 	}

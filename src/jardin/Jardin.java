@@ -89,7 +89,7 @@ public class Jardin {
 		int valor = filas[fila/100].interaccionMoneda(pos);
 		if(valor == 0) {
 			for(Moneda m : monedasGeneradas) {
-				if(m.contains(pos)) {
+				if(m.contains(pos)) {					
 					sonidoMoneda.play();
 					valor = m.getValor();
 					monedasGeneradas.remove(m);
@@ -99,6 +99,11 @@ public class Jardin {
 			}
 		}
 		return valor;
+	}
+	
+	public void removerPlanta(Point pos) {
+		int fila = (int) (pos.getY()/100)*100;
+		filas[fila/100].interaccionPala(pos);
 	}
 	
 	public void generarZombi() {
