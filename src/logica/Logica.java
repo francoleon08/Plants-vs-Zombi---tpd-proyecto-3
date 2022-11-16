@@ -34,6 +34,10 @@ public class Logica {
 		this.modo = modo;
 	}
 	
+	public String getModoJuego() {
+		return this.modo;
+	}
+	
 	public Iterable<EnteGrafico> getPlantasDisponibles() {
 		return jardin.getPlantasDisponibles();
 	}

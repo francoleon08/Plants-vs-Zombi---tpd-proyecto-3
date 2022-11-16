@@ -31,7 +31,7 @@ public class JardinGrafico {
 			e.printStackTrace();
 		}
 		panelGrafico = new JLayeredPane();
-		panelGrafico.setBounds(10, 110, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));		
+		panelGrafico.setBounds(66, 115, Integer.parseInt(config.getProperty("width")), Integer.parseInt(config.getProperty("heigth")));		
 		panelGrafico.setLayout(null);		
 		panelGrafico.setOpaque(false);
 		ImageIcon img= imagenEscalada(config.getProperty("fondo_"+modoJuego), panelGrafico.getWidth(), panelGrafico.getHeight());

@@ -67,19 +67,24 @@ public class Jardin {
 	
 	public int insertPlanta(int index, Point position) {		
 		Planta insert = plantasDisponibles.get(index).clone();
+		Point posInsert;
 		int precio = 0;
-		Point posInsert = refactorPoint(position);		
 		boolean celdaVacia = true;
 		
-		if(filas[(int) (posInsert.getY())/100].hayPlantaEnPos(posInsert)) {
-			celdaVacia = false;
-		}
-		if(plantasDisponibles.get(index).puedeComprar() && logica.getDinero() >= insert.getPrecio() 
-				&& celdaVacia && insert != null && posInsert != null) {						
-			insert.setPosition(posInsert);
-			filas[(int) (posInsert.getY())/100].insertPlanta(insert);
-			plantasDisponibles.get(index).resetCompra();
-			precio += insert.getPrecio();			
+		if(plantasDisponibles.get(index).puedeComprar() && logica.getDinero() >= insert.getPrecio()) {
+			posInsert = refactorPoint(position);	
+			posInsert.x = posInsert.x + 18;
+			
+			if(filas[(int) (posInsert.getY())/100].hayPlantaEnPos(posInsert)) {
+				celdaVacia = false;
+			}
+			
+			if(celdaVacia && insert != null && posInsert != null) {						
+				insert.setPosition(posInsert);
+				filas[(int) (posInsert.getY())/100].insertPlanta(insert);
+				plantasDisponibles.get(index).resetCompra();
+				precio += insert.getPrecio();			
+			}
 		}
 		return precio;
 	}
@@ -125,13 +130,16 @@ public class Jardin {
 				}
 			}
 		}
-		if(checkGameOver()) {
-			stopTimers();
-			logica.gameOver();
-		}
 		else {
-			if(checkUpLevel()) {				
-				upLevel();
+			//System.out.print("");
+			if(checkGameOver()) {
+				stopTimers();
+				logica.gameOver();
+			}
+			else {
+				if(checkUpLevel()) {				
+					upLevel();
+				}
 			}
 		}
 	}

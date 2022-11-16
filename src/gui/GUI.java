@@ -42,6 +42,7 @@ public class GUI extends JFrame {
 	private ImageIcon playMusic;
 	private ImageIcon stopMusic;
 	private JLabel logo;
+	private JLabel fondo;
 	private int indexPlanta;
 	private boolean runJuego;
 	private boolean accionPala;
@@ -56,7 +57,7 @@ public class GUI extends JFrame {
 		stopMusic = new ImageIcon(guiConfig.getProperty("stopMusic"));
 				
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(1100, 720));
+		setSize(new Dimension(1100, 750));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
@@ -64,37 +65,37 @@ public class GUI extends JFrame {
 		getContentPane().setBackground(new Color(154, 228, 146));			
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();		
-		Image cursorImage = tk.getImage("assets\\imagenes\\gui\\cursor.png");
+		Image cursorImage = tk.getImage(guiConfig.getProperty("cursor"));
 		Cursor cursor = tk.createCustomCursor(cursorImage, new Point(0,0), "Custom Cursor");	
 		getContentPane().setCursor(cursor);
 		
 		logo = new JLabel(new ImageIcon(guiConfig.getProperty("logo")));
-		logo.setBounds(211, 99, 700, 418);
+		logo.setBounds(200, 116, 700, 418);
 		
 		textDinero = new JTextPane();
 		textDinero.setEditable(false);
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
 		textDinero.setBackground(new Color(154, 228, 146));
 		textDinero.setText("DINERO: "+logica.getDinero());
-		textDinero.setBounds(570, 53, 150, 20);
+		textDinero.setBounds(750, 53, 150, 20);
 		textDinero.setVisible(false);
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
 		buttonModoNoche = new JButton(new ImageIcon(guiConfig.getProperty("modoNoche")));		
-		buttonModoDia.setBounds(211, 578, 283, 70);
-		buttonModoNoche.setBounds(628, 578, 283, 70);		
+		buttonModoDia.setBounds(200, 578, 283, 70);
+		buttonModoNoche.setBounds(617, 578, 283, 70);		
 		buttonModoDia.setContentAreaFilled(false);		
 		buttonModoNoche.setContentAreaFilled(false);
 		buttonModoDia.setBorder(null);
 		buttonModoNoche.setBorder(null);
 		
-		pala = new JButton(new ImageIcon("assets\\imagenes\\pala\\pala.png"));
+		pala = new JButton(new ImageIcon(guiConfig.getProperty("pala")));
 		pala.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 			}
 		});
-		pala.setBounds(730,15,90,90);
+		pala.setBounds(910,15,90,90);
 		pala.setContentAreaFilled(false);
 		pala.setBorder(null);
 		pala.setVisible(false);
@@ -118,7 +119,7 @@ public class GUI extends JFrame {
 		});
 		
 		buttonMusic = new JButton(playMusic);
-		buttonMusic.setBounds(527, 578, 90, 90);
+		buttonMusic.setBounds(515, 578, 70, 70);
 		buttonMusic.setOpaque(false);
 		buttonMusic.setContentAreaFilled(false);	
 		buttonMusic.setBorder(null);
@@ -133,12 +134,17 @@ public class GUI extends JFrame {
 			}
 		});
 		
+		fondo = new JLabel();
+		fondo.setBounds(0, 0, 1100, 750);
+		fondo.setVisible(false);
+		
 		getContentPane().add(logo);
 		getContentPane().add(textDinero);
 		getContentPane().add(buttonModoDia);
 		getContentPane().add(buttonModoNoche);
 		getContentPane().add(pala);
 		getContentPane().add(buttonMusic);
+		getContentPane().add(fondo);
 		accionMouse();				
 	}
 
@@ -147,11 +153,18 @@ public class GUI extends JFrame {
 		buttonModoNoche.setVisible(false);
 		buttonModoDia.setVisible(false);
 		pala.setVisible(true);
-		buttonMusic.setLocation(840, 25);
+		buttonMusic.setLocation(1020, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
 		textDinero.setVisible(true);
+		if(logica.getModoJuego() == "dia") {
+			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia")));
+		}
+		else {
+			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_noche")));
+		}
+		fondo.setVisible(true);
 		runJuego = true;
 	}
 	
@@ -182,7 +195,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {								
 				if(runJuego) {
 					Point insert = e.getPoint();
-					insert.setLocation(insert.getX()-10, insert.getY()-110);
+					insert.setLocation(insert.getX()-66, insert.getY()-116);
 					if(indexPlanta >= 0) {
 						crearPlanta(insert);
 						accionPala = false;

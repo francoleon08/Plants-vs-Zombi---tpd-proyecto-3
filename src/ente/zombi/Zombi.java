@@ -30,7 +30,7 @@ public class Zombi extends Ente implements Visitor {
 		this.bailarin = bailarin;
 		this.run = true;
 		this.setLocation(position);
-		this.width = 90;
+		this.width = 64;
 		this.height = 100;
 		
 		init();
