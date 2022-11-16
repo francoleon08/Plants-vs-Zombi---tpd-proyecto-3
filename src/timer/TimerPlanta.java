@@ -12,13 +12,15 @@ public class TimerPlanta extends Thread {
 	}
 	
 	public void run() {
-		while(control) {
-			System.out.println("");
-			jardin.actualizarPlantas();
-			try {
-				Thread.sleep(500);			
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		while(true) {
+			System.out.print("");
+			if(control) {
+				jardin.actualizarPlantas();
+				try {
+					Thread.sleep(500);			
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

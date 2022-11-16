@@ -51,7 +51,7 @@ public class Botonera {
 		}
 		
 		panelBotones.setSize((cont)*100, 100);
-		//gui.addBotonera(panelBotones);
+		gui.addBotonera(panelBotones);
 	}
 	
 	public void actualizarBotonera(Iterable<EnteGrafico> list) {

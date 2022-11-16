@@ -204,7 +204,7 @@ public class Jardin {
 		return cont == 0;
 	}
 	
-	private void upLevel() {
+	private void upLevel() {		
 		stopTimers();
 		for(int i=0; i<filas.length; i++) {
 			filas[i].limpiarListas();

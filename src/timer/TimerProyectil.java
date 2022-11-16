@@ -15,17 +15,20 @@ public class TimerProyectil extends Thread {
 	}
 	
 	public void run() {
-		while(control) {					
-			jardin.actualizarProyectiles();
-			cooldownMoneda--;
-			if(cooldownMoneda == 0) {
-				jardin.generarMoneda();
-				cooldownMoneda = COOLDOWN_MONEDA;
-			}
-			try {
-				Thread.sleep(5);			
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		while(true) {
+			System.out.print("");
+			if(control) {
+				jardin.actualizarProyectiles();
+				cooldownMoneda--;
+				if(cooldownMoneda == 0) {
+					jardin.generarMoneda();
+					cooldownMoneda = COOLDOWN_MONEDA;
+				}
+				try {
+					Thread.sleep(5);			
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -35,6 +38,7 @@ public class TimerProyectil extends Thread {
 	}
 
 	public void iniciar() {
+		cooldownMoneda = COOLDOWN_MONEDA;
 		control = true;
 	}
 }

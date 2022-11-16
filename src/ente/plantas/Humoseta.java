@@ -29,7 +29,7 @@ public class Humoseta extends Planta {
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
 			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()+30);
-			disparo = new Espora(aux, this.config);
+			disparo = new Espora(aux, this.config, 0);
 		}
 		return disparo;
 	}

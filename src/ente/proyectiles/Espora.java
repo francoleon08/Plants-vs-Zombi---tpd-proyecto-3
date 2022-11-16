@@ -15,20 +15,30 @@ public class Espora extends Proyectil {
 	/**
 	 * Instantiates a new espora.
 	 * @param punto the punto
-	 * @param grafico the grafico
-	 * @param velocidad the velocidad
-	 * @param distancia the distancia
-	 * @param danio the danio
+	 * @param p de Properites
+	 * @param index 0->rafaga, 1->espora
 	 */
-	public Espora(Point position, Properties p ) {
+	public Espora(Point position, Properties p, int index) {
 		this.setLocation(position);
 		this.config = p;		
-		this.width = Integer.parseInt(config.getProperty("ancho_espora"));
-		this.height = Integer.parseInt(config.getProperty("alto_espora"));
-		this.danio = Integer.parseInt(config.getProperty("danio_espora"));
-		this.velocidad = Integer.parseInt(config.getProperty("velocidad_espora"));
-		this.distancia = Integer.parseInt(config.getProperty("distancia_espora"));
-		this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_espora"));
+		if(index == 0) {
+			this.width = Integer.parseInt(config.getProperty("ancho_rafaga_espora"));
+			this.height = Integer.parseInt(config.getProperty("alto_rafaga_espora"));
+			this.danio = Integer.parseInt(config.getProperty("danio_rafaga_espora"));
+			this.velocidad = Integer.parseInt(config.getProperty("velocidad_rafaga_espora"));
+			this.distancia = Integer.parseInt(config.getProperty("distancia_rafaga_espora"));
+			this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_rafaga_espora"));
+		}
+		else {
+			if(index == 1) {
+				this.width = Integer.parseInt(config.getProperty("ancho_espora"));
+				this.height = Integer.parseInt(config.getProperty("alto_espora"));
+				this.danio = Integer.parseInt(config.getProperty("danio_espora"));
+				this.velocidad = Integer.parseInt(config.getProperty("velocidad_espora"));
+				this.distancia = Integer.parseInt(config.getProperty("distancia_espora"));
+				this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_espora"));
+			}
+		}
 	}
 
 	/**
@@ -38,6 +48,7 @@ public class Espora extends Proyectil {
 	public void accept(Visitor v) {
 		v.visitProyectil(this);
 	}
+
 	
 	/**
 	 * Gets the distancia.
