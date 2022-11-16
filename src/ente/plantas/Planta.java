@@ -7,6 +7,7 @@ import ente.proyectiles.Proyectil;
 public abstract class Planta extends Ente {
 	protected int salud;
 	protected int precio;
+	protected int danio;
 	protected int cooldownAccion;
 	protected int cooldownCompra;
 	protected EnteGrafico icon;
@@ -18,6 +19,10 @@ public abstract class Planta extends Ente {
 	
 	public int getPrecio() {
 		return precio;
+	}
+	
+	public int getDanio() {
+		return danio;
 	}
 	
 	public boolean estaViva() {

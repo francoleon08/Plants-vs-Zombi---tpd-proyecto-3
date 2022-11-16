@@ -16,9 +16,10 @@ public class Zombi extends Ente implements Visitor {
 	private boolean caracono;
 	private boolean lector;
 	private boolean portero;
+	private boolean bailarin;
 	private boolean run;
 	
-	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, int salud, int danio, Point position, String skin) {
+	public Zombi(boolean abanderado, boolean caracono, boolean lector, boolean portero, boolean bailarin, int salud, int danio, Point position, String skin) {
 		this.salud = salud;
 		this.danio = 1;
 		this.velocidad = 1;
@@ -26,12 +27,21 @@ public class Zombi extends Ente implements Visitor {
 		this.caracono = caracono;
 		this.lector = lector;
 		this.portero = portero;
+		this.bailarin = bailarin;
 		this.run = true;
 		this.setLocation(position);
 		this.width = 90;
 		this.height = 100;
 		
+		init();
+		
 		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, skin);		
+	}
+	
+	private void init() {
+		if(bailarin) {
+			velocidad *= 2;
+		}
 	}
 	
 	public boolean estaVivo() {
@@ -68,6 +78,14 @@ public class Zombi extends Ente implements Visitor {
 	
 	public void setPortero(boolean portero) {
 		this.portero = portero;
+	}
+	
+	public boolean isBailarin() {
+		return bailarin;
+	}
+	
+	public void setBailarin(boolean bailarin) {
+		this.bailarin = bailarin;
 	}
 
 	public void actualizar() {
@@ -121,14 +139,19 @@ public class Zombi extends Ente implements Visitor {
 			this.run = true;
 		}
 	}
+	
+	public void visitNuez(Nuez p) {
+		this.run = false;
+		if(p.disminuirSalud(danio)) {
+			this.run = true;
+		}
+	}
 
-	@Override
 	public void visitProyectil(Proyectil p) {		
 		this.salud -= p.getDanio();
 		lectorPeriodico();
 	}
 
-	@Override
 	public void accept(Visitor v) {
 		// TODO Auto-generated method stub		
 	}

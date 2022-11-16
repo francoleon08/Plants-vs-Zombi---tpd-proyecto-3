@@ -9,7 +9,6 @@ import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 
 public class Jalapeno extends Planta {
-	private int danio;
 	
 	public Jalapeno(Point position, Properties p) {
 		this.setLocation(position);

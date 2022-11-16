@@ -12,6 +12,7 @@ public class Girasol extends Planta {
 	
 	public Girasol(Point position, Properties p) {
 		this.setLocation(position);
+		this.danio = 0;
 		this.config = p;
 		this.salud = Integer.parseInt(config.getProperty("salud_girasol"));
 		this.precio = Integer.parseInt(config.getProperty("precio_girasol"));

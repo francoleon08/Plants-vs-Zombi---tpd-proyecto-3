@@ -56,7 +56,8 @@ public class FilaJardin {
 						p.resetDisparo();
 					}						
 					else {
-						removePlanta(p);
+						if(p.getDanio() > 0)
+							removePlanta(p);
 					}
 				}
 			}

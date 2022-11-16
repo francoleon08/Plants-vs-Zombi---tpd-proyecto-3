@@ -102,7 +102,15 @@ public class GeneradorNivel {
 					Planta p = new Humoseta(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
 					plantasDisponibles.add(p);
 					i=i+6;
-				}break;			
+				}break;	
+				
+				case'N':{
+					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
+					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
+					Planta p = new Nuez(new Point(Integer.parseInt(x),Integer.parseInt(y)), configPlanta);
+					plantasDisponibles.add(p);
+					i=i+6;
+				}break;	
 			
 				case'1':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
@@ -119,6 +127,7 @@ public class GeneradorNivel {
 					zombisDisponibles.add(z);
 					i=i+6;
 				}break;
+				
 				case'3':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
 					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
@@ -126,6 +135,7 @@ public class GeneradorNivel {
 					zombisDisponibles.add(z);
 					i=i+6;
 				}break;
+				
 				case'4':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
 					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
@@ -133,10 +143,19 @@ public class GeneradorNivel {
 					zombisDisponibles.add(z);
 					i=i+6;
 				}break;
+				
 				case'5':{
 					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
 					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
 					Zombi z = director.zombiPortero(new Point(Integer.parseInt(x),Integer.parseInt(y)));
+					zombisDisponibles.add(z);
+					i=i+6;
+				}break;
+				
+				case'6':{
+					x = String.valueOf(level.charAt(i+2)) + String.valueOf(level.charAt(i+3)) + String.valueOf(level.charAt(i+4));
+					y = String.valueOf(level.charAt(i+6)) + String.valueOf(level.charAt(i+7)) + String.valueOf(level.charAt(i+8));
+					Zombi z = director.zombiBailarin(new Point(Integer.parseInt(x),Integer.parseInt(y)));
 					zombisDisponibles.add(z);
 					i=i+6;
 				}break;

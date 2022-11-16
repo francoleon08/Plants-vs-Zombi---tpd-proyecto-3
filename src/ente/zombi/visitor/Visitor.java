@@ -17,5 +17,7 @@ public interface Visitor {
 	
 	public void visitHumoseta(Humoseta p);
 	
+	public void visitNuez(Nuez p);
+	
 	public void visitProyectil(Proyectil p);
 }
