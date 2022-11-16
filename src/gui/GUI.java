@@ -24,8 +24,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -234,7 +232,8 @@ public class GUI extends JFrame {
 		buttonModoDia.setVisible(true);
 		buttonModoNoche.setVisible(true);
 		pala.setVisible(false);
-		buttonMusic.setLocation(527, 578);
+		fondo.setVisible(false);
+		buttonMusic.setLocation(515, 578);
 		runJuego = false;
 	}
 	
