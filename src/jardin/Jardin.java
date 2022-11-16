@@ -130,16 +130,14 @@ public class Jardin {
 				}
 			}
 		}
+		//System.out.print("");
+		if(checkGameOver()) {
+			stopTimers();
+			logica.gameOver();
+		}
 		else {
-			//System.out.print("");
-			if(checkGameOver()) {
-				stopTimers();
-				logica.gameOver();
-			}
-			else {
-				if(checkUpLevel()) {				
-					upLevel();
-				}
+			if(checkUpLevel()) {				
+				upLevel();
 			}
 		}
 	}
