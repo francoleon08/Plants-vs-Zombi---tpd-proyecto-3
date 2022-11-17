@@ -1,6 +1,7 @@
 package jardin;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 import Sonido.SClip;
 import animacion.Animacion;
@@ -60,6 +61,8 @@ public class FilaJardin {
 							removePlanta(p);
 					}
 				}
+				if(!p.estaViva())
+					removePlanta(p);
 			}
 		} catch(Exception e) {}
 	}
@@ -123,7 +126,7 @@ public class FilaJardin {
 	}
 	
 	public boolean hayZombisActivos() {
-		return zombis != 0;
+		return !zombisActivos.isEmpty();
 	}
 	
 	public boolean hayZombiAlFinal() {

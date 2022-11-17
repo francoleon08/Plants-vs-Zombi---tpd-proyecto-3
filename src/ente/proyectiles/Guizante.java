@@ -20,7 +20,7 @@ public class Guizante extends Proyectil {
 		this.width= Integer.parseInt(config.getProperty("ancho_guizante"));
 		this.height=Integer.parseInt(config.getProperty("alto_guizante"));
 		this.danio=Integer.parseInt(config.getProperty("danio_guizante"));
-		this.velocidad=Integer.parseInt(config.getProperty("valocidad_guizante"));
+		this.velocidad=Integer.parseInt(config.getProperty("velocidad_guizante"));
 		this.grafico=new EnteGrafico(position, this.width, this.height, config.getProperty("skin_guizante"));
 	}
 

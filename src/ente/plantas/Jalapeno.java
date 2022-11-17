@@ -1,9 +1,11 @@
 package ente.plantas;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
+import ente.proyectiles.Explosion;
 import ente.proyectiles.Guizante;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
@@ -25,7 +27,8 @@ public class Jalapeno extends Planta {
 	}
 
 	public Proyectil disparar() {
-		return null;
+		this.salud = 0;
+		return new Explosion(this.getLocation(), config);
 	}
 
 	public Planta clone() {
@@ -47,6 +50,7 @@ public class Jalapeno extends Planta {
 			this.icon.setSkin(config.getProperty("icon_jalapeno"));			
 		}
 	}
+	
 
 	public void resetDisparo() {
 		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_jalapeno"));

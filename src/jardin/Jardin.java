@@ -130,14 +130,16 @@ public class Jardin {
 				}
 			}
 		}
-		//System.out.print("");
-		if(checkGameOver()) {
-			stopTimers();
-			logica.gameOver();
-		}
 		else {
-			if(checkUpLevel()) {				
-				upLevel();
+			if(checkGameOver()) {
+				stopTimers();
+				logica.gameOver();
+			}
+			else {
+				if(checkUpLevel()) {		
+					System.out.print("asd");
+					upLevel();
+				}
 			}
 		}
 	}
@@ -212,6 +214,7 @@ public class Jardin {
 			if(filas[i].hayZombisActivos())
 				cont++;
 		}
+		System.out.println(cont);
 		return cont == 0;
 	}
 	
