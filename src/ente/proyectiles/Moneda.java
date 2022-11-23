@@ -13,6 +13,7 @@ public class Moneda extends Proyectil {
 
 	public Moneda(Point position, Properties p) {
 		this.config = p;
+		this.choqueZombie = false;
 		this.setLocation(position);
 		this.cooldown = Integer.parseInt(config.getProperty("cooldown_moneda"));
 		this.valor = Integer.parseInt(config.getProperty("valor_moneda"));
@@ -29,7 +30,11 @@ public class Moneda extends Proyectil {
 	
 	public void actualizar() {
 		cooldown--;
-	} 
+	}
+	
+	public boolean condicionElim(int lim) {
+		return cooldown == 0;
+	}
 	
 	public void actualizarCaida() {
 		if(this.getLocation().getY() < Integer.parseInt(config.getProperty("minPosicionMoneda"))) {

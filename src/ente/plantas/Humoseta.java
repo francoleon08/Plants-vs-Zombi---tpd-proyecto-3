@@ -6,6 +6,7 @@ import java.util.Properties;
 import ente.grafico.EnteGrafico;
 import ente.proyectiles.Espora;
 import ente.proyectiles.Proyectil;
+import ente.proyectiles.RafagaEspora;
 import ente.zombi.visitor.Visitor;
 
 public class Humoseta extends Planta {
@@ -29,8 +30,8 @@ public class Humoseta extends Planta {
 		Proyectil disparo =  null;
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
-			aux.setLocation(this.getLocation().getX()+10, this.getLocation().getY()+30);
-			disparo = new Espora(aux, this.config, 0);
+			aux.setLocation(this.getLocation().getX()+30, this.getLocation().getY()+30);
+			disparo = new RafagaEspora(aux, this.config);
 		}
 		return disparo;
 	}

@@ -15,6 +15,7 @@ import ente.zombi.visitor.Visitor;
 public class Guizante extends Proyectil {
 	
 	public Guizante(Point position, Properties p ) {
+		this.choqueZombie = false;
 		this.config=p;
 		this.setLocation(position);
 		this.width= Integer.parseInt(config.getProperty("ancho_guizante"));

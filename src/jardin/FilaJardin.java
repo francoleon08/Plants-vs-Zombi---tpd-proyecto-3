@@ -71,7 +71,7 @@ public class FilaJardin {
 		try {
 			for(Proyectil p : proyectilesActivos) {
 				p.actualizar();
-				if(p.getLocation().getX() >= 899) 
+				if(p.condicionElim(899)) 
 					removeProyectiles(p);
 			}
 		} catch(Exception e) {}
@@ -88,14 +88,19 @@ public class FilaJardin {
 		for(Proyectil p : proyectilesActivos) {
 			if(z.intersects(p) && p.getDanio() > 0) {
 				sonidoZombi.play();
-				removeProyectiles(p);
-				p.accept(z);					
+				
+				p.setChoqueZombie();
+				if(p.condicionElim(899))
+					removeProyectiles(p);
+				
+				p.accept(z);
+				Point aux = z.getLocation();
 				if(!z.estaVivo()) {
 					removeZombi(z);
-					jardin.generarAnimacionExplocion(z.getLocation());
+					jardin.generarAnimacionExplocion(aux);
 				}
 				else {
-					jardin.generarAnimacionColision(p.getLocation());
+					jardin.generarAnimacionColision(aux);
 				}
 			}
 		}
