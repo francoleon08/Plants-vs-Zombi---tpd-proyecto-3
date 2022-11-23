@@ -226,6 +226,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void gameOver() {
+		javax.swing.JOptionPane.showMessageDialog(this, "GAME OVER");
 		logo.setVisible(true);
 		botonera.setVisible(false);
 		panelGrafico.setVisible(false);
@@ -239,6 +240,7 @@ public class GUI extends JFrame {
 	
 	public void cambiarNivel() {	
 		runJuego = false;
+		javax.swing.JOptionPane.showMessageDialog(this, "SUIGUIENTE NIVEL");
 		getContentPane().remove(botonera);
 		getContentPane().repaint();
 		botoneraGrafica = new Botonera(this);

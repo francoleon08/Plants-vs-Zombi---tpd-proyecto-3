@@ -136,8 +136,7 @@ public class Jardin {
 				logica.gameOver();
 			}
 			else {
-				if(checkUpLevel()) {		
-					System.out.print("asd");
+				if(checkUpLevel()) {							
 					upLevel();
 				}
 			}
@@ -195,8 +194,8 @@ public class Jardin {
 	}
 	
 	public void generarAnimacionColision(Point p, String url) {
-		//Animacion animacion = new Animacion(this.jardinGrafico, p, url);
-		//animacion.start();
+		Animacion animacion = new Animacion(this.jardinGrafico, p, url);
+		animacion.start();
 		//animacion = null;
 	}
 	
@@ -213,8 +212,7 @@ public class Jardin {
 		for(int i=0; i<filas.length; i++) {
 			if(filas[i].hayZombisActivos())
 				cont++;
-		}
-		System.out.println(cont);
+		}		
 		return cont == 0;
 	}
 	

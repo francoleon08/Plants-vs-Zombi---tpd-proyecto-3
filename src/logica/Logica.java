@@ -21,7 +21,7 @@ public class Logica {
 		reproductorActivo = true;
 		gui = new GUI(this);		
 		gui.setVisible();
-		reproductorfondo= new SClip("assets\\sonidos\\Music1.wav");
+		reproductorfondo= new SClip("assets/sonidos/Music1.wav");
 		reproductorfondo.loop();
 	}
 	

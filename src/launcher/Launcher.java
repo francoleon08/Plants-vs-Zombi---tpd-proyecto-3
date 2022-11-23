@@ -5,7 +5,7 @@ import logica.Logica;
 
 public class Launcher {
 
-	public static void main(String[] args) {		
-		SwingUtilities.invokeLater(Logica::new);
-	}
-}
+        public static void main(String[] args) {
+            new Logica();
+        }
+    }
