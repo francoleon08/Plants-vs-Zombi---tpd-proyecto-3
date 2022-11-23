@@ -25,7 +25,6 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-@SuppressWarnings("serial")
 public class GUI extends JFrame {
 	private Logica logica;
 	private Properties guiConfig;
@@ -44,6 +43,7 @@ public class GUI extends JFrame {
 	private int indexPlanta;
 	private boolean runJuego;
 	private boolean accionPala;
+	private JLayeredPane panelFondo;
 	
 	public GUI(Logica logica) {
 		cargarConfiguracion();		
@@ -60,7 +60,13 @@ public class GUI extends JFrame {
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		getContentPane().setLayout(null);
-		getContentPane().setBackground(new Color(154, 228, 146));			
+		
+		panelFondo  = new JLayeredPane();
+		panelFondo.setSize(1100, 750);
+		panelFondo.setOpaque(false);
+		getContentPane().add(panelFondo);
+		
+		//getContentPane().setBackground(new Color(154, 228, 146));			
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();		
 		Image cursorImage = tk.getImage(guiConfig.getProperty("cursor"));
@@ -137,12 +143,14 @@ public class GUI extends JFrame {
 		fondo.setVisible(false);
 		
 		getContentPane().add(logo);
-		getContentPane().add(textDinero);
+	
 		getContentPane().add(buttonModoDia);
 		getContentPane().add(buttonModoNoche);
-		getContentPane().add(pala);
-		getContentPane().add(buttonMusic);
-		getContentPane().add(fondo);
+		panelFondo.add(textDinero,1);
+		
+		
+		panelFondo.add(buttonMusic,0);
+		panelFondo.add(fondo,1);
 		accionMouse();				
 	}
 
@@ -151,13 +159,14 @@ public class GUI extends JFrame {
 		buttonModoNoche.setVisible(false);
 		buttonModoDia.setVisible(false);
 		pala.setVisible(true);
+		panelFondo.add(pala,0);
 		buttonMusic.setLocation(1020, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
 		textDinero.setVisible(true);
 		if(logica.getModoJuego() == "dia") {
-			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia")));
+			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia2")));
 		}
 		else {
 			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_noche")));
@@ -165,15 +174,16 @@ public class GUI extends JFrame {
 		fondo.setVisible(true);
 		runJuego = true;
 	}
-	
+	//Panel de juego
 	public void addJPanel(JLayeredPane panel) {
 		panelGrafico = panel;
-		getContentPane().add(panelGrafico);
+		panelFondo.add(panelGrafico,-1);
+		
 	}
-	
+	//Botonera
 	public void addBotonera(JLayeredPane panel) {
 		botonera = panel;
-		getContentPane().add(botonera);
+		panelFondo.add(botonera, 2);
 	}
 	
 	public void accionBoton(int index) {
@@ -187,13 +197,16 @@ public class GUI extends JFrame {
 	public void setVisible() {
 		this.setVisible(true);
 	}
+	public String getPropiedad(String key) {
+		return guiConfig.getProperty(key);
+	}
 	
 	private void accionMouse() {
 		getContentPane().addMouseListener(new MouseAdapter() {			
 			public void mouseClicked(MouseEvent e) {								
 				if(runJuego) {
 					Point insert = e.getPoint();
-					insert.setLocation(insert.getX()-66, insert.getY()-116);
+					insert.setLocation(insert.getX()-110, insert.getY()-116);
 					if(indexPlanta >= 0) {
 						crearPlanta(insert);
 						accionPala = false;
