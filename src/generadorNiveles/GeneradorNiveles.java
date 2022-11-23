@@ -31,6 +31,7 @@ public class GeneradorNiveles extends JFrame {
         setSize(400,310);
         getContentPane().setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
         
         panelPrincipal = new JPanel();
         panelPrincipal.setBounds(getContentPane().getBounds());
@@ -74,6 +75,11 @@ public class GeneradorNiveles extends JFrame {
         		nivel =(int) textNivel.getValue();
         		if(nivel > 0 && nivel <999) {        			
         			crearNivel(comboBoxModo.getItemAt(comboBoxModo.getSelectedIndex()).toString());
+        		}
+        		else {
+        			generarMensaje("NIVEL INCORRECTO");
+        			nivel = 1;
+        			textNivel.setValue(nivel);
         		}
         	}
         });

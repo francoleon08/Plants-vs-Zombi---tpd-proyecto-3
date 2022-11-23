@@ -91,6 +91,7 @@ public class GUI extends JFrame {
 		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());		
 		textDinero.setText("DINERO: "+logica.getDinero());
 		textDinero.setVisible(true);
+		btnCrearNiveles.setVisible(false);
 		if(logica.getModoJuego() == "dia") {
 			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia2")));
 		}
@@ -281,6 +282,7 @@ public class GUI extends JFrame {
 		buttonModoNoche.setVisible(true);
 		pala.setVisible(false);
 		fondo.setVisible(false);
+		btnCrearNiveles.setVisible(true);
 		buttonMusic.setLocation(515, 578);
 		runJuego = false;
 	}
