@@ -14,10 +14,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import logica.Logica;
+import nivel.generador.GeneradorNivel;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
 import ente.grafico.EnteGrafico;
+import generadorNiveles.GeneradorNiveles;
 import gui.botonera.Botonera;
 import java.awt.Font;
 import java.awt.Image;
@@ -38,6 +41,7 @@ public class GUI extends JFrame {
 	private JButton buttonModoNoche;
 	private JButton pala;
 	private JButton buttonMusic;
+	private JButton btnCrearNiveles;
 	private ImageIcon playMusic;
 	private ImageIcon stopMusic;
 	private JLabel logo;
@@ -64,6 +68,8 @@ public class GUI extends JFrame {
 		getContentPane().add(logo);	
 		getContentPane().add(buttonModoDia);
 		getContentPane().add(buttonModoNoche);	
+		getContentPane().add(btnCrearNiveles);
+				
 		panelFondo.add(buttonMusic, 2);
 		panelFondo.add(fondo, 1);
 		panelFondo.add(botonExit, 0);
@@ -154,6 +160,11 @@ public class GUI extends JFrame {
 		botonExit.setBackground(new Color(224, 27, 36));
 		botonExit.setBounds(1075, 0, 25, 25);
 		botonExit.setLayout(null);
+		
+		btnCrearNiveles = new JButton("Crear Niveles");
+		btnCrearNiveles.setBounds(930, 0, 130, 25);
+		btnCrearNiveles.setOpaque(false);
+		btnCrearNiveles.setContentAreaFilled(false);
 	}
 	
 	private void configListener() {
@@ -192,6 +203,12 @@ public class GUI extends JFrame {
 		botonExit.addMouseListener(new MouseAdapter() {			
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
+			}
+		});
+		btnCrearNiveles.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new GeneradorNiveles();
 			}
 		});
 	}
