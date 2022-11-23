@@ -48,6 +48,7 @@ public class GUI extends JFrame {
 	private int indexPlanta;
 	private boolean runJuego;
 	private boolean accionPala;
+	private JLayeredPane panelFondo;
 	
 	public GUI() {
 		cargarConfiguracion();		
@@ -62,6 +63,10 @@ public class GUI extends JFrame {
 		stopMusic = new ImageIcon(guiConfig.getProperty("stopMusic"));
 		logo = new JLabel(new ImageIcon(guiConfig.getProperty("logo")));
 		logo.setBounds(200, 116, 700, 418);
+		
+		panelFondo  = new JLayeredPane();
+		panelFondo.setSize(1100, 750);
+		panelFondo.setOpaque(false);		
 		
 		textDinero = new JTextPane();
 		textDinero.setEditable(false);
@@ -138,6 +143,7 @@ public class GUI extends JFrame {
 		botonExit.setBounds(1075, 0, 25, 25);
 		botonExit.setLayout(null);
 	
+		getContentPane().add(panelFondo);
 		getContentPane().add(botonExit);
 		getContentPane().add(logo);
 		getContentPane().add(textDinero);
@@ -206,8 +212,8 @@ public class GUI extends JFrame {
 		panelGrafico.repaint();		
 	}
 	
-	public void setVisible() {
-		this.setVisible(true);
+	public String getPropiedad(String key) {
+		return guiConfig.getProperty(key);
 	}
 	
 	private void accionMouse() {
@@ -215,7 +221,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {								
 				if(runJuego) {
 					Point insert = e.getPoint();
-					insert.setLocation(insert.getX()-66, insert.getY()-116);
+					insert.setLocation(insert.getX()-110, insert.getY()-116);
 					if(indexPlanta >= 0) {
 						crearPlanta(insert);
 						accionPala = false;

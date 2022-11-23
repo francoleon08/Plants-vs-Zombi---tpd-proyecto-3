@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import ente.grafico.EnteGrafico;
@@ -23,7 +24,12 @@ public class Botonera {
 		panelBotones = new JLayeredPane();
 		panelBotones.setBounds(10, 10, 400, 100);
 		panelBotones.setLayout(null);
-		panelBotones.setOpaque(true);
+		panelBotones.setOpaque(false);
+		ImageIcon fondo= new ImageIcon(gui.getPropiedad("fondo_botonera"));
+		JLabel lblFondo= new JLabel(fondo);
+		lblFondo.setSize(400, 100);
+		
+		panelBotones.add(lblFondo,0);
 		botones = new LinkedList<JButton>();
 			
 		gui.addBotonera(panelBotones);		
