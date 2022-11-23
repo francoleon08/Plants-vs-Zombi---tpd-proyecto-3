@@ -10,6 +10,7 @@ import ente.Ente;
 public abstract class Proyectil extends Ente {
 	protected int danio;
 	protected int velocidad;
+	boolean choqueZombie;
 
 	/**
 	 * Gets the danio.
@@ -34,6 +35,11 @@ public abstract class Proyectil extends Ente {
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
+	
+	//Indica que ya choqué a un zombie, solo puede ser seteado
+	public void setChoqueZombie() {
+		choqueZombie = true;
+	}
 
 	/**
 	 * Actualizar.
@@ -44,5 +50,9 @@ public abstract class Proyectil extends Ente {
 		aux.setLocation(this.getLocation().getX()+velocidad, this.getLocation().getY());
 		this.setLocation(aux);
 		this.grafico.update(this.getLocation());
+	}
+
+	public boolean condicionElim(int lim) {
+		return this.getLocation().getX() >= lim || choqueZombie;
 	} 
 }

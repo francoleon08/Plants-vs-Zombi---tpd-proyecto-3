@@ -29,7 +29,7 @@ public class SetaDesporada extends Planta {
 		Point aux = new Point(0,0);
 		if(this.cooldownAccion == 0) {
 			aux.setLocation(this.getLocation().getX()+30, this.getLocation().getY()+50);
-			disparo = new Espora(aux, this.config, 1);
+			disparo = new Espora(aux, this.config);
 		}
 		return disparo;
 	}

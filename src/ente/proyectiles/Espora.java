@@ -16,29 +16,17 @@ public class Espora extends Proyectil {
 	 * Instantiates a new espora.
 	 * @param punto the punto
 	 * @param p de Properites
-	 * @param index 0->rafaga, 1->espora
 	 */
-	public Espora(Point position, Properties p, int index) {
+	public Espora(Point position, Properties p) {
 		this.setLocation(position);
 		this.config = p;		
-		if(index == 0) {
-			this.width = Integer.parseInt(config.getProperty("ancho_rafaga_espora"));
-			this.height = Integer.parseInt(config.getProperty("alto_rafaga_espora"));
-			this.danio = Integer.parseInt(config.getProperty("danio_rafaga_espora"));
-			this.velocidad = Integer.parseInt(config.getProperty("velocidad_rafaga_espora"));
-			this.distancia = Integer.parseInt(config.getProperty("distancia_rafaga_espora"));
-			this.grafico = new EnteGrafico(position, this.width, this.height, config.getProperty("skin_rafaga_espora"));
-		}
-		else {
-			if(index == 1) {
-				this.width = Integer.parseInt(config.getProperty("ancho_espora"));
-				this.height = Integer.parseInt(config.getProperty("alto_espora"));
-				this.danio = Integer.parseInt(config.getProperty("danio_espora"));
-				this.velocidad = Integer.parseInt(config.getProperty("velocidad_espora"));
-				this.distancia = Integer.parseInt(config.getProperty("distancia_espora"));
-				this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_espora"));
-			}
-		}
+		this.choqueZombie = false;
+		this.width = Integer.parseInt(config.getProperty("ancho_espora"));
+		this.height = Integer.parseInt(config.getProperty("alto_espora"));
+		this.danio = Integer.parseInt(config.getProperty("danio_espora"));
+		this.velocidad = Integer.parseInt(config.getProperty("velocidad_espora"));
+		this.distancia = 100*Integer.parseInt(config.getProperty("distancia_espora"));
+		this.grafico = new EnteGrafico(this.getLocation(), this.width, this.height, config.getProperty("skin_espora"));
 	}
 
 	/**
@@ -49,6 +37,14 @@ public class Espora extends Proyectil {
 		v.visitProyectil(this);
 	}
 
+	public void actualizar() {
+		super.actualizar();
+		distancia--;
+	}
+	
+	public boolean condicionElim(int lim) {
+		return distancia == 0 || super.condicionElim(lim);
+	}
 	
 	/**
 	 * Gets the distancia.
