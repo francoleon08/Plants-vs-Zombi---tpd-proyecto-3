@@ -92,10 +92,10 @@ public class FilaJardin {
 				p.accept(z);					
 				if(!z.estaVivo()) {
 					removeZombi(z);
-					jardin.generarAnimacionColision(p.getLocation(), "assets\\imagenes\\zombis\\explocion.gif");
+					jardin.generarAnimacionExplocion(z.getLocation());
 				}
 				else {
-					jardin.generarAnimacionColision(p.getLocation(), "assets\\imagenes\\zombis\\impacto.gif");
+					jardin.generarAnimacionColision(p.getLocation());
 				}
 			}
 		}

@@ -24,6 +24,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
@@ -41,42 +44,31 @@ public class GUI extends JFrame {
 	private ImageIcon stopMusic;
 	private JLabel logo;
 	private JLabel fondo;
+	private JPanel botonExit;
 	private int indexPlanta;
 	private boolean runJuego;
 	private boolean accionPala;
 	
-	public GUI(Logica logica) {
+	public GUI() {
 		cargarConfiguracion();		
-		this.logica = logica;
+		this.logica = new Logica(this);
 		this.indexPlanta = -1;
 		this.runJuego = false;
 		this.accionPala = false;
+				
+		configGui();
+		
 		playMusic = new ImageIcon(guiConfig.getProperty("playMusic"));
 		stopMusic = new ImageIcon(guiConfig.getProperty("stopMusic"));
-				
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(new Dimension(1100, 750));
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setUndecorated(true);
-		getContentPane().setLayout(null);
-		getContentPane().setBackground(new Color(154, 228, 146));			
-		
-		Toolkit tk = Toolkit.getDefaultToolkit();		
-		Image cursorImage = tk.getImage(guiConfig.getProperty("cursor"));
-		Cursor cursor = tk.createCustomCursor(cursorImage, new Point(0,0), "Custom Cursor");	
-		getContentPane().setCursor(cursor);
-		
 		logo = new JLabel(new ImageIcon(guiConfig.getProperty("logo")));
 		logo.setBounds(200, 116, 700, 418);
 		
 		textDinero = new JTextPane();
 		textDinero.setEditable(false);
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
-		textDinero.setBackground(new Color(154, 228, 146));
-		textDinero.setText("DINERO: "+logica.getDinero());
-		textDinero.setBounds(750, 53, 150, 20);
-		textDinero.setVisible(false);
+		textDinero.setOpaque(false);
+		textDinero.setBounds(750, 53, 200, 20);
+		textDinero.setVisible(false);		
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
 		buttonModoNoche = new JButton(new ImageIcon(guiConfig.getProperty("modoNoche")));		
@@ -134,8 +126,19 @@ public class GUI extends JFrame {
 		
 		fondo = new JLabel();
 		fondo.setBounds(0, 0, 1100, 750);
-		fondo.setVisible(false);
+		fondo.setVisible(false);			
 		
+		botonExit = new JPanel();
+		botonExit.addMouseListener(new MouseAdapter() {			
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		botonExit.setBackground(new Color(224, 27, 36));
+		botonExit.setBounds(1075, 0, 25, 25);
+		botonExit.setLayout(null);
+	
+		getContentPane().add(botonExit);
 		getContentPane().add(logo);
 		getContentPane().add(textDinero);
 		getContentPane().add(buttonModoDia);
@@ -143,7 +146,10 @@ public class GUI extends JFrame {
 		getContentPane().add(pala);
 		getContentPane().add(buttonMusic);
 		getContentPane().add(fondo);
-		accionMouse();				
+		
+		accionMouse();			
+		
+		setVisible(true);
 	}
 
 	private void initGame() {
@@ -154,7 +160,8 @@ public class GUI extends JFrame {
 		buttonMusic.setLocation(1020, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
-		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());
+		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());		
+		textDinero.setText("DINERO: "+logica.getDinero());
 		textDinero.setVisible(true);
 		if(logica.getModoJuego() == "dia") {
 			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia")));
@@ -164,6 +171,21 @@ public class GUI extends JFrame {
 		}
 		fondo.setVisible(true);
 		runJuego = true;
+	}
+	
+	private void configGui() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(new Dimension(1100, 750));
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		getContentPane().setLayout(null);
+		getContentPane().setBackground(new Color(154, 228, 146));			
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();		
+		Image cursorImage = tk.getImage(guiConfig.getProperty("cursor"));
+		Cursor cursor = tk.createCustomCursor(cursorImage, new Point(0,0), "Custom Cursor");
+		getContentPane().setCursor(cursor);
 	}
 	
 	public void addJPanel(JLayeredPane panel) {

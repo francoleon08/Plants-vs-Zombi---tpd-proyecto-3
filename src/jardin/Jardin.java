@@ -35,6 +35,8 @@ public class Jardin {
 	private int nivelActual;
 	private static final int MAX_LEVEL = 4;
 	
+	private Animacion animaciones;
+	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {
 		this.logica = logica;
 		nivelActual = 1;
@@ -53,6 +55,7 @@ public class Jardin {
 		cargarConfiguracionMoneda();
 		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");
 		
+		animaciones = new Animacion(jardinGrafico);
 		
 		timerZombis = new TimerZombi(this);
 		timerPlantas = new TimerPlanta(this);
@@ -65,13 +68,15 @@ public class Jardin {
 		timerProyectiles.start();
 	}
 	
-	public int insertPlanta(int index, Point position) {		
-		Planta insert = plantasDisponibles.get(index).clone();
+	public int insertPlanta(int index, Point position) {
+		Planta insert;
 		Point posInsert;
 		int precio = 0;
 		boolean celdaVacia = true;
 		
-		if(plantasDisponibles.get(index).puedeComprar() && logica.getDinero() >= insert.getPrecio()) {
+		if(plantasDisponibles.get(index).puedeComprar() && plantasDisponibles.get(index).getPrecio() <= logica.getDinero()) {
+			insert = plantasDisponibles.get(index).clone();
+			
 			posInsert = refactorPoint(position);	
 			posInsert.x = posInsert.x + 18;
 			
@@ -193,10 +198,12 @@ public class Jardin {
 		jardinGrafico.setEnte(e);
 	}
 	
-	public void generarAnimacionColision(Point p, String url) {
-		Animacion animacion = new Animacion(this.jardinGrafico, p, url);
-		animacion.start();
-		//animacion = null;
+	public void generarAnimacionColision(Point p) {
+		animaciones.playColision(p);
+	}
+	
+	public void generarAnimacionExplocion(Point p) {
+		animaciones.playExplocion(p);
 	}
 	
 	public Iterable<EnteGrafico> getPlantasDisponibles() {

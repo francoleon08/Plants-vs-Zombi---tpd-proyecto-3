@@ -1,8 +1,6 @@
 package logica;
 
 import java.awt.Point;
-import java.util.LinkedList;
-
 import Sonido.SClip;
 import ente.grafico.EnteGrafico;
 import gui.GUI;
@@ -16,11 +14,10 @@ public class Logica {
 	private SClip reproductorfondo;
 	private boolean reproductorActivo;
 	
-	public Logica() {
+	public Logica(GUI gui) {
+		this.gui = gui;
 		dinero = 40000;
-		reproductorActivo = true;
-		gui = new GUI(this);		
-		gui.setVisible();
+		reproductorActivo = true;		
 		reproductorfondo= new SClip("assets/sonidos/Music1.wav");
 		reproductorfondo.loop();
 	}
