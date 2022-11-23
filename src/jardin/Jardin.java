@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
-
 import Sonido.SClip;
 import animacion.Animacion;
 import ente.grafico.EnteGrafico;
@@ -16,7 +15,6 @@ import ente.zombi.Zombi;
 import gui.GUI;
 import logica.Logica;
 import nivel.Nivel;
-import splashscreen.SplashScreen;
 import timer.*;
 
 public class Jardin {

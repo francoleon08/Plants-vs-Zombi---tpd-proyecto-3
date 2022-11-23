@@ -1,7 +1,6 @@
 package splashscreen;
 
 import java.awt.BorderLayout;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
