@@ -94,9 +94,12 @@ public class Jardin {
 		return precio;
 	}
 	
-	public int interaccionMoneda(Point pos) {
+	public int interaccionMoneda(Point pos) {		
 		int fila = (int) (pos.getY()/100)*100;
-		int valor = filas[fila/100].interaccionMoneda(pos);
+		int valor = -1;
+		if(fila/100 >= 0) {
+			valor = filas[fila/100].interaccionMoneda(pos);			
+		}
 		if(valor == 0) {
 			for(Moneda m : monedasGeneradas) {
 				if(m.contains(pos)) {					
