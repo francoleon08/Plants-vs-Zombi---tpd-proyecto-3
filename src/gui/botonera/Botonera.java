@@ -20,7 +20,7 @@ public class Botonera {
 	public Botonera(GUI gui) {
 		this.gui = gui;
 		panelBotones = new JLayeredPane();
-		panelBotones.setBounds(10, 10, 400, 100);
+		panelBotones.setBounds(10, 5, 400, 100);
 		panelBotones.setLayout(null);
 		panelBotones.setOpaque(false);		
 		botones = new LinkedList<JButton>();
