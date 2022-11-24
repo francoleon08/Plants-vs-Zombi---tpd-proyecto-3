@@ -73,7 +73,6 @@ public class GUI extends JFrame {
 		panelFondo.add(buttonMusic, 2);
 		panelFondo.add(fondo, 1);
 		panelFondo.add(botonExit, 0);
-		
 		accionMouse();				
 		setVisible(true);
 	}
@@ -88,12 +87,12 @@ public class GUI extends JFrame {
 		buttonMusic.setLocation(1020, 25);
 		logica.initGame();
 		botoneraGrafica = new Botonera(this);
-		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());		
+		botoneraGrafica.setBotonera(logica.getPlantasDisponibles());	
 		textDinero.setText("DINERO: "+logica.getDinero());
 		textDinero.setVisible(true);
 		btnCrearNiveles.setVisible(false);
 		if(logica.getModoJuego() == "dia") {
-			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia2")));
+			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_dia")));
 		}
 		else {
 			fondo.setIcon(new ImageIcon(guiConfig.getProperty("fondo_noche")));
@@ -130,7 +129,8 @@ public class GUI extends JFrame {
 		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
 		textDinero.setOpaque(false);
 		textDinero.setBounds(750, 53, 200, 20);
-		textDinero.setVisible(false);		
+		textDinero.setVisible(false);
+		textDinero.setCaretColor(new Color(255, 255, 255));
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
 		buttonModoNoche = new JButton(new ImageIcon(guiConfig.getProperty("modoNoche")));		
@@ -158,8 +158,11 @@ public class GUI extends JFrame {
 		fondo.setVisible(false);			
 
 		botonExit = new JPanel();
-		botonExit.setBackground(new Color(224, 27, 36));
+		botonExit.setOpaque(false);
 		botonExit.setBounds(1075, 0, 25, 25);
+		JLabel boton=new JLabel(new ImageIcon(guiConfig.getProperty("boton_exit")));
+		boton.setSize(25,25);
+		botonExit.add(boton);
 		botonExit.setLayout(null);
 		
 		btnCrearNiveles = new JButton("Crear Niveles");
