@@ -1,5 +1,6 @@
 package gui.botonera;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -21,12 +22,7 @@ public class Botonera {
 		panelBotones = new JLayeredPane();
 		panelBotones.setBounds(10, 10, 400, 100);
 		panelBotones.setLayout(null);
-		panelBotones.setOpaque(false);
-		ImageIcon fondo= new ImageIcon(gui.getPropiedad("fondo_botonera"));
-		JLabel lblFondo= new JLabel(fondo);
-		lblFondo.setSize(400, 100);
-		
-		panelBotones.add(lblFondo,0);
+		panelBotones.setOpaque(false);		
 		botones = new LinkedList<JButton>();
 			
 		gui.addBotonera(panelBotones);		
@@ -40,7 +36,7 @@ public class Botonera {
 			insert.setBounds(cont*100, 0, 100, 100);
 			insert.setOpaque(false);
 			insert.setContentAreaFilled(false);	
-			insert.setBorder(null);
+			insert.setBorder(null);			
 			insert.addActionListener(new ActionListener() {				
 				public void actionPerformed(ActionEvent e) {
 					controlBoton(insert);
@@ -54,6 +50,12 @@ public class Botonera {
 		}
 		
 		panelBotones.setSize((cont)*100, 100);
+		JLabel fondo = new JLabel(new ImageIcon(gui.getPropiedad("fondo_botonera")));
+		fondo.setBounds(panelBotones.getBounds());
+		fondo.setSize((int) panelBotones.getSize().getWidth()+20,100);
+		fondo.setLocation(-10, 0);
+		panelBotones.add(fondo);
+		panelBotones.setLayer(fondo, 0);
 		gui.addBotonera(panelBotones);
 	}
 	

@@ -14,8 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import logica.Logica;
-import nivel.generador.GeneradorNivel;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
@@ -126,11 +124,12 @@ public class GUI extends JFrame {
 		
 		textDinero = new JTextPane();
 		textDinero.setEditable(false);
-		textDinero.setFont(new Font("Arial", Font.BOLD, 17));
+		textDinero.setFont(new Font("Arial", Font.BOLD, 20));
+		textDinero.setBounds(710, 50, 180, 25);
 		textDinero.setOpaque(false);
-		textDinero.setBounds(750, 53, 200, 20);
-		textDinero.setVisible(false);
-		textDinero.setCaretColor(new Color(255, 255, 255));
+		textDinero.setVisible(false);	
+		textDinero.setForeground(new Color(255,255,255));
+		
 		
 		buttonModoDia = new JButton(new ImageIcon(guiConfig.getProperty("modoDia")));
 		buttonModoNoche = new JButton(new ImageIcon(guiConfig.getProperty("modoNoche")));		
@@ -159,14 +158,14 @@ public class GUI extends JFrame {
 
 		botonExit = new JPanel();
 		botonExit.setOpaque(false);
-		botonExit.setBounds(1075, 0, 25, 25);
+		botonExit.setBounds(1073, 2, 25, 25);
 		JLabel boton=new JLabel(new ImageIcon(guiConfig.getProperty("boton_exit")));
 		boton.setSize(25,25);
 		botonExit.add(boton);
 		botonExit.setLayout(null);
 		
 		btnCrearNiveles = new JButton("Crear Niveles");
-		btnCrearNiveles.setBounds(930, 0, 130, 25);
+		btnCrearNiveles.setBounds(930, 2, 130, 25);
 		btnCrearNiveles.setOpaque(false);
 		btnCrearNiveles.setContentAreaFilled(false);
 	}

@@ -16,7 +16,7 @@ public class Logica {
 	
 	public Logica(GUI gui) {
 		this.gui = gui;
-		dinero = 40000;
+		dinero = 1000;
 		reproductorActivo = true;		
 		reproductorfondo= new SClip("assets/sonidos/Music1.wav");
 		reproductorfondo.loop();
