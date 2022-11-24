@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
-import ente.proyectiles.Espora;
 import ente.proyectiles.Proyectil;
 import ente.proyectiles.RafagaEspora;
 import ente.zombi.visitor.Visitor;

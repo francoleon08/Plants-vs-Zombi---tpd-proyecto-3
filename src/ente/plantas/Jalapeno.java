@@ -1,12 +1,10 @@
 package ente.plantas;
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.Properties;
 
 import ente.grafico.EnteGrafico;
 import ente.proyectiles.Explosion;
-import ente.proyectiles.Guizante;
 import ente.proyectiles.Proyectil;
 import ente.zombi.visitor.Visitor;
 

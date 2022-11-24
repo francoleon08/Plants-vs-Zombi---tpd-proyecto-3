@@ -31,8 +31,7 @@ public class Jardin {
 	private SClip sonidoMoneda;
 	private String modoJuego;
 	private int nivelActual;
-	private static final int MAX_LEVEL = 4;
-	
+	private static final int MAX_LEVEL = 4;	
 	private Animacion animaciones;
 	
 	public Jardin(Logica logica, GUI gui, String modoJuego) {

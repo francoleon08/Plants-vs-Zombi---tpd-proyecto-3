@@ -1,11 +1,8 @@
 package jardin;
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.LinkedList;
 import Sonido.SClip;
-import animacion.Animacion;
-import ente.plantas.Jalapeno;
 import ente.plantas.Planta;
 import ente.proyectiles.Moneda;
 import ente.proyectiles.Proyectil;
@@ -17,8 +14,7 @@ public class FilaJardin {
 	private LinkedList<Planta> plantasActivas;
 	private LinkedList<Proyectil> proyectilesActivos;
 	private SClip sonidoZombi;
-	private SClip sonidoMoneda;
-	private int zombis;
+	private SClip sonidoMoneda;	
 	private boolean gameOver;
 	
 	public FilaJardin(Jardin jardin) {
@@ -27,8 +23,7 @@ public class FilaJardin {
 		plantasActivas = new LinkedList<Planta>();
 		proyectilesActivos = new LinkedList<Proyectil>();
 		sonidoZombi = new SClip("assets/sonidos/proyectil.wav");
-		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");
-		zombis = 0;
+		sonidoMoneda = new SClip("assets/sonidos/sonidoMoneda.wav");		
 		gameOver = false;
 	}
 	
@@ -100,7 +95,7 @@ public class FilaJardin {
 					jardin.generarAnimacionExplocion(aux);
 				}
 				else {
-					jardin.generarAnimacionColision(aux);
+					jardin.generarAnimacionColision(p.getLocation());
 				}
 			}
 		}
@@ -156,8 +151,7 @@ public class FilaJardin {
 	
 	public void insertZombi(Zombi z) {
 		zombisActivos.add(z);
-		jardin.insertEnteJardinGrafico(z.getEnteGrafico());
-		zombis++;
+		jardin.insertEnteJardinGrafico(z.getEnteGrafico());		
 	}
 	
 	public void insertProyectil(Proyectil p) {
@@ -168,8 +162,7 @@ public class FilaJardin {
 	public void limpiarListas() {
 		zombisActivos.clear();
 		plantasActivas.clear();
-		proyectilesActivos.clear();
-		zombis = 0;
+		proyectilesActivos.clear();		
 		gameOver = false;
 	}
 	
@@ -177,8 +170,7 @@ public class FilaJardin {
 		boolean removio=false;
 		if(z != null) {
 			zombisActivos.remove(z);
-			jardin.removerEnteJardinGrafico(z.getEnteGrafico());
-			zombis--;
+			jardin.removerEnteJardinGrafico(z.getEnteGrafico());			
 			removio=true;
 		}
 		return removio;

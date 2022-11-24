@@ -10,7 +10,7 @@ import ente.Ente;
 public abstract class Proyectil extends Ente {
 	protected int danio;
 	protected int velocidad;
-	boolean choqueZombie;
+	protected boolean choqueZombie;
 
 	/**
 	 * Gets the danio.
