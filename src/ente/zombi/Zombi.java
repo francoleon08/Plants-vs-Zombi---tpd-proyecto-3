@@ -160,7 +160,7 @@ public class Zombi extends Ente implements Visitor {
 		if(lector && salud <= 40 && velocidad == 1) {
 			velocidad *=3;
 			//CAMIAR A LA SKIN CORRESPONDIENTE
-			this.grafico.setSkin("assets\\imagenes\\zombis\\comunZombi.gif");
+			this.grafico.setSkin(config.getProperty("zombieLector2"));
 		}
 			
 	}
