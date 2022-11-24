@@ -43,9 +43,9 @@ public class SetaSolar extends Planta {
 	}
 
 	private void crecer() {
-		System.out.println("Crecí");
 		this.grafico.setSkin(config.getProperty("skin_setaSolar2"));
 		this.salud = Integer.parseInt(config.getProperty("salud_setaSolar2"));
+		this.cooldownAccion = Integer.parseInt(config.getProperty("cooldownaccion_setaSolar2"));
 	}
 	
 	public Planta clone() {
