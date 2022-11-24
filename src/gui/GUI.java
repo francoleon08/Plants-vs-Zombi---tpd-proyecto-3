@@ -241,7 +241,7 @@ public class GUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {								
 				if(runJuego) {
 					Point insert = e.getPoint();
-					insert.setLocation(insert.getX()-110, insert.getY()-115);
+					insert.setLocation(insert.getX()-110, insert.getY()-97);
 					if(indexPlanta >= 0) {
 						crearPlanta(insert);
 						accionPala = false;						
